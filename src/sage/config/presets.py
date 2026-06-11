@@ -112,6 +112,10 @@ ABLATIONS: dict[str, Preset] = {
     "router_learned": _set(**{"router.variant": "learned"}),
     # fusion / correction
     "wo_dphf": _set(**{"fusion.variant": "single"}),
+    # HyDE off: route every query to plain dense retrieval (no hypothesis document),
+    # keeping rerank/correction/graph on. Isolates the HyDE contribution; the router
+    # itself is ablated separately by the routing triad.
+    "wo_hyde": _set(**{"router.enabled": False}),
     "wo_sscc": _set(**{"correction.variant": "crag"}),
     "wo_crag": _set(**{"correction.enabled": False}),
     "wo_rerank": _set(**{"rerank.enabled": False}),
