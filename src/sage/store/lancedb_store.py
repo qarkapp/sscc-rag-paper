@@ -120,7 +120,11 @@ class LanceDBStore:
             if self._table_name in db.list_tables():
                 self._table = db.open_table(self._table_name)
             else:
-                self._table = db.create_table(self._table_name, schema=_schema(self._dim))
+                try:
+                    self._table = db.create_table(self._table_name, schema=_schema(self._dim))
+                except (ValueError, OSError):
+                    # Lost a create race or a stale table directory exists; open it.
+                    self._table = db.open_table(self._table_name)
         return self._table
 
     # -- VectorStore API ---------------------------------------------------
