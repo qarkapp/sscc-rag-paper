@@ -57,6 +57,19 @@ async def test_get_by_ids_preserves_order_and_embeddings(tmp_path):
     assert rows[0].embedding.shape == (3,)
 
 
+async def test_ids_with_apostrophes(tmp_path):
+    # Wikipedia-style ids contain single quotes; the SQL filter must escape them.
+    store = LanceDBStore(tmp_path / "db", dim=3)
+    tricky = "U Know What's Up"
+    await store.upsert([_row(tricky, [1.0, 0.0, 0.0])])
+    rows = await store.get_by_ids([tricky])
+    assert [r.chunk_id for r in rows] == [tricky]
+    hits = await store.search(
+        np.asarray([1.0, 0.0, 0.0], dtype=np.float32), top_k=5, document_filter=["d1"]
+    )
+    assert hits[0].chunk_id == tricky
+
+
 async def test_upsert_is_idempotent(tmp_path):
     store = LanceDBStore(tmp_path / "db", dim=3)
     await store.upsert([_row("c0", [1.0, 0.0, 0.0])])

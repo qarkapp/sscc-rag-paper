@@ -62,6 +62,11 @@ def _row_to_record(row: StoreRow) -> dict[str, Any]:
     }
 
 
+def _sql_quote(value: str) -> str:
+    """Quote a string for a LanceDB SQL filter, escaping embedded single quotes."""
+    return "'" + value.replace("'", "''") + "'"
+
+
 def _record_to_result(rec: dict[str, Any]) -> SearchResult:
     distance = float(rec.get("_distance", 0.0))
     return SearchResult(
@@ -144,7 +149,7 @@ class LanceDBStore:
     ) -> list[SearchResult]:
         where = "level = 0"
         if document_filter:
-            ids = ", ".join(f"'{d}'" for d in document_filter)
+            ids = ", ".join(_sql_quote(d) for d in document_filter)
             where += f" AND document_id IN ({ids})"
         return await asyncio.to_thread(self._search_sync, query_vector, top_k, where)
 
@@ -168,7 +173,7 @@ class LanceDBStore:
 
     def _get_by_ids_sync(self, ids: list[str]) -> list[StoreRow]:
         table = self._ensure_table()
-        quoted = ", ".join(f"'{i}'" for i in ids)
+        quoted = ", ".join(_sql_quote(i) for i in ids)
         records = table.search().where(f"chunk_id IN ({quoted})").limit(len(ids)).to_list()
         by_id = {r["chunk_id"]: _record_to_row(r) for r in records}
         return [by_id[i] for i in ids if i in by_id]

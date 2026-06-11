@@ -7,6 +7,7 @@ from sage.hetdocqa.curate import (
     dataset_stats,
     near_duplicate_mask,
 )
+from sage.hetdocqa.eval_loader import build_hetdocqa_dataset
 from sage.hetdocqa.generate import (
     check_answerable_without_context,
     cross_validate,
@@ -41,6 +42,7 @@ __all__ = [
     "assign_collection_splits",
     "build_candidates",
     "build_datasheet",
+    "build_hetdocqa_dataset",
     "check_answerable_without_context",
     "cross_validate",
     "dataset_stats",
