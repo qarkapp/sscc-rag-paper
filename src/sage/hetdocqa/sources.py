@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import csv
 import io
+import re
 
 import httpx
 
@@ -17,6 +18,7 @@ from sage.chunking.languages import is_code_file
 from sage.hetdocqa.schema import Modality, SourceDoc
 
 __all__ = [
+    "arxiv_search",
     "fetch_arxiv_pdf",
     "fetch_csv",
     "fetch_github_file",
@@ -29,6 +31,27 @@ _MAX_CHARS = 20000
 
 def _truncate(text: str) -> str:
     return text[:_MAX_CHARS]
+
+
+def arxiv_search(query: str, max_results: int = 10) -> list[str]:
+    """Return arXiv ids matching a query (via the public arXiv API)."""
+    try:
+        resp = httpx.get(
+            "http://export.arxiv.org/api/query",
+            params={
+                "search_query": query,
+                "start": 0,
+                "max_results": max_results,
+                "sortBy": "relevance",
+            },
+            timeout=_TIMEOUT,
+        )
+        resp.raise_for_status()
+    except httpx.HTTPError:
+        return []
+    ids = re.findall(r"<id>http://arxiv\.org/abs/([^<]+)</id>", resp.text)
+    # The first <id> is the feed itself; entry ids carry a version suffix.
+    return [i.split("v")[0] if re.search(r"v\d+$", i) else i for i in ids]
 
 
 def fetch_github_file(
@@ -117,7 +140,7 @@ def fetch_arxiv_pdf(collection_id: str, arxiv_id: str, license: str) -> SourceDo
 
         with pymupdf.open(stream=resp.content, filetype="pdf") as doc:
             text = "\n".join(page.get_text() for page in doc)
-    except Exception:  # noqa: BLE001 - network or PDF-parse failures are non-fatal
+    except Exception:
         return None
     if not text.strip():
         return None

@@ -85,12 +85,15 @@ async def build_candidates(
             return None
         qid = f"{collection.collection_id}-{qtype.value}-{i}"
         async with semaphore:
-            candidate = await draft_question(generator, qtype, selected, qid=qid)
-            if candidate is None:
+            try:
+                candidate = await draft_question(generator, qtype, selected, qid=qid)
+                if candidate is None:
+                    return None
+                await check_answerable_without_context(candidate, validator)
+                if candidate.answerable_without_context is False:
+                    await cross_validate(candidate, selected, validator)
+            except Exception:
                 return None
-            await check_answerable_without_context(candidate, validator)
-            if candidate.answerable_without_context is False:
-                await cross_validate(candidate, selected, validator)
         return candidate
 
     tasks = [

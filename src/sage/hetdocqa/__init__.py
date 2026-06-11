@@ -21,6 +21,7 @@ from sage.hetdocqa.schema import (
     SourceDoc,
 )
 from sage.hetdocqa.sources import (
+    arxiv_search,
     fetch_arxiv_pdf,
     fetch_csv,
     fetch_github_file,
@@ -35,6 +36,7 @@ __all__ = [
     "QuestionType",
     "SourceDoc",
     "apply_splits",
+    "arxiv_search",
     "assign_collection_splits",
     "build_candidates",
     "build_datasheet",
