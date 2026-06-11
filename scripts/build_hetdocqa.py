@@ -31,6 +31,7 @@ from sage.hetdocqa import (
     fetch_github_file,
     fetch_wikipedia,
     write_release,
+    write_review_bundle,
 )
 
 # Curated, well-known arXiv ids (avoids the rate-limited search API), each paired
@@ -246,8 +247,11 @@ async def main() -> None:
 
     all_docs = [d for v in docs.values() for d in v]
     write_release("data/hetdocqa", candidates, collections, all_docs)
+    # Local-only review bundle (embeds evidence text for the human-review app).
+    write_review_bundle("data/hetdocqa/review.json", candidates, all_docs)
     print(
-        "wrote data/hetdocqa/{questions.jsonl,DATASHEET.md,collections.json,corpus_manifest.json}"
+        "wrote data/hetdocqa/{questions.jsonl,DATASHEET.md,collections.json,"
+        "corpus_manifest.json,review.json}"
     )
 
 

@@ -13,6 +13,7 @@ from sage.hetdocqa.generate import (
     draft_question,
 )
 from sage.hetdocqa.release import build_datasheet, to_retrieval_dataset, write_release
+from sage.hetdocqa.review import review_records, write_review_bundle
 from sage.hetdocqa.schema import (
     Collection,
     Modality,
@@ -50,8 +51,10 @@ __all__ = [
     "fetch_wikipedia",
     "locate_span",
     "near_duplicate_mask",
+    "review_records",
     "select_documents",
     "snippets_to_spans",
     "to_retrieval_dataset",
     "write_release",
+    "write_review_bundle",
 ]

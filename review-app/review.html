@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HetDocQA Review</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      mark { background: #fde68a; padding: 0 1px; border-radius: 2px; }
+      .ctx { white-space: pre-wrap; }
+    </style>
+  </head>
+  <body class="bg-slate-100 text-slate-800">
+    <div id="root"></div>
+
+    <script type="module">
+      import React, { useState, useEffect, useMemo, useCallback } from "https://esm.sh/react@18.3.1";
+      import { createRoot } from "https://esm.sh/react-dom@18.3.1/client";
+      import htm from "https://esm.sh/htm@3.1.1";
+      const html = htm.bind(React.createElement);
+
+      const TYPES = ["factual", "code", "cross_document", "multi_hop", "thematic"];
+      const TYPE_COLORS = {
+        factual: "bg-sky-100 text-sky-800",
+        code: "bg-violet-100 text-violet-800",
+        cross_document: "bg-emerald-100 text-emerald-800",
+        multi_hop: "bg-amber-100 text-amber-800",
+        thematic: "bg-rose-100 text-rose-800",
+      };
+      const STORE_KEY = "hetdocqa-review-v1";
+
+      const loadDecisions = () => {
+        try { return JSON.parse(localStorage.getItem(STORE_KEY) || "{}"); }
+        catch { return {}; }
+      };
+
+      function Badge({ children, cls }) {
+        return html`<span class=${"inline-block rounded px-2 py-0.5 text-xs font-medium " + (cls || "bg-slate-200 text-slate-700")}>${children}</span>`;
+      }
+
+      function Evidence({ ev }) {
+        return html`
+          <div class="rounded-lg border border-slate-200 bg-white p-3 text-sm">
+            <div class="mb-1 flex items-center gap-2 text-xs text-slate-500">
+              <${Badge} cls="bg-slate-800 text-white">${ev.modality}<//>
+              <span class="font-mono">${ev.filename}</span>
+              <span>· chars ${ev.char_start}–${ev.char_end}</span>
+            </div>
+            <div class="ctx leading-relaxed text-slate-700">
+              <span class="text-slate-400">…${ev.before}</span><mark>${ev.text}</mark><span class="text-slate-400">${ev.after}…</span>
+            </div>
+          </div>`;
+      }
+
+      function App() {
+        const [records, setRecords] = useState([]);
+        const [decisions, setDecisions] = useState(loadDecisions);
+        const [idx, setIdx] = useState(0);
+        const [filterType, setFilterType] = useState("all");
+        const [filterStatus, setFilterStatus] = useState("all");
+        const [query, setQuery] = useState("");
+
+        useEffect(() => { localStorage.setItem(STORE_KEY, JSON.stringify(decisions)); }, [decisions]);
+
+        const filtered = useMemo(() => records.filter((r) => {
+          const d = decisions[r.qid] || {};
+          const status = d.status || "pending";
+          if (filterType !== "all" && (d.type || r.type) !== filterType) return false;
+          if (filterStatus !== "all" && status !== filterStatus) return false;
+          if (query && !(r.question.toLowerCase().includes(query.toLowerCase()) || r.qid.includes(query))) return false;
+          return true;
+        }), [records, decisions, filterType, filterStatus, query]);
+
+        const current = filtered[idx] || null;
+
+        const update = useCallback((qid, patch) => {
+          setDecisions((d) => ({ ...d, [qid]: { ...(d[qid] || {}), ...patch } }));
+        }, []);
+
+        const setStatus = useCallback((status) => {
+          if (!current) return;
+          update(current.qid, { status });
+          setIdx((i) => Math.min(i + 1, filtered.length - 1));
+        }, [current, filtered.length, update]);
+
+        useEffect(() => {
+          const onKey = (e) => {
+            if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.tagName === "SELECT") return;
+            if (e.key === "a") setStatus("accept");
+            else if (e.key === "r") setStatus("reject");
+            else if (e.key === "j" || e.key === "ArrowDown") setIdx((i) => Math.min(i + 1, filtered.length - 1));
+            else if (e.key === "k" || e.key === "ArrowUp") setIdx((i) => Math.max(i - 1, 0));
+          };
+          window.addEventListener("keydown", onKey);
+          return () => window.removeEventListener("keydown", onKey);
+        }, [setStatus, filtered.length]);
+
+        const onLoad = (e) => {
+          const file = e.target.files[0];
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = () => { setRecords(JSON.parse(reader.result)); setIdx(0); };
+          reader.readAsText(file);
+        };
+
+        const counts = useMemo(() => {
+          let a = 0, r = 0;
+          for (const rec of records) {
+            const s = (decisions[rec.qid] || {}).status;
+            if (s === "accept") a++; else if (s === "reject") r++;
+          }
+          return { a, r, pending: records.length - a - r };
+        }, [records, decisions]);
+
+        const download = (name, text) => {
+          const blob = new Blob([text], { type: "application/json" });
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url; link.download = name; link.click();
+          URL.revokeObjectURL(url);
+        };
+
+        const exportDecisions = () => download("hetdocqa_decisions.json", JSON.stringify(decisions, null, 2));
+
+        const exportAccepted = () => {
+          const lines = records
+            .filter((r) => (decisions[r.qid] || {}).status === "accept")
+            .map((r) => {
+              const d = decisions[r.qid] || {};
+              return JSON.stringify({
+                qid: r.qid,
+                question: r.question,
+                answer: d.answer ?? r.answer,
+                type: d.type ?? r.type,
+                collection_id: r.collection_id,
+                split: r.split,
+                gold_spans: r.evidence.map((ev) => ({
+                  document_id: ev.document_id, char_start: ev.char_start, char_end: ev.char_end, grade: 1,
+                })),
+              });
+            });
+          download("validated_questions.jsonl", lines.join("\n"));
+        };
+
+        if (records.length === 0) {
+          return html`
+            <div class="mx-auto mt-24 max-w-xl rounded-xl bg-white p-8 text-center shadow">
+              <h1 class="mb-2 text-2xl font-bold">HetDocQA Review</h1>
+              <p class="mb-6 text-slate-500">Load <code>data/hetdocqa/review.json</code> to begin. Your decisions are saved in this browser automatically.</p>
+              <label class="cursor-pointer rounded-lg bg-slate-800 px-4 py-2 text-white hover:bg-slate-700">
+                Load review.json
+                <input type="file" accept=".json" class="hidden" onChange=${onLoad} />
+              </label>
+            </div>`;
+        }
+
+        const d = current ? decisions[current.qid] || {} : {};
+        const status = d.status || "pending";
+
+        return html`
+          <div class="flex h-screen flex-col">
+            <header class="flex items-center gap-4 border-b bg-white px-4 py-2 shadow-sm">
+              <h1 class="text-lg font-bold">HetDocQA Review</h1>
+              <div class="flex gap-2 text-sm">
+                <${Badge} cls="bg-emerald-100 text-emerald-800">✓ ${counts.a}<//>
+                <${Badge} cls="bg-rose-100 text-rose-800">✗ ${counts.r}<//>
+                <${Badge}>… ${counts.pending}<//>
+              </div>
+              <div class="ml-auto flex gap-2">
+                <button class="rounded bg-slate-700 px-3 py-1 text-sm text-white" onClick=${exportAccepted}>Export accepted.jsonl</button>
+                <button class="rounded border px-3 py-1 text-sm" onClick=${exportDecisions}>Export decisions</button>
+                <label class="cursor-pointer rounded border px-3 py-1 text-sm">Load<input type="file" accept=".json" class="hidden" onChange=${onLoad} /></label>
+              </div>
+            </header>
+
+            <div class="flex min-h-0 flex-1">
+              <aside class="flex w-80 flex-col border-r bg-white">
+                <div class="space-y-2 border-b p-2 text-sm">
+                  <input class="w-full rounded border px-2 py-1" placeholder="Search…" value=${query} onInput=${(e) => { setQuery(e.target.value); setIdx(0); }} />
+                  <div class="flex gap-2">
+                    <select class="flex-1 rounded border px-1 py-1" value=${filterType} onChange=${(e) => { setFilterType(e.target.value); setIdx(0); }}>
+                      <option value="all">all types</option>
+                      ${TYPES.map((t) => html`<option value=${t}>${t}</option>`)}
+                    </select>
+                    <select class="flex-1 rounded border px-1 py-1" value=${filterStatus} onChange=${(e) => { setFilterStatus(e.target.value); setIdx(0); }}>
+                      <option value="all">all</option>
+                      <option value="pending">pending</option>
+                      <option value="accept">accepted</option>
+                      <option value="reject">rejected</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="min-h-0 flex-1 overflow-y-auto">
+                  ${filtered.map((r, i) => {
+                    const s = (decisions[r.qid] || {}).status || "pending";
+                    const mark = s === "accept" ? "✓" : s === "reject" ? "✗" : "·";
+                    const sel = i === idx ? "bg-slate-100" : "";
+                    return html`<button key=${r.qid} class=${"block w-full border-b px-3 py-2 text-left text-sm hover:bg-slate-50 " + sel} onClick=${() => setIdx(i)}>
+                      <span class=${"mr-2 font-bold " + (s === "accept" ? "text-emerald-600" : s === "reject" ? "text-rose-600" : "text-slate-300")}>${mark}</span>
+                      <span class="text-slate-700">${r.question.slice(0, 70)}</span>
+                    </button>`;
+                  })}
+                </div>
+              </aside>
+
+              <main class="min-h-0 flex-1 overflow-y-auto p-6">
+                ${!current ? html`<p class="text-slate-400">No questions match the filters.</p>` : html`
+                  <div class="mx-auto max-w-3xl space-y-4">
+                    <div class="flex flex-wrap items-center gap-2">
+                      <${Badge} cls=${TYPE_COLORS[d.type ?? current.type]}>${d.type ?? current.type}<//>
+                      <${Badge}>${current.split}<//>
+                      <span class="font-mono text-xs text-slate-400">${current.qid}</span>
+                      ${current.auto.is_clean ? html`<${Badge} cls="bg-emerald-50 text-emerald-700">auto-clean<//>` : html`<${Badge} cls="bg-amber-50 text-amber-700">auto-flagged<//>`}
+                    </div>
+
+                    <div class="rounded-xl bg-white p-4 shadow-sm">
+                      <p class="text-lg font-medium">${current.question}</p>
+                      <div class="mt-3">
+                        <label class="text-xs font-semibold text-slate-500">ANSWER (editable)</label>
+                        <textarea class="mt-1 w-full rounded border p-2 text-sm" rows="2" value=${d.answer ?? current.answer} onInput=${(e) => update(current.qid, { answer: e.target.value })}></textarea>
+                      </div>
+                      <div class="mt-3 flex items-center gap-3 text-sm">
+                        <label class="text-xs font-semibold text-slate-500">TYPE</label>
+                        <select class="rounded border px-2 py-1" value=${d.type ?? current.type} onChange=${(e) => update(current.qid, { type: e.target.value })}>
+                          ${TYPES.map((t) => html`<option value=${t}>${t}</option>`)}
+                        </select>
+                        <span class="text-xs text-slate-400">auto: answerable-no-context=${String(current.auto.answerable_without_context)} · ${JSON.stringify(current.auto.validation)}</span>
+                      </div>
+                    </div>
+
+                    <div>
+                      <h3 class="mb-2 text-sm font-semibold text-slate-500">GOLD EVIDENCE (${current.evidence.length} span${current.evidence.length === 1 ? "" : "s"})</h3>
+                      <div class="space-y-2">
+                        ${current.evidence.map((ev, i) => html`<${Evidence} key=${i} ev=${ev} />`)}
+                      </div>
+                    </div>
+
+                    <div class="rounded-xl bg-white p-4 shadow-sm">
+                      <textarea class="mb-3 w-full rounded border p-2 text-sm" rows="2" placeholder="Notes (optional)…" value=${d.notes || ""} onInput=${(e) => update(current.qid, { notes: e.target.value })}></textarea>
+                      <div class="flex gap-3">
+                        <button class=${"flex-1 rounded-lg px-4 py-2 font-semibold " + (status === "accept" ? "bg-emerald-600 text-white" : "bg-emerald-100 text-emerald-800 hover:bg-emerald-200")} onClick=${() => setStatus("accept")}>Accept (a)</button>
+                        <button class=${"flex-1 rounded-lg px-4 py-2 font-semibold " + (status === "reject" ? "bg-rose-600 text-white" : "bg-rose-100 text-rose-800 hover:bg-rose-200")} onClick=${() => setStatus("reject")}>Reject (r)</button>
+                      </div>
+                      <p class="mt-2 text-center text-xs text-slate-400">keys: a accept · r reject · j/k or ↑/↓ navigate · ${idx + 1} / ${filtered.length}</p>
+                    </div>
+                  </div>`}
+              </main>
+            </div>
+          </div>`;
+      }
+
+      createRoot(document.getElementById("root")).render(html`<${App} />`);
+    </script>
+  </body>
+</html>
