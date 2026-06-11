@@ -117,7 +117,8 @@ ABLATIONS: dict[str, Preset] = {
     "wo_rerank": _set(**{"rerank.enabled": False}),
     # graph
     "wo_graph": _disable_graph,
-    "wo_graphsage": _set(**{"graph.gnn_layers": 0}),
+    "wo_graphsage": _set(**{"graph.gnn_layers": 0}),  # PPR expansion only (no GNN rescore)
+    "graph_no_expand": _set(**{"graph.ppr_expand": False}),  # GNN rescore only (no expansion)
     "wo_nli_edges": _drop_edge("nli"),
     "wo_semantic_edges": _drop_edge("semantic"),
     "wo_ast_edges": _drop_edge("ast"),

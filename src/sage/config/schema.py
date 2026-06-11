@@ -150,6 +150,8 @@ class GraphCfg(BaseModel):
     gnn_objective: Literal["graphsage_neighbor", "dgi"] = "graphsage_neighbor"
     query_fusion: Literal["project_query", "late_fusion", "query_proj_head"] = "project_query"
     late_fusion_beta: float = 0.5
+    ppr_expand: bool = True  # add PPR-expanded chunks to the candidate set
+    ppr_min_score: float = 0.0  # only add expanded chunks with PPR score above this
     ppr_steps: int = 20
     ppr_alpha: float = 0.15
     ppr_expand_frac: float = 0.5

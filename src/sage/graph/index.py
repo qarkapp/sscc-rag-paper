@@ -130,6 +130,7 @@ class GraphContext:
             budget=budget,
             alpha=self._cfg.ppr_alpha,
             steps=self._cfg.ppr_steps,
+            min_score=self._cfg.ppr_min_score,
         )
 
     def rescore(self, query_vector: np.ndarray, results: list[SearchResult]) -> list[SearchResult]:

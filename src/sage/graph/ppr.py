@@ -57,12 +57,18 @@ def expand_by_ppr(
     budget: int,
     alpha: float = 0.15,
     steps: int = 20,
+    min_score: float = 0.0,
 ) -> list[str]:
-    """Return up to ``budget`` new chunk ids ranked by PPR, excluding the seeds."""
+    """Return up to ``budget`` new chunk ids ranked by PPR, excluding the seeds.
+
+    Only chunks with PPR score above ``min_score`` are added, which keeps weakly
+    connected (off-topic) chunks out of the candidate set.
+    """
     if budget <= 0:
         return []
     scores = personalized_pagerank(graph, seed_ids, edge_types, alpha=alpha, steps=steps)
     seeds = set(seed_ids)
-    candidates = [(cid, s) for cid, s in scores.items() if cid not in seeds and s > 0.0]
+    threshold = max(0.0, min_score)
+    candidates = [(cid, s) for cid, s in scores.items() if cid not in seeds and s > threshold]
     candidates.sort(key=lambda p: p[1], reverse=True)
     return [cid for cid, _ in candidates[:budget]]

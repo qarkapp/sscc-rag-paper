@@ -143,7 +143,7 @@ class RetrievalPipeline:
 
         # Personalized PageRank expansion: add structurally-related chunks.
         seeds = [r.chunk_id for r in candidates]
-        added_ids = self.graph.expand(seeds, budget=max(1, k))
+        added_ids = self.graph.expand(seeds, budget=max(1, k)) if self.config.graph.ppr_expand else []
         # Entailment-chain expansion for multi-hop queries.
         if is_multi_hop:
             added_ids = list(dict.fromkeys([*added_ids, *self.graph.entailment_expand(seeds)]))
@@ -167,6 +167,12 @@ class RetrievalPipeline:
             trace.record("graph_expand", added=len(extra))
 
         # GraphSAGE refinement: blend bi-encoder and refined-embedding similarity.
+        # When a cross-encoder rerank follows, the reranker is the authority on the
+        # final ordering; rescoring here would only reshuffle the reranker's input
+        # (and, with near-tied cross-encoder scores, flip tie-breaks off the stronger
+        # retrieval order). So graph rescoring runs only when it is the final scorer.
+        if self.config.rerank.enabled and self.reranker is not None:
+            return candidates
         rescored = self.graph.rescore(query_vector, candidates)
         if rescored is not candidates:
             trace.record("graph_rescore", n=len(rescored))
