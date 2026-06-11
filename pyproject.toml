@@ -83,6 +83,12 @@ plugins = ["pydantic.mypy"]
 files = ["src/sage"]
 
 [[tool.mypy.overrides]]
+# torch ships partial stubs; some tensor methods (e.g. .backward) are untyped.
+# Relax untyped-call checking only in the GNN module that touches them directly.
+module = ["sage.graph.gnn"]
+disallow_untyped_calls = false
+
+[[tool.mypy.overrides]]
 # Third-party libraries without type stubs.
 module = [
     "lancedb.*", "umap.*", "sklearn.*", "chonkie.*", "tree_sitter.*",
@@ -98,4 +104,6 @@ addopts = "-q"
 filterwarnings = [
     # UMAP disables parallelism when seeded; this is intended for reproducibility.
     "ignore:n_jobs value 1 overridden:UserWarning",
+    # torch_geometric still touches the deprecated torch.jit.script path.
+    "ignore:`torch.jit.script`:DeprecationWarning",
 ]

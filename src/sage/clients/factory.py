@@ -9,7 +9,7 @@ from sage.clients.generator import ChatGenerator
 from sage.clients.reranker import RerankClient
 from sage.config.schema import BackendCfg, PipelineConfig
 
-__all__ = ["build_backends", "Backends"]
+__all__ = ["Backends", "build_backends"]
 
 
 def _backend_config(cfg: BackendCfg) -> BackendConfig:
