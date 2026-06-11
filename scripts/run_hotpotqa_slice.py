@@ -35,6 +35,15 @@ N_QUESTIONS = 120
 TOP_K = 10
 PRIMARY = "Success@10"
 
+# Generator-robustness sweep: the ablation matrix is run under each generator.
+# Embeddings and reranking stay on local oMLX; only HyDE/step-back/CRAG generation
+# varies. These are distinct from the HetDocQA question generator (DeepSeek).
+GENERATORS = [
+    ("qwen3.6-35b", "qwen/qwen3.6-35b-a3b"),
+    ("grok-4.20", "x-ai/grok-4.20"),
+    ("gemini-2.5-flash", "google/gemini-2.5-flash"),
+]
+
 
 def load_slice() -> RetrievalDataset:
     from datasets import load_dataset
@@ -83,19 +92,15 @@ async def main() -> None:
 
     cache = CallCache(".cache/hotpot", CacheMode.READ_WRITE)
     embedder = OpenAICompatEmbedder(BackendConfig(provider="omlx", model="bge-m3-mlx-fp16"), cache)
-    generator = ChatGenerator(
-        BackendConfig(provider="omlx", model="gemma-4-26b-a4b-it-4bit"), cache
-    )
     reranker = RerankClient(BackendConfig(provider="omlx", model="jina-reranker-v3-mlx"), cache)
 
     dim = await embedder.probe()
     store = LanceDBStore(".cache/hotpot/db", dim=dim)
     await index_passages(store, embedder, dataset.corpus)
-    print(f"indexed ({time.time() - t0:.0f}s)")
+    print(f"indexed {len(dataset.corpus)} passages ({time.time() - t0:.0f}s)")
 
     base = full(PipelineConfig())
     base.raptor.enabled = False  # passages are single paragraphs; RAPTOR does not apply
-
     ablations = [
         "full",
         "router_keyword",
@@ -105,58 +110,62 @@ async def main() -> None:
         "wo_graph",
         "semantic_only",
     ]
-    outcomes = await run_ablations(
-        ablations,
-        base,
-        dataset,
-        embedder=embedder,
-        store=store,
-        generator=generator,
-        reranker=reranker,
-        top_k=TOP_K,
-        primary_metric=PRIMARY,
-        measures=("nDCG@10", "Success@10", "R@10", "RR@10"),
-    )
-    print(f"ran {len(ablations)} ablations ({time.time() - t0:.0f}s)")
 
-    # Oracle upper bound = per-query max over forced strategies.
-    forced: dict[str, dict[str, float]] = {}
-    for name, strat in [
-        ("semantic", Strategy.SEMANTIC),
-        ("dphf", Strategy.DPHF),
-        ("stepback", Strategy.STEP_BACK),
-    ]:
-        pipe = build_retrieval_pipeline(
-            base, embedder=embedder, store=store, generator=generator, reranker=reranker
+    for label, model in GENERATORS:
+        generator = ChatGenerator(
+            BackendConfig(provider="openrouter", model=model, timeout=120), cache
         )
-        pipe.router = _ForcedRouter(strat)
-        forced[name] = await _per_query(pipe, dataset, PRIMARY)
-    qids = sorted(forced["semantic"])
-    oracle_pq = {
-        q: max(forced["semantic"][q], forced["dphf"][q], forced["stepback"][q]) for q in qids
-    }
-    oracle = AblationOutcome(
-        "router_oracle", {PRIMARY: float(np.mean(list(oracle_pq.values())))}, oracle_pq
-    )
-    outcomes.append(oracle)
-    print(f"computed oracle bound ({time.time() - t0:.0f}s)")
-
-    # Report: metrics + bootstrap CI on the primary metric + significance vs semantic_only.
-    print("\n=== HotpotQA slice ===")
-    print(f"{'config':16} {PRIMARY:>10} {'nDCG@10':>9} {'95% CI':>18}")
-    for o in outcomes:
-        mean, lo, hi = bootstrap_ci(list(o.per_query.values()), seed=0)
-        ndcg = o.metrics.get("nDCG@10", float("nan"))
-        print(
-            f"{o.name:16} {o.metrics.get(PRIMARY, mean):>10.4f} {ndcg:>9.4f}   [{lo:.3f}, {hi:.3f}]"
+        outcomes = await run_ablations(
+            ablations,
+            base,
+            dataset,
+            embedder=embedder,
+            store=store,
+            generator=generator,
+            reranker=reranker,
+            top_k=TOP_K,
+            primary_metric=PRIMARY,
+            measures=("nDCG@10", "Success@10", "R@10", "RR@10"),
         )
 
-    print("\n=== paired vs semantic_only (Holm-corrected) ===")
-    for c in compare_to_reference(outcomes, "semantic_only"):
-        star = "*" if c.significant else " "
-        print(
-            f"{c.name:16} d={c.delta:+.4f} [{c.ci_low:+.3f}, {c.ci_high:+.3f}] p={c.p_value:.4f} {star}"
+        # Oracle upper bound = per-query max over forced strategies.
+        forced: dict[str, dict[str, float]] = {}
+        for sname, strat in [
+            ("semantic", Strategy.SEMANTIC),
+            ("dphf", Strategy.DPHF),
+            ("stepback", Strategy.STEP_BACK),
+        ]:
+            pipe = build_retrieval_pipeline(
+                base, embedder=embedder, store=store, generator=generator, reranker=reranker
+            )
+            pipe.router = _ForcedRouter(strat)
+            forced[sname] = await _per_query(pipe, dataset, PRIMARY)
+        qids = sorted(forced["semantic"])
+        oracle_pq = {
+            q: max(forced["semantic"][q], forced["dphf"][q], forced["stepback"][q]) for q in qids
+        }
+        outcomes.append(
+            AblationOutcome(
+                "router_oracle", {PRIMARY: float(np.mean(list(oracle_pq.values())))}, oracle_pq
+            )
         )
+
+        print(f"\n========== generator: {label} ({model}) ==========")
+        print(f"{'config':16} {PRIMARY:>10} {'nDCG@10':>9} {'95% CI':>18}")
+        for o in outcomes:
+            mean, lo, hi = bootstrap_ci(list(o.per_query.values()), seed=0)
+            ndcg = o.metrics.get("nDCG@10", float("nan"))
+            print(
+                f"{o.name:16} {o.metrics.get(PRIMARY, mean):>10.4f} {ndcg:>9.4f}   [{lo:.3f}, {hi:.3f}]"
+            )
+        print("-- paired vs semantic_only (Holm-corrected) --")
+        for c in compare_to_reference(outcomes, "semantic_only"):
+            star = "*" if c.significant else " "
+            print(
+                f"{c.name:16} d={c.delta:+.4f} [{c.ci_low:+.3f}, {c.ci_high:+.3f}] p={c.p_value:.4f} {star}"
+            )
+        print(f"(elapsed {time.time() - t0:.0f}s)")
+
     print(f"\ntotal {time.time() - t0:.0f}s")
 
 
