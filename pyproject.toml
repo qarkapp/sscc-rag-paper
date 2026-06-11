@@ -1,0 +1,101 @@
+[project]
+name = "sage"
+version = "0.1.0"
+description = "Strategy-Adaptive Graph-Enhanced retrieval: a compositional retrieval-augmented generation framework"
+readme = "README.md"
+license = { text = "Apache-2.0" }
+authors = [
+    { name = "Sadanand Singh" },
+    { name = "Allam S. Reddy" },
+    { name = "Manan Chopra" },
+]
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "pydantic>=2.7",
+    "pyyaml>=6.0",
+    "numpy>=1.26",
+    "openai>=1.40",
+    "httpx>=0.27",
+    "tenacity>=8.3",
+]
+
+[project.optional-dependencies]
+# Heavier stacks are opt-in per phase to keep the base install light and
+# resolution fast. Install with e.g. `uv sync --extra index`.
+index = [
+    "lancedb>=0.13",
+    "pyarrow>=16",
+    "umap-learn>=0.5.6",
+    "scikit-learn>=1.5",
+    "chonkie>=0.4",
+    "tree-sitter>=0.23",
+    "tree-sitter-language-pack>=0.7",
+]
+graph = [
+    "torch>=2.4",
+    "torch-geometric>=2.6",
+    "networkx>=3.3",
+    "sentence-transformers>=3.0",
+]
+eval = [
+    "ir-measures>=0.3.6",
+    "bm25s>=0.2",
+    "datasets>=3.0",
+    "ragas>=0.2",
+    "scipy>=1.13",
+]
+
+[project.scripts]
+sage = "sage.cli:main"
+
+[build-system]
+requires = ["uv_build>=0.11.8,<0.12.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.2",
+    "pytest-asyncio>=0.23",
+    "hypothesis>=6.100",
+    "ruff>=0.6",
+    "mypy>=1.11",
+    "types-pyyaml>=6.0",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF", "N", "C4", "PTH"]
+ignore = ["E501"]  # line length handled by formatter
+
+[tool.ruff.lint.isort]
+known-first-party = ["sage"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_unused_ignores = true
+disallow_untyped_defs = true
+plugins = ["pydantic.mypy"]
+files = ["src/sage"]
+
+[[tool.mypy.overrides]]
+# Third-party libraries without type stubs.
+module = [
+    "lancedb.*", "umap.*", "sklearn.*", "chonkie.*", "tree_sitter.*",
+    "tree_sitter_language_pack.*", "torch", "torch.*", "torch_geometric.*",
+    "networkx.*", "bm25s.*", "ir_measures.*", "ragas.*", "sentence_transformers.*",
+]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+addopts = "-q"
+filterwarnings = [
+    # UMAP disables parallelism when seeded; this is intended for reproducibility.
+    "ignore:n_jobs value 1 overridden:UserWarning",
+]
