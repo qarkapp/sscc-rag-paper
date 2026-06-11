@@ -14,6 +14,7 @@ import time
 from pathlib import Path
 
 from sage.eval.span_mapping import GoldSpan
+from sage.hetdocqa.review import write_review_bundle
 from sage.hetdocqa.schema import QuestionCandidate, QuestionType, SourceDoc
 from sage.hetdocqa.sources import (
     fetch_arxiv_pdf,
@@ -21,14 +22,13 @@ from sage.hetdocqa.sources import (
     fetch_github_file,
     fetch_wikipedia,
 )
-from sage.hetdocqa.review import write_review_bundle
 
 DATA = Path("data/hetdocqa")
 
 
 def refetch(collection_id: str, source_ref: str, filename: str) -> SourceDoc | None:
     """Re-fetch a document from its reproducible source_ref pointer (with one retry)."""
-    for attempt in range(2):
+    for _ in range(2):
         doc: SourceDoc | None = None
         if source_ref.startswith("arxiv://"):
             doc = fetch_arxiv_pdf(collection_id, source_ref[len("arxiv://") :], "arXiv")
@@ -51,7 +51,11 @@ def refetch(collection_id: str, source_ref: str, filename: str) -> SourceDoc | N
 
 
 def main() -> None:
-    rows = [json.loads(line) for line in (DATA / "questions.jsonl").read_text().splitlines() if line.strip()]
+    rows = [
+        json.loads(line)
+        for line in (DATA / "questions.jsonl").read_text().splitlines()
+        if line.strip()
+    ]
     manifest = {d["doc_id"]: d for d in json.loads((DATA / "corpus_manifest.json").read_text())}
 
     needed = {span["document_id"] for r in rows for span in r["gold_spans"]}
@@ -86,7 +90,9 @@ def main() -> None:
     ]
     write_review_bundle(DATA / "review.json", candidates, sources)
     located = sum(1 for rec in json.loads((DATA / "review.json").read_text()) if rec["evidence"])
-    print(f"wrote data/hetdocqa/review.json ({located}/{len(rows)} questions have located evidence)")
+    print(
+        f"wrote data/hetdocqa/review.json ({located}/{len(rows)} questions have located evidence)"
+    )
 
 
 if __name__ == "__main__":

@@ -18,6 +18,7 @@ __all__ = [
     "DEFAULT_MEASURES",
     "exact_match",
     "retrieval_metrics",
+    "retrieval_metrics_per_query",
     "token_f1",
 ]
 
@@ -39,6 +40,18 @@ def retrieval_metrics(
     clean_run = {q: {d: float(s) for d, s in docs.items()} for q, docs in run.items()}
     aggregate = ir_measures.calc_aggregate(parsed, clean_qrels, clean_run)
     return {str(measure): float(value) for measure, value in aggregate.items()}
+
+
+def retrieval_metrics_per_query(qrels: Qrels, run: Run, measure: str) -> dict[str, float]:
+    """Per-query scores for one measure (for bootstrap CIs and paired tests)."""
+    import ir_measures
+
+    parsed = ir_measures.parse_measure(measure)
+    clean_qrels = {q: {d: int(r) for d, r in docs.items()} for q, docs in qrels.items()}
+    clean_run = {q: {d: float(s) for d, s in docs.items()} for q, docs in run.items()}
+    return {
+        m.query_id: float(m.value) for m in ir_measures.iter_calc([parsed], clean_qrels, clean_run)
+    }
 
 
 # -- answer metrics (SQuAD-style normalization) ----------------------------
