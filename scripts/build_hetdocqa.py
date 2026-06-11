@@ -112,6 +112,24 @@ ARXIV_PAPERS = [
     ("2302.04761", "Large language model"),  # Toolformer
     ("2201.08239", "Chatbot"),  # LaMDA
     ("2303.08774", "GPT-4"),  # GPT-4
+    ("1312.5602", "Reinforcement learning"),  # DQN
+    ("1602.01783", "Reinforcement learning"),  # A3C
+    ("1707.06347", "Reinforcement learning"),  # PPO
+    ("1509.02971", "Reinforcement learning"),  # DDPG
+    ("1412.6572", "Adversarial machine learning"),  # Adversarial examples
+    ("1312.6199", "Adversarial machine learning"),  # Intriguing properties
+    ("1611.03530", "Machine learning"),  # Rethinking generalization
+    ("1207.0580", "Deep learning"),  # Dropout
+    ("1502.01852", "Deep learning"),  # PReLU / He init
+    ("1801.06146", "Natural language processing"),  # ULMFiT
+    ("1802.05365", "Natural language processing"),  # ELMo
+    ("1408.5882", "Natural language processing"),  # CNN for sentence classification
+    ("1703.03400", "Meta-learning (computer science)"),  # MAML
+    ("2005.12872", "Object detection"),  # DETR
+    ("2111.06377", "Self-supervised learning"),  # MAE
+    ("2006.11477", "Speech recognition"),  # wav2vec 2.0
+    ("1503.03832", "Facial recognition system"),  # FaceNet
+    ("2010.11934", "Natural language processing"),  # mT5
 ]
 ARXIV_THROTTLE_S = 2.0  # be polite to arXiv between PDF downloads
 
@@ -278,6 +296,34 @@ REPOS = [
         ["README.rst", "networkx/algorithms/shortest_paths/generic.py"],
         "BSD-3-Clause",
         "Graph theory",
+    ),
+    (
+        "transformers",
+        "huggingface",
+        "transformers",
+        "main",
+        ["README.md", "src/transformers/pipelines/base.py"],
+        "Apache-2.0",
+        "Natural language processing",
+    ),
+    ("tqdm", "tqdm", "tqdm", "master", ["README.rst", "tqdm/std.py"], "MIT", "Progress bar"),
+    (
+        "jinja",
+        "pallets",
+        "jinja",
+        "main",
+        ["README.md", "src/jinja2/environment.py"],
+        "BSD-3-Clause",
+        "Template processor",
+    ),
+    (
+        "scikit-image",
+        "scikit-image",
+        "scikit-image",
+        "main",
+        ["README.md", "skimage/filters/thresholding.py"],
+        "BSD-3-Clause",
+        "Digital image processing",
     ),
 ]
 
