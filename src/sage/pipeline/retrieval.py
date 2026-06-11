@@ -29,8 +29,10 @@ from sage.core.types import (
     StrategyDecision,
 )
 from sage.graph.index import GraphContext
+from sage.graph.nli_edges import NliClassifier
 from sage.pipeline.expansion import expand_parent_chunks
 from sage.pipeline.rerank import apply_reranker
+from sage.prefetch.srp import SpeculativeRetrievalPrefetcher
 from sage.raptor.retrieval import raptor_retrieve
 from sage.strategies.fusion import merge_deduplicate
 
@@ -48,6 +50,8 @@ class RetrievalPipeline:
     corrector: Corrector | None = None
     generator: Generator | None = None
     graph: GraphContext | None = None
+    prefetcher: SpeculativeRetrievalPrefetcher | None = None
+    nli_classifier: NliClassifier | None = None
     _graph_built: bool = False
 
     async def run(
@@ -58,6 +62,14 @@ class RetrievalPipeline:
         trace = RetrievalTrace(query=query)
 
         query_vector = await self.embedder.embed_query(query)
+
+        # Speculative prefetch: serve from the buffer on a near-duplicate query.
+        if cfg.prefetch.enabled and self.prefetcher is not None:
+            hit = await self.prefetcher.maybe_hit(query_vector)
+            if hit is not None:
+                trace.record("prefetch_hit", n=len(hit))
+                return hit[:k], trace
+
         decision = await self._route(query, query_vector)
         trace.record("route", strategy=str(decision.strategy), entropy=decision.entropy)
 
@@ -79,7 +91,9 @@ class RetrievalPipeline:
         trace.record("retrieve", n=len(candidates))
 
         if cfg.graph.enabled:
-            candidates = await self._graph_expand(candidates, k, trace)
+            candidates = await self._graph_stage(
+                query_vector, candidates, k, decision.is_multi_hop, trace
+            )
 
         if cfg.rerank.enabled and self.reranker is not None:
             candidates = await apply_reranker(self.reranker, query, candidates, k)
@@ -108,37 +122,55 @@ class RetrievalPipeline:
             )
         return candidates[:k], trace
 
-    async def _graph_expand(
-        self, candidates: list[SearchResult], k: int, trace: RetrievalTrace
+    async def _graph_stage(
+        self,
+        query_vector: np.ndarray,
+        candidates: list[SearchResult],
+        k: int,
+        is_multi_hop: bool,
+        trace: RetrievalTrace,
     ) -> list[SearchResult]:
         if not self._graph_built:
             self.graph = await GraphContext.build(
-                self.store, self.config.graph, seed=self.config.seed
+                self.store,
+                self.config.graph,
+                seed=self.config.seed,
+                nli_classifier=self.nli_classifier,
             )
             self._graph_built = True
         if self.graph is None or not candidates:
             return candidates
+
+        # Personalized PageRank expansion: add structurally-related chunks.
         seeds = [r.chunk_id for r in candidates]
         added_ids = self.graph.expand(seeds, budget=max(1, k))
-        if not added_ids:
-            return candidates
-        rows = await self.store.get_by_ids(added_ids)
-        extra = [
-            SearchResult(
-                chunk_id=row.chunk_id,
-                document_id=row.document_id,
-                content=row.content,
-                relevance_score=0.0,
-                chunk_index=row.chunk_index,
-                level=row.level,
-                score_source=ScoreSource.PPR,
-                filename=row.filename,
-                embedding=row.embedding,
-            )
-            for row in rows
-        ]
-        trace.record("graph_expand", added=len(extra))
-        return merge_deduplicate([candidates, extra])
+        # Entailment-chain expansion for multi-hop queries.
+        if is_multi_hop:
+            added_ids = list(dict.fromkeys([*added_ids, *self.graph.entailment_expand(seeds)]))
+        if added_ids:
+            rows = await self.store.get_by_ids(added_ids)
+            extra = [
+                SearchResult(
+                    chunk_id=row.chunk_id,
+                    document_id=row.document_id,
+                    content=row.content,
+                    relevance_score=0.0,
+                    chunk_index=row.chunk_index,
+                    level=row.level,
+                    score_source=ScoreSource.PPR,
+                    filename=row.filename,
+                    embedding=row.embedding,
+                )
+                for row in rows
+            ]
+            candidates = merge_deduplicate([candidates, extra])
+            trace.record("graph_expand", added=len(extra))
+
+        # GraphSAGE refinement: blend bi-encoder and refined-embedding similarity.
+        rescored = self.graph.rescore(query_vector, candidates)
+        if rescored is not candidates:
+            trace.record("graph_rescore", n=len(rescored))
+        return rescored
 
     async def _route(self, query: str, query_vector: np.ndarray) -> StrategyDecision:
         if not self.config.router.enabled:

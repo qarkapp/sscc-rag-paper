@@ -60,3 +60,31 @@ async def test_graph_disabled_has_no_expand_stage(tmp_path):
     pipeline = build_retrieval_pipeline(cfg, embedder=embedder, store=store)
     _, trace = await pipeline.run("subtopic 2", top_k=3)
     assert trace.last("graph_expand") is None
+
+
+async def test_srp_short_circuits_on_buffer_hit(tmp_path):
+    from sage.config.schema import PrefetchCfg
+    from sage.core.types import SearchResult
+    from sage.prefetch import SpeculativeRetrievalPrefetcher
+
+    embedder = FakeEmbedder(dim=24)
+    store = await _index(tmp_path, embedder)
+
+    async def _retrieve(_query: str) -> list[SearchResult]:
+        return []
+
+    prefetcher = SpeculativeRetrievalPrefetcher(
+        PrefetchCfg(hit_cosine_threshold=0.99), embedder, _retrieve
+    )
+    qvec = await embedder.embed_query("subtopic 2")
+    cached = [SearchResult(chunk_id="cached", document_id="d", content="x", relevance_score=1.0)]
+    prefetcher._buffer.put(qvec, cached)
+
+    cfg = semantic_only(PipelineConfig())
+    cfg.prefetch.enabled = True
+    pipeline = build_retrieval_pipeline(cfg, embedder=embedder, store=store)
+    pipeline.prefetcher = prefetcher
+
+    results, trace = await pipeline.run("subtopic 2", top_k=3)
+    assert trace.last("prefetch_hit") is not None
+    assert results[0].chunk_id == "cached"  # served from the buffer, not retrieval
