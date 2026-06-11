@@ -21,3 +21,4 @@ data/cache/
 *.lance/
 runs/
 data/
+.DS_Store
