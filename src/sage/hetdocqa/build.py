@@ -64,13 +64,21 @@ async def build_candidates(
     generator: Generator,
     validator: Generator,
     embedder: Embedder,
-    per_type: int = 1,
+    per_type: int | dict[QuestionType, int] = 1,
     dedup_threshold: float = 0.9,
     concurrency: int = 8,
     seed: int = 42,
 ) -> list[QuestionCandidate]:
-    """Generate, filter, dedup, and split a candidate pool (concurrently)."""
+    """Generate, filter, dedup, and split a candidate pool (concurrently).
+
+    ``per_type`` is either a single count for every question type or a per-type
+    mapping, which lets a run rebalance the type distribution (e.g. generate more
+    factual/code and fewer thematic questions).
+    """
     semaphore = asyncio.Semaphore(concurrency)
+
+    def _count(qtype: QuestionType) -> int:
+        return per_type[qtype] if isinstance(per_type, dict) else per_type
 
     async def make_one(
         collection: Collection, qtype: QuestionType, i: int
@@ -100,7 +108,7 @@ async def build_candidates(
         make_one(collection, qtype, i)
         for collection in collections
         for qtype in QuestionType
-        for i in range(per_type)
+        for i in range(_count(qtype))
     ]
     candidates = [c for c in await asyncio.gather(*tasks) if c is not None]
 

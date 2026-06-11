@@ -23,6 +23,7 @@ from sage.clients.embedder import OpenAICompatEmbedder
 from sage.clients.generator import ChatGenerator
 from sage.hetdocqa import (
     Collection,
+    QuestionType,
     SourceDoc,
     build_candidates,
     dataset_stats,
@@ -87,6 +88,30 @@ ARXIV_PAPERS = [
     ("1301.3781", "Word embedding"),  # word2vec original
     ("2305.14314", "Large language model"),  # QLoRA
     ("2201.11903", "Large language model"),  # Chain-of-thought
+    ("1409.1556", "Convolutional neural network"),  # VGG
+    ("1512.00567", "Convolutional neural network"),  # Inception
+    ("1608.06993", "Convolutional neural network"),  # DenseNet
+    ("1502.03167", "Batch normalization"),  # BatchNorm
+    ("1607.06450", "Deep learning"),  # Layer Normalization
+    ("1506.01497", "Object detection"),  # Faster R-CNN
+    ("1804.02767", "Object detection"),  # YOLOv3
+    ("1905.11946", "Convolutional neural network"),  # EfficientNet
+    ("2106.09685", "Fine-tuning (deep learning)"),  # LoRA
+    ("2104.08691", "Prompt engineering"),  # Prompt tuning
+    ("2204.02311", "Large language model"),  # PaLM
+    ("2210.11416", "Large language model"),  # Flan
+    ("2211.05100", "Large language model"),  # BLOOM
+    ("2206.07682", "Large language model"),  # Emergent abilities
+    ("1804.07461", "Natural language processing"),  # GLUE
+    ("1905.00537", "Natural language processing"),  # SuperGLUE
+    ("2009.03300", "Machine learning"),  # MMLU
+    ("1903.00161", "Question answering"),  # DROP
+    ("2104.09864", "Transformer (deep learning architecture)"),  # RoPE
+    ("1412.3555", "Recurrent neural network"),  # GRU evaluation
+    ("1410.3916", "Artificial neural network"),  # Memory Networks
+    ("2302.04761", "Large language model"),  # Toolformer
+    ("2201.08239", "Chatbot"),  # LaMDA
+    ("2303.08774", "GPT-4"),  # GPT-4
 ]
 ARXIV_THROTTLE_S = 2.0  # be polite to arXiv between PDF downloads
 
@@ -200,6 +225,60 @@ REPOS = [
         "BSD-3-Clause",
         "Web framework",
     ),
+    (
+        "pytest",
+        "pytest-dev",
+        "pytest",
+        "main",
+        ["README.rst", "src/_pytest/main.py"],
+        "MIT",
+        "Software testing",
+    ),
+    (
+        "scipy",
+        "scipy",
+        "scipy",
+        "main",
+        ["README.rst", "scipy/integrate/_quadpack_py.py"],
+        "BSD-3-Clause",
+        "SciPy",
+    ),
+    (
+        "aiohttp",
+        "aio-libs",
+        "aiohttp",
+        "master",
+        ["README.rst", "aiohttp/client.py"],
+        "Apache-2.0",
+        "HTTP",
+    ),
+    (
+        "poetry",
+        "python-poetry",
+        "poetry",
+        "main",
+        ["README.md", "src/poetry/installation/installer.py"],
+        "MIT",
+        "Package manager",
+    ),
+    (
+        "uvicorn",
+        "encode",
+        "uvicorn",
+        "master",
+        ["README.md", "uvicorn/server.py"],
+        "BSD-3-Clause",
+        "Web server",
+    ),
+    (
+        "networkx",
+        "networkx",
+        "networkx",
+        "main",
+        ["README.rst", "networkx/algorithms/shortest_paths/generic.py"],
+        "BSD-3-Clause",
+        "Graph theory",
+    ),
 ]
 
 # (collection_id, csv_url, name, wiki article)
@@ -305,7 +384,14 @@ async def main() -> None:
         generator=drafter,
         validator=validator,
         embedder=embedder,
-        per_type=4,
+        # Balanced mix: more factual/code, fewer thematic (which is over-represented).
+        per_type={
+            QuestionType.FACTUAL: 5,
+            QuestionType.CODE: 5,
+            QuestionType.CROSS_DOCUMENT: 2,
+            QuestionType.MULTI_HOP: 2,
+            QuestionType.THEMATIC: 1,
+        },
         concurrency=8,
     )
     clean = [c for c in candidates if c.is_clean]
