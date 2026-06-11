@@ -37,6 +37,7 @@ def _schema(dim: int) -> pa.Schema:
             pa.field("filename", pa.string()),
             pa.field("page_number", pa.int32()),
             pa.field("section_name", pa.string()),
+            pa.field("language", pa.string()),
             pa.field("parent_id", pa.string()),
             pa.field("child_ids", pa.list_(pa.string())),
             pa.field("vector", pa.list_(pa.float32(), dim)),
@@ -54,6 +55,7 @@ def _row_to_record(row: StoreRow) -> dict[str, Any]:
         "filename": row.filename,
         "page_number": row.page_number,
         "section_name": row.section_name,
+        "language": row.language,
         "parent_id": row.parent_id,
         "child_ids": list(row.child_ids),
         "vector": np.asarray(row.embedding, dtype=np.float32).tolist(),
@@ -88,6 +90,7 @@ def _record_to_row(rec: dict[str, Any]) -> StoreRow:
         filename=rec.get("filename"),
         page_number=rec.get("page_number"),
         section_name=rec.get("section_name"),
+        language=rec.get("language"),
         parent_id=rec.get("parent_id"),
         child_ids=tuple(rec.get("child_ids") or ()),
     )
@@ -172,3 +175,14 @@ class LanceDBStore:
 
     async def count(self) -> int:
         return await asyncio.to_thread(lambda: self._ensure_table().count_rows())
+
+    async def all_leaf_rows(self) -> list[StoreRow]:
+        """Return every leaf row (level 0), used to build the chunk graph."""
+        return await asyncio.to_thread(self._all_leaf_rows_sync)
+
+    def _all_leaf_rows_sync(self) -> list[StoreRow]:
+        table = self._ensure_table()
+        records = table.search().where("level = 0").limit(table.count_rows()).to_list()
+        rows = [_record_to_row(r) for r in records]
+        rows.sort(key=lambda r: (r.document_id, r.chunk_index))
+        return rows

@@ -21,7 +21,14 @@ from sage.core.protocols import (
     Router,
     VectorStore,
 )
-from sage.core.types import RetrievalTrace, SearchResult, Strategy, StrategyDecision
+from sage.core.types import (
+    RetrievalTrace,
+    ScoreSource,
+    SearchResult,
+    Strategy,
+    StrategyDecision,
+)
+from sage.graph.index import GraphContext
 from sage.pipeline.expansion import expand_parent_chunks
 from sage.pipeline.rerank import apply_reranker
 from sage.raptor.retrieval import raptor_retrieve
@@ -40,6 +47,8 @@ class RetrievalPipeline:
     reranker: Reranker | None = None
     corrector: Corrector | None = None
     generator: Generator | None = None
+    graph: GraphContext | None = None
+    _graph_built: bool = False
 
     async def run(
         self, query: str, top_k: int | None = None
@@ -69,6 +78,9 @@ class RetrievalPipeline:
             candidates = merge_deduplicate([candidates, raptor_hits])
         trace.record("retrieve", n=len(candidates))
 
+        if cfg.graph.enabled:
+            candidates = await self._graph_expand(candidates, k, trace)
+
         if cfg.rerank.enabled and self.reranker is not None:
             candidates = await apply_reranker(self.reranker, query, candidates, k)
             trace.record("rerank", n=len(candidates))
@@ -95,6 +107,38 @@ class RetrievalPipeline:
                 self.store, candidates, cfg.expansion.window_chars
             )
         return candidates[:k], trace
+
+    async def _graph_expand(
+        self, candidates: list[SearchResult], k: int, trace: RetrievalTrace
+    ) -> list[SearchResult]:
+        if not self._graph_built:
+            self.graph = await GraphContext.build(
+                self.store, self.config.graph, seed=self.config.seed
+            )
+            self._graph_built = True
+        if self.graph is None or not candidates:
+            return candidates
+        seeds = [r.chunk_id for r in candidates]
+        added_ids = self.graph.expand(seeds, budget=max(1, k))
+        if not added_ids:
+            return candidates
+        rows = await self.store.get_by_ids(added_ids)
+        extra = [
+            SearchResult(
+                chunk_id=row.chunk_id,
+                document_id=row.document_id,
+                content=row.content,
+                relevance_score=0.0,
+                chunk_index=row.chunk_index,
+                level=row.level,
+                score_source=ScoreSource.PPR,
+                filename=row.filename,
+                embedding=row.embedding,
+            )
+            for row in rows
+        ]
+        trace.record("graph_expand", added=len(extra))
+        return merge_deduplicate([candidates, extra])
 
     async def _route(self, query: str, query_vector: np.ndarray) -> StrategyDecision:
         if not self.config.router.enabled:

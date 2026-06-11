@@ -105,6 +105,7 @@ class IndexingPipeline:
                 filename=filename,
                 page_number=chunk.page_number,
                 section_name=chunk.section_name,
+                language=chunk.language,
             )
             for i, chunk in enumerate(chunks)
         ]

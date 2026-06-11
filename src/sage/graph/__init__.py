@@ -6,6 +6,7 @@ lazily.
 """
 
 from sage.graph.build import EDGE_TYPES, ChunkGraph, build_chunk_graph
+from sage.graph.index import GraphContext
 from sage.graph.nli_edges import (
     EntailmentEdge,
     EntailmentLabel,
@@ -19,6 +20,7 @@ __all__ = [
     "ChunkGraph",
     "EntailmentEdge",
     "EntailmentLabel",
+    "GraphContext",
     "build_chunk_graph",
     "build_entailment_edges",
     "entailment_chains",

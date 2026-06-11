@@ -125,6 +125,7 @@ class StoreRow:
     filename: str | None = None
     page_number: int | None = None
     section_name: str | None = None
+    language: str | None = None
     parent_id: str | None = None
     child_ids: tuple[str, ...] = ()
 

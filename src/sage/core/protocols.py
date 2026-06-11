@@ -119,6 +119,10 @@ class VectorStore(Protocol):
         """Fetch rows (including embeddings) by id."""
         ...
 
+    async def all_leaf_rows(self) -> list[StoreRow]:
+        """Return every leaf row (level 0), e.g. for building the chunk graph."""
+        ...
+
 
 @runtime_checkable
 class Parser(Protocol):
