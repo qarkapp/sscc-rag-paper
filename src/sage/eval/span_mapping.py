@@ -8,7 +8,7 @@ fairness mechanism for comparing systems with different chunk sizes.
 
 from __future__ import annotations
 
-from collections.abc import Sequence
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 
 __all__ = ["ChunkSpan", "GoldSpan", "build_qrels", "relevant_chunk_ids"]
@@ -59,7 +59,7 @@ def relevant_chunk_ids(
 
 
 def build_qrels(
-    gold_by_query: dict[str, Sequence[GoldSpan]],
+    gold_by_query: Mapping[str, Sequence[GoldSpan]],
     chunks: Sequence[ChunkSpan],
     *,
     min_overlap: float = 0.5,
