@@ -94,6 +94,7 @@ module = [
     "lancedb.*", "umap.*", "sklearn.*", "chonkie.*", "tree_sitter.*",
     "tree_sitter_language_pack.*", "torch", "torch.*", "torch_geometric.*",
     "networkx.*", "bm25s.*", "ir_measures.*", "ragas.*", "sentence_transformers.*",
+    "datasets.*",
 ]
 ignore_missing_imports = true
 
@@ -106,4 +107,7 @@ filterwarnings = [
     "ignore:n_jobs value 1 overridden:UserWarning",
     # torch_geometric still touches the deprecated torch.jit.script path.
     "ignore:`torch.jit.script`:DeprecationWarning",
+    # ir_measures uses ast.Num internally (deprecated, removed in 3.14; we run 3.12).
+    "ignore:ast.Num is deprecated:DeprecationWarning",
+    "ignore:Attribute n is deprecated:DeprecationWarning",
 ]
