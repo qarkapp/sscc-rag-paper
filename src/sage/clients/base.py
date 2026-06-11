@@ -8,7 +8,8 @@ Everything else in ``sage`` depends only on the protocols in
 from __future__ import annotations
 
 import os
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from typing import Any
 
 from openai import AsyncOpenAI
 from tenacity import (
@@ -47,6 +48,9 @@ class BackendConfig:
     base_url: str | None = None
     api_key_env: str | None = None
     timeout: float = 120.0
+    # Extra request-body params for OpenAI-compatible backends, e.g. DeepSeek's
+    # {"thinking": {"type": "disabled"}} or {"reasoning_effort": "high"}.
+    extra_body: dict[str, Any] = field(default_factory=dict)
 
     def resolved_base_url(self) -> str:
         return self.base_url or _DEFAULT_BASE_URLS.get(self.provider, _DEFAULT_BASE_URLS["openai"])

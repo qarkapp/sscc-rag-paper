@@ -8,6 +8,7 @@ for a human validation pass.
 
 from __future__ import annotations
 
+import asyncio
 from collections.abc import Sequence
 
 import numpy as np
@@ -65,28 +66,40 @@ async def build_candidates(
     embedder: Embedder,
     per_type: int = 1,
     dedup_threshold: float = 0.9,
+    concurrency: int = 8,
     seed: int = 42,
 ) -> list[QuestionCandidate]:
-    """Generate, filter, dedup, and split a candidate pool."""
-    candidates: list[QuestionCandidate] = []
-    for collection in collections:
+    """Generate, filter, dedup, and split a candidate pool (concurrently)."""
+    semaphore = asyncio.Semaphore(concurrency)
+
+    async def make_one(
+        collection: Collection, qtype: QuestionType, i: int
+    ) -> QuestionCandidate | None:
         docs = docs_by_collection.get(collection.collection_id, [])
         if not docs:
-            continue
-        rng = rng_for(f"hetdocqa-{collection.collection_id}")
-        for qtype in QuestionType:
-            for i in range(per_type):
-                selected = select_documents(docs, qtype, rng)
-                if not selected:
-                    continue
-                qid = f"{collection.collection_id}-{qtype.value}-{i}"
-                candidate = await draft_question(generator, qtype, selected, qid=qid)
-                if candidate is None:
-                    continue
-                await check_answerable_without_context(candidate, validator)
-                if candidate.answerable_without_context is False:
-                    await cross_validate(candidate, selected, validator)
-                candidates.append(candidate)
+            return None
+        # Per-task RNG keeps document selection deterministic and race-free.
+        rng = rng_for(f"hetdocqa-{collection.collection_id}-{qtype.value}-{i}")
+        selected = select_documents(docs, qtype, rng)
+        if not selected:
+            return None
+        qid = f"{collection.collection_id}-{qtype.value}-{i}"
+        async with semaphore:
+            candidate = await draft_question(generator, qtype, selected, qid=qid)
+            if candidate is None:
+                return None
+            await check_answerable_without_context(candidate, validator)
+            if candidate.answerable_without_context is False:
+                await cross_validate(candidate, selected, validator)
+        return candidate
+
+    tasks = [
+        make_one(collection, qtype, i)
+        for collection in collections
+        for qtype in QuestionType
+        for i in range(per_type)
+    ]
+    candidates = [c for c in await asyncio.gather(*tasks) if c is not None]
 
     if candidates:
         embeddings = await embedder.embed_documents([c.question for c in candidates])

@@ -82,7 +82,8 @@ async def draft_question(
         f"Target question type: {qtype}.\n\nDocuments:\n\n{_render_docs(docs)}\n\n"
         "Write the question now."
     )
-    parsed = _extract_json(await generator.complete(_DRAFT_SYSTEM, user, max_tokens=600))
+    # Budgets are generous because reasoning models spend tokens before the answer.
+    parsed = _extract_json(await generator.complete(_DRAFT_SYSTEM, user, max_tokens=2000))
     if not parsed or not parsed.get("question") or not parsed.get("answer"):
         return None
 
@@ -112,7 +113,7 @@ async def check_answerable_without_context(
     candidate: QuestionCandidate, generator: Generator, *, f1_threshold: float = 0.6
 ) -> bool:
     """Set and return whether the question is answerable with no retrieved context."""
-    answer = await generator.complete(_NO_CONTEXT_SYSTEM, candidate.question, max_tokens=64)
+    answer = await generator.complete(_NO_CONTEXT_SYSTEM, candidate.question, max_tokens=400)
     answerable = (
         "unknown" not in answer.lower() and token_f1(answer, candidate.answer) >= f1_threshold
     )
@@ -134,7 +135,7 @@ async def cross_validate(
         f"Question: {candidate.question}\nAnswer: {candidate.answer}\n"
         f"Type: {candidate.qtype}\nEvidence:\n{evidence[:_DOC_BUDGET]}"
     )
-    parsed = _extract_json(await generator.complete(_VALIDATE_SYSTEM, user, max_tokens=120)) or {}
+    parsed = _extract_json(await generator.complete(_VALIDATE_SYSTEM, user, max_tokens=600)) or {}
     verdict = {
         "supported": bool(parsed.get("supported", False)),
         "type_ok": bool(parsed.get("type_ok", False)),

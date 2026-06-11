@@ -45,6 +45,7 @@ class ChatGenerator:
             ],
             max_tokens=max_tokens,
             temperature=temperature,
+            extra_body=self._config.extra_body or None,
         )
         text = resp.choices[0].message.content or ""
         self._cache.put(key, "generate", self._config.provider, self._config.model, text)
@@ -75,6 +76,7 @@ class ChatGenerator:
             max_tokens=max_tokens,
             temperature=temperature,
             stream=True,
+            extra_body=self._config.extra_body or None,
         )
         async for event in stream:
             delta = event.choices[0].delta.content or ""
@@ -89,5 +91,9 @@ class ChatGenerator:
             self._config.provider,
             self._config.model,
             {"system": system, "user": user},
-            {"max_tokens": max_tokens, "temperature": temperature},
+            {
+                "max_tokens": max_tokens,
+                "temperature": temperature,
+                "extra_body": self._config.extra_body or {},
+            },
         )
