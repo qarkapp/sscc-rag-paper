@@ -4,7 +4,8 @@ Pools the context paragraphs of a HotpotQA-distractor sample into one corpus (qr
 = the gold supporting-fact paragraphs per question), indexes with bge-m3 via oMLX,
 and runs the query-time ablation matrix end-to-end (EGR routing, HyDE/step-back,
 RRF, SSCC, cross-encoder rerank, graph expansion) with bootstrap CIs and paired
-tests. Generation uses a fast local oMLX model; everything is cached.
+tests, under several OpenRouter generators (a robustness sweep). Embeddings and
+reranking stay on local oMLX; queries run concurrently and everything is cached.
 
     uv run python scripts/run_hotpotqa_slice.py
 """
@@ -24,12 +25,14 @@ from sage.clients.reranker import RerankClient
 from sage.config import full
 from sage.config.schema import PipelineConfig
 from sage.core.types import StrategyDecision
-from sage.eval.ablate import AblationOutcome, compare_to_reference, run_ablations
+from sage.eval.ablate import AblationOutcome, compare_to_reference, run_ablations, run_dataset
 from sage.eval.dataset import QAExample, RetrievalDataset, index_passages
 from sage.eval.metrics import retrieval_metrics_per_query
 from sage.eval.stats import bootstrap_ci
 from sage.pipeline import build_retrieval_pipeline
 from sage.store import LanceDBStore
+
+_SEM = asyncio.Semaphore(8)
 
 N_QUESTIONS = 120
 TOP_K = 10
@@ -75,10 +78,7 @@ class _ForcedRouter:
 
 
 async def _per_query(pipeline, dataset, metric: str) -> dict[str, float]:  # type: ignore[no-untyped-def]
-    run = {}
-    for ex in dataset.examples:
-        results, _ = await pipeline.run(ex.question, top_k=TOP_K)
-        run[ex.qid] = {r.chunk_id: float(r.relevance_score) for r in results}
+    run = dict(await run_dataset(pipeline, dataset, top_k=TOP_K, semaphore=_SEM))
     qrels = {q: dataset.qrels[q] for q in run if q in dataset.qrels}
     return retrieval_metrics_per_query(qrels, run, metric)
 

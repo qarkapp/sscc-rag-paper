@@ -12,6 +12,8 @@ graph-refined embeddings, and exposes two operations on a retrieved result set:
 
 from __future__ import annotations
 
+import asyncio
+
 import numpy as np
 
 from sage.config.schema import GraphCfg
@@ -23,7 +25,29 @@ from sage.graph.nli_edges import EntailmentEdge, NliClassifier, build_entailment
 from sage.graph.ppr import expand_by_ppr
 from sage.graph.traversal import entailment_chains
 
-__all__ = ["GraphContext"]
+__all__ = ["GraphContext", "get_or_build_graph"]
+
+# Cache built graphs (incl. trained GraphSAGE) so ablations sharing a store + graph
+# config reuse one build instead of re-training the GNN for every configuration.
+_GRAPH_CACHE: dict[str, GraphContext | None] = {}
+_GRAPH_LOCK = asyncio.Lock()
+
+
+async def get_or_build_graph(
+    store: VectorStore,
+    cfg: GraphCfg,
+    *,
+    seed: int = 42,
+    nli_classifier: NliClassifier | None = None,
+) -> GraphContext | None:
+    """Build the graph for (store, cfg) once and reuse it across pipelines."""
+    key = f"{id(store)}:{cfg.model_dump_json()}"
+    async with _GRAPH_LOCK:
+        if key not in _GRAPH_CACHE:
+            _GRAPH_CACHE[key] = await GraphContext.build(
+                store, cfg, seed=seed, nli_classifier=nli_classifier
+            )
+        return _GRAPH_CACHE[key]
 
 
 class GraphContext:

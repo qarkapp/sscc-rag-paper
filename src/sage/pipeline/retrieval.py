@@ -28,7 +28,7 @@ from sage.core.types import (
     Strategy,
     StrategyDecision,
 )
-from sage.graph.index import GraphContext
+from sage.graph.index import GraphContext, get_or_build_graph
 from sage.graph.nli_edges import NliClassifier
 from sage.pipeline.expansion import expand_parent_chunks
 from sage.pipeline.rerank import apply_reranker
@@ -131,7 +131,7 @@ class RetrievalPipeline:
         trace: RetrievalTrace,
     ) -> list[SearchResult]:
         if not self._graph_built:
-            self.graph = await GraphContext.build(
+            self.graph = await get_or_build_graph(
                 self.store,
                 self.config.graph,
                 seed=self.config.seed,

@@ -5,6 +5,7 @@ from sage.eval.ablate import (
     Comparison,
     compare_to_reference,
     run_ablations,
+    run_dataset,
 )
 from sage.eval.dataset import (
     QAExample,
@@ -55,5 +56,6 @@ __all__ = [
     "retrieval_metrics",
     "retrieval_metrics_per_query",
     "run_ablations",
+    "run_dataset",
     "token_f1",
 ]

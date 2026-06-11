@@ -10,6 +10,7 @@ that only change query-time behaviour reuse it.
 
 from __future__ import annotations
 
+import asyncio
 from collections.abc import Sequence
 from dataclasses import dataclass, field
 
@@ -20,8 +21,32 @@ from sage.eval.dataset import RetrievalDataset
 from sage.eval.metrics import retrieval_metrics, retrieval_metrics_per_query
 from sage.eval.stats import holm_bonferroni, paired_bootstrap_test, paired_diff_ci
 from sage.pipeline.assembly import build_retrieval_pipeline
+from sage.pipeline.retrieval import RetrievalPipeline
 
-__all__ = ["AblationOutcome", "Comparison", "compare_to_reference", "run_ablations"]
+__all__ = [
+    "AblationOutcome",
+    "Comparison",
+    "compare_to_reference",
+    "run_ablations",
+    "run_dataset",
+]
+
+
+async def run_dataset(
+    pipeline: RetrievalPipeline,
+    dataset: RetrievalDataset,
+    *,
+    top_k: int,
+    semaphore: asyncio.Semaphore,
+) -> list[tuple[str, dict[str, float]]]:
+    """Run a pipeline over every question concurrently; return (qid, run) pairs."""
+
+    async def one(example: object) -> tuple[str, dict[str, float]]:
+        async with semaphore:
+            results, _ = await pipeline.run(example.question, top_k=top_k)  # type: ignore[attr-defined]
+            return example.qid, {r.chunk_id: float(r.relevance_score) for r in results}  # type: ignore[attr-defined]
+
+    return await asyncio.gather(*(one(ex) for ex in dataset.examples))
 
 
 @dataclass(slots=True)
@@ -54,18 +79,17 @@ async def run_ablations(
     top_k: int = 10,
     primary_metric: str = "nDCG@10",
     measures: Sequence[str] | None = None,
+    concurrency: int = 8,
 ) -> list[AblationOutcome]:
     """Run each named ablation over the dataset and collect metrics + per-query scores."""
     outcomes: list[AblationOutcome] = []
+    semaphore = asyncio.Semaphore(concurrency)
     for name in names:
         cfg = apply(name, base)
         pipeline = build_retrieval_pipeline(
             cfg, embedder=embedder, store=store, generator=generator, reranker=reranker
         )
-        run: dict[str, dict[str, float]] = {}
-        for example in dataset.examples:
-            results, _ = await pipeline.run(example.question, top_k=top_k)
-            run[example.qid] = {r.chunk_id: float(r.relevance_score) for r in results}
+        run = dict(await run_dataset(pipeline, dataset, top_k=top_k, semaphore=semaphore))
         qrels = {q: dataset.qrels[q] for q in run if q in dataset.qrels}
         outcomes.append(
             AblationOutcome(
