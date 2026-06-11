@@ -43,7 +43,7 @@ __all__ = [
 class BackendCfg(BaseModel):
     """Connection settings for an OpenAI-compatible backend (oMLX/OpenRouter)."""
 
-    provider: Literal["omlx", "openrouter", "openai"] = "omlx"
+    provider: Literal["omlx", "openrouter", "openai", "deepseek"] = "omlx"
     model: str = "bge-m3-mlx-fp16"
     base_url: str | None = None
     api_key_env: str | None = None

@@ -28,11 +28,13 @@ _DEFAULT_BASE_URLS = {
     "omlx": "http://127.0.0.1:1234/v1",
     "openrouter": "https://openrouter.ai/api/v1",
     "openai": "https://api.openai.com/v1",
+    "deepseek": "https://api.deepseek.com/v1",
 }
 _DEFAULT_KEY_ENV = {
     "omlx": "OMLX_API_KEY",
     "openrouter": "OPENROUTER_API_KEY",
     "openai": "OPENAI_API_KEY",
+    "deepseek": "DEEPSEEK_API_KEY",
 }
 
 
