@@ -30,6 +30,7 @@ index = [
     "chonkie>=0.4",
     "tree-sitter>=0.23",
     "tree-sitter-language-pack>=0.7",
+    "pymupdf>=1.24",
 ]
 graph = [
     "torch>=2.4",
@@ -85,7 +86,7 @@ files = ["src/sage"]
 [[tool.mypy.overrides]]
 # torch ships partial stubs; some tensor methods (e.g. .backward) are untyped.
 # Relax untyped-call checking only in the GNN module that touches them directly.
-module = ["sage.graph.gnn"]
+module = ["sage.graph.gnn", "sage.hetdocqa.sources"]
 disallow_untyped_calls = false
 
 [[tool.mypy.overrides]]

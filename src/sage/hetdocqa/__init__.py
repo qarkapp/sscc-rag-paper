@@ -1,5 +1,6 @@
 """HetDocQA: construction toolkit for a heterogeneous multi-format retrieval benchmark."""
 
+from sage.hetdocqa.build import build_candidates, select_documents
 from sage.hetdocqa.curate import (
     apply_splits,
     assign_collection_splits,
@@ -19,6 +20,12 @@ from sage.hetdocqa.schema import (
     QuestionType,
     SourceDoc,
 )
+from sage.hetdocqa.sources import (
+    fetch_arxiv_pdf,
+    fetch_csv,
+    fetch_github_file,
+    fetch_wikipedia,
+)
 from sage.hetdocqa.spans import locate_span, snippets_to_spans
 
 __all__ = [
@@ -29,13 +36,19 @@ __all__ = [
     "SourceDoc",
     "apply_splits",
     "assign_collection_splits",
+    "build_candidates",
     "build_datasheet",
     "check_answerable_without_context",
     "cross_validate",
     "dataset_stats",
     "draft_question",
+    "fetch_arxiv_pdf",
+    "fetch_csv",
+    "fetch_github_file",
+    "fetch_wikipedia",
     "locate_span",
     "near_duplicate_mask",
+    "select_documents",
     "snippets_to_spans",
     "to_retrieval_dataset",
     "write_release",
