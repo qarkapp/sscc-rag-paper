@@ -84,7 +84,7 @@ async def main() -> None:
         )
         for r in rows
     ]
-    sources = [s for s in []]  # datasheet license/modality info comes from the manifest if present
+    sources = []  # datasheet license/modality info comes from the manifest if present
     manifest_path = DATA / "corpus_manifest.json"
     if manifest_path.exists():
         from sage.hetdocqa.schema import Modality, SourceDoc
