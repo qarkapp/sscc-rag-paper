@@ -32,7 +32,8 @@ from sage.eval.stats import bootstrap_ci
 from sage.pipeline import build_retrieval_pipeline
 from sage.store import LanceDBStore
 
-_SEM = asyncio.Semaphore(8)
+CONCURRENCY = 4  # modest: avoids overwhelming the OpenRouter endpoint
+_SEM = asyncio.Semaphore(CONCURRENCY)
 
 N_QUESTIONS = 120
 TOP_K = 10
@@ -115,18 +116,27 @@ async def main() -> None:
         generator = ChatGenerator(
             BackendConfig(provider="openrouter", model=model, timeout=120), cache
         )
-        outcomes = await run_ablations(
-            ablations,
-            base,
-            dataset,
-            embedder=embedder,
-            store=store,
-            generator=generator,
-            reranker=reranker,
-            top_k=TOP_K,
-            primary_metric=PRIMARY,
-            measures=("nDCG@10", "Success@10", "R@10", "RR@10"),
-        )
+        print(f"\n>>> generator {label} starting ({time.time() - t0:.0f}s)", flush=True)
+        outcomes = []
+        for name in ablations:
+            (o,) = await run_ablations(
+                [name],
+                base,
+                dataset,
+                embedder=embedder,
+                store=store,
+                generator=generator,
+                reranker=reranker,
+                top_k=TOP_K,
+                primary_metric=PRIMARY,
+                measures=("nDCG@10", "Success@10", "R@10", "RR@10"),
+                concurrency=CONCURRENCY,
+            )
+            outcomes.append(o)
+            print(
+                f"    [{label}/{name}] {PRIMARY}={o.metrics.get(PRIMARY, 0):.3f} ({time.time() - t0:.0f}s)",
+                flush=True,
+            )
 
         # Oracle upper bound = per-query max over forced strategies.
         forced: dict[str, dict[str, float]] = {}

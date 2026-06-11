@@ -38,13 +38,25 @@ async def run_dataset(
     *,
     top_k: int,
     semaphore: asyncio.Semaphore,
+    query_timeout: float = 90.0,
 ) -> list[tuple[str, dict[str, float]]]:
-    """Run a pipeline over every question concurrently; return (qid, run) pairs."""
+    """Run a pipeline over every question concurrently; return (qid, run) pairs.
+
+    Each query is bounded by ``query_timeout`` and failures degrade to an empty
+    result, so one stuck backend call cannot freeze the whole batch.
+    """
 
     async def one(example: object) -> tuple[str, dict[str, float]]:
+        qid: str = example.qid  # type: ignore[attr-defined]
         async with semaphore:
-            results, _ = await pipeline.run(example.question, top_k=top_k)  # type: ignore[attr-defined]
-            return example.qid, {r.chunk_id: float(r.relevance_score) for r in results}  # type: ignore[attr-defined]
+            try:
+                results, _ = await asyncio.wait_for(
+                    pipeline.run(example.question, top_k=top_k),  # type: ignore[attr-defined]
+                    timeout=query_timeout,
+                )
+                return qid, {r.chunk_id: float(r.relevance_score) for r in results}
+            except (TimeoutError, Exception):
+                return qid, {}
 
     return await asyncio.gather(*(one(ex) for ex in dataset.examples))
 
