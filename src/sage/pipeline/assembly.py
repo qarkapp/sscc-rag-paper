@@ -24,9 +24,9 @@ __all__ = ["build_retrieval_pipeline"]
 
 
 def _ensure_components_registered() -> None:
-    # Importing these modules triggers their @register decorators.
-    import sage.correction.crag
-    import sage.routing.keyword
+    # Importing these packages triggers each component's @register decorator.
+    import sage.correction
+    import sage.routing
     import sage.strategies.semantic  # noqa: F401
 
 

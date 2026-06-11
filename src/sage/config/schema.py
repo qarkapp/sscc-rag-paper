@@ -133,9 +133,11 @@ class CorrectionCfg(BaseModel):
     # CRAG (single-threshold baseline), scores on a 1-100 scale.
     crag_upper: float = 60.0
     crag_lower: float = 25.0
-    # SSCC: tau(source) = tau0 * (1 + alpha * 1[source == bi_encoder]).
-    sscc_tau0: float = 0.5
-    sscc_alpha: float = 0.6
+    # SSCC: separate thresholds per score source. Bi-encoder scores are 1/(1+L2) in
+    # (0, 1]; cross-encoder rerank scores are unbounded logits, so they require a
+    # different threshold. Both are fit on a dev split by calibration.
+    sscc_tau_bi: float = 0.5
+    sscc_tau_cross: float = 0.0
     enable_query_rewrite: bool = True
 
 
