@@ -33,6 +33,31 @@ def _truncate(text: str) -> str:
     return text[:_MAX_CHARS]
 
 
+def _get(url: str, *, retries: int = 4, **kwargs: object) -> httpx.Response | None:
+    """GET with retry/backoff on rate limits and transient errors."""
+    import time
+
+    kwargs.setdefault("timeout", _TIMEOUT)
+    kwargs.setdefault("follow_redirects", True)
+    delay = 2.0
+    for attempt in range(retries):
+        try:
+            resp = httpx.get(url, **kwargs)  # type: ignore[arg-type]
+            if resp.status_code == 429 or resp.status_code >= 500:
+                wait = float(resp.headers.get("retry-after", delay))
+                time.sleep(min(wait, 30.0))
+                delay *= 2
+                continue
+            resp.raise_for_status()
+            return resp
+        except httpx.HTTPError:
+            if attempt == retries - 1:
+                return None
+            time.sleep(delay)
+            delay *= 2
+    return None
+
+
 def arxiv_search(query: str, max_results: int = 10) -> list[str]:
     """Return arXiv ids matching a query (via the public arXiv API)."""
     try:
@@ -76,7 +101,6 @@ def fetch_github_file(
 
 
 def fetch_wikipedia(collection_id: str, title: str) -> SourceDoc | None:
-    url = "https://en.wikipedia.org/w/api.php"
     params = {
         "action": "query",
         "prop": "extracts",
@@ -85,14 +109,17 @@ def fetch_wikipedia(collection_id: str, title: str) -> SourceDoc | None:
         "titles": title,
         "redirects": "1",
     }
+    resp = _get(
+        "https://en.wikipedia.org/w/api.php",
+        params=params,
+        headers={"User-Agent": "sage-hetdocqa/0.1"},
+    )
+    if resp is None:
+        return None
     try:
-        resp = httpx.get(
-            url, params=params, timeout=_TIMEOUT, headers={"User-Agent": "sage-hetdocqa/0.1"}
-        )
-        resp.raise_for_status()
         pages = resp.json()["query"]["pages"]
         extract = next(iter(pages.values())).get("extract", "")
-    except (httpx.HTTPError, KeyError, ValueError):
+    except (KeyError, ValueError):
         return None
     if not extract:
         return None
@@ -131,11 +158,10 @@ def fetch_csv(
 
 
 def fetch_arxiv_pdf(collection_id: str, arxiv_id: str, license: str) -> SourceDoc | None:
+    resp = _get(f"https://arxiv.org/pdf/{arxiv_id}")
+    if resp is None:
+        return None
     try:
-        resp = httpx.get(
-            f"https://arxiv.org/pdf/{arxiv_id}", timeout=_TIMEOUT, follow_redirects=True
-        )
-        resp.raise_for_status()
         import pymupdf
 
         with pymupdf.open(stream=resp.content, filetype="pdf") as doc:

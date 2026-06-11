@@ -65,6 +65,28 @@ ARXIV_PAPERS = [
     ("1406.2661", "Generative adversarial network"),  # GAN
     ("1312.6114", "Variational autoencoder"),  # VAE
     ("2403.05530", "Large language model"),  # Gemini 1.5
+    ("2203.02155", "Reinforcement learning from human feedback"),  # InstructGPT
+    ("2302.13971", "Llama (language model)"),  # LLaMA
+    ("2307.09288", "Llama (language model)"),  # LLaMA 2
+    ("1910.10683", "Transformer (deep learning architecture)"),  # T5
+    ("2104.08821", "Word embedding"),  # SimCSE
+    ("2002.08909", "Retrieval-augmented generation"),  # REALM
+    ("2112.04426", "Retrieval-augmented generation"),  # RETRO
+    ("2208.03299", "Retrieval-augmented generation"),  # Atlas
+    ("2007.01282", "Question answering"),  # Fusion-in-Decoder
+    ("1606.05250", "Question answering"),  # SQuAD
+    ("1611.09268", "Information retrieval"),  # MS MARCO
+    ("2104.08663", "Information retrieval"),  # BEIR
+    ("1409.3215", "Recurrent neural network"),  # Seq2Seq
+    ("1508.04025", "Attention (machine learning)"),  # Luong attention
+    ("1503.02531", "Knowledge distillation"),  # Distillation
+    ("2004.05150", "Transformer (deep learning architecture)"),  # Longformer
+    ("2103.00020", "Contrastive learning"),  # CLIP
+    ("2010.11929", "Vision transformer"),  # ViT
+    ("1505.04597", "Convolutional neural network"),  # U-Net
+    ("1301.3781", "Word embedding"),  # word2vec original
+    ("2305.14314", "Large language model"),  # QLoRA
+    ("2201.11903", "Large language model"),  # Chain-of-thought
 ]
 ARXIV_THROTTLE_S = 2.0  # be polite to arXiv between PDF downloads
 
@@ -132,6 +154,51 @@ REPOS = [
         ["README.md", "rich/console.py"],
         "MIT",
         "Terminal emulator",
+    ),
+    (
+        "typer",
+        "fastapi",
+        "typer",
+        "master",
+        ["README.md", "typer/main.py"],
+        "MIT",
+        "Command-line interface",
+    ),
+    (
+        "pandas",
+        "pandas-dev",
+        "pandas",
+        "main",
+        ["README.md", "pandas/core/frame.py"],
+        "BSD-3-Clause",
+        "Pandas (software)",
+    ),
+    (
+        "numpy",
+        "numpy",
+        "numpy",
+        "main",
+        ["README.md", "numpy/__init__.py"],
+        "BSD-3-Clause",
+        "NumPy",
+    ),
+    (
+        "sklearn",
+        "scikit-learn",
+        "scikit-learn",
+        "main",
+        ["README.rst", "sklearn/base.py"],
+        "BSD-3-Clause",
+        "Scikit-learn",
+    ),
+    (
+        "starlette",
+        "encode",
+        "starlette",
+        "master",
+        ["README.md", "starlette/applications.py"],
+        "BSD-3-Clause",
+        "Web framework",
     ),
 ]
 
@@ -238,7 +305,7 @@ async def main() -> None:
         generator=drafter,
         validator=validator,
         embedder=embedder,
-        per_type=8,
+        per_type=4,
         concurrency=8,
     )
     clean = [c for c in candidates if c.is_clean]
