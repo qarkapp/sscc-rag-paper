@@ -27,7 +27,12 @@ from sage.hetdocqa.release import build_datasheet
 from sage.hetdocqa.schema import Collection, QuestionCandidate, QuestionType
 
 DATA = Path("data/hetdocqa")
-BATCHES = ["batch1_validated_questions.jsonl", "batch2_validated_questions.jsonl"]
+BATCHES = [
+    "batch1_validated_questions.jsonl",
+    "batch2_validated_questions.jsonl",
+    "batch3_validated_questions.jsonl",
+    "batch4_validated_questions.jsonl",
+]
 DEDUP_THRESHOLD = 0.93
 
 
