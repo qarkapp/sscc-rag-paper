@@ -168,7 +168,11 @@ class LanceDBStore:
         table = self._ensure_table()
         vec = np.asarray(query_vector, dtype=np.float32).tolist()
         records = table.search(vec).metric("l2").where(where).limit(top_k).to_list()
-        return [_record_to_result(r) for r in records]
+        results = [_record_to_result(r) for r in records]
+        # Deterministic order: equal-distance hits can be returned in process-dependent
+        # order, which would otherwise make the downstream ranking non-reproducible.
+        results.sort(key=lambda r: (-r.relevance_score, r.chunk_id))
+        return results
 
     async def get_by_ids(self, ids: Sequence[str]) -> list[StoreRow]:
         if not ids:

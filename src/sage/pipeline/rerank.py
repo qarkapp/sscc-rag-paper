@@ -19,4 +19,8 @@ async def apply_reranker(
     if not results:
         return results
     ranked = await reranker.rerank(query, [r.content for r in results], top_n)
-    return [results[idx].with_score(score, ScoreSource.CROSS_ENCODER) for idx, score in ranked]
+    reranked = [results[idx].with_score(score, ScoreSource.CROSS_ENCODER) for idx, score in ranked]
+    # Tie-break on chunk_id so equal cross-encoder scores order identically regardless
+    # of the (process-dependent) input order, keeping the top-k reproducible.
+    reranked.sort(key=lambda r: (-r.relevance_score, r.chunk_id))
+    return reranked

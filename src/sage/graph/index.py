@@ -57,14 +57,19 @@ class GraphContext:
         self,
         graph: ChunkGraph,
         cfg: GraphCfg,
-        refined: dict[str, np.ndarray] | None = None,
+        *,
+        seed: int = 42,
         entailment: list[EntailmentEdge] | None = None,
     ) -> None:
         self._graph = graph
         self._cfg = cfg
+        self._seed = seed
         self._edge_types = [e for e in cfg.edges if e in EDGE_TYPES]
         self._base = {cid: graph.embeddings[i] for i, cid in enumerate(graph.chunk_ids)}
-        self._refined = refined or {}
+        # GraphSAGE refinement is trained lazily on first rescore. When a cross-encoder
+        # reranker follows, rescoring is skipped entirely, so the (expensive) GNN training
+        # never runs -- which keeps graph builds and re-runs fast in the common path.
+        self._refined: dict[str, np.ndarray] | None = None
         self._entailment = entailment or []
 
     @classmethod
@@ -93,18 +98,22 @@ class GraphContext:
         embeddings = np.vstack([r.embedding for r in rows])
         graph = build_chunk_graph(chunks, embeddings, semantic_threshold=cfg.semantic_threshold)
 
-        refined: dict[str, np.ndarray] | None = None
-        edge_types = [e for e in cfg.edges if e in EDGE_TYPES]
-        if cfg.gnn_layers > 0 and edge_types:
-            refined_matrix = refine_embeddings(graph, cfg, edge_types, seed=seed)
-            refined = {cid: refined_matrix[i] for i, cid in enumerate(graph.chunk_ids)}
-
         entailment: list[EntailmentEdge] | None = None
         if "nli" in cfg.edges and nli_classifier is not None:
             entailment = build_entailment_edges(
                 chunks, embeddings, nli_classifier, cos_gate=cfg.nli_cos_gate
             )
-        return cls(graph, cfg, refined, entailment)
+        return cls(graph, cfg, seed=seed, entailment=entailment)
+
+    def _ensure_refined(self) -> dict[str, np.ndarray]:
+        """Train (once) and return GraphSAGE-refined embeddings; empty if disabled."""
+        if self._refined is None:
+            if self._cfg.gnn_layers > 0 and self._edge_types:
+                matrix = refine_embeddings(self._graph, self._cfg, self._edge_types, seed=self._seed)
+                self._refined = {cid: matrix[i] for i, cid in enumerate(self._graph.chunk_ids)}
+            else:
+                self._refined = {}
+        return self._refined
 
     def entailment_expand(self, seed_ids: list[str], *, max_hops: int = 3) -> list[str]:
         """Return chunk ids reached along entailment chains from the seeds."""
@@ -135,11 +144,12 @@ class GraphContext:
 
     def rescore(self, query_vector: np.ndarray, results: list[SearchResult]) -> list[SearchResult]:
         """Re-rank results by blending bi-encoder and graph-refined similarity."""
-        if not self._refined:
+        refined_map = self._ensure_refined()
+        if not refined_map:
             return results
         rescored: list[SearchResult] = []
         for r in results:
-            refined = self._refined.get(r.chunk_id)
+            refined = refined_map.get(r.chunk_id)
             base = self._base.get(r.chunk_id)
             if refined is None or base is None:
                 rescored.append(r)
@@ -149,7 +159,7 @@ class GraphContext:
             else:  # project_query / query_proj_head: score directly in the refined space
                 score = _cos(query_vector, refined)
             rescored.append(r.with_score(score, r.score_source))
-        rescored.sort(key=lambda x: x.relevance_score, reverse=True)
+        rescored.sort(key=lambda x: (-x.relevance_score, x.chunk_id))
         return rescored
 
 

@@ -23,7 +23,9 @@ def merge_deduplicate(rankings: Sequence[Sequence[SearchResult]]) -> list[Search
         for result in ranking:
             if result.chunk_id not in seen:
                 seen[result.chunk_id] = result
-    return sorted(seen.values(), key=lambda r: r.relevance_score, reverse=True)
+    # Tie-break on chunk_id so equal scores order identically across processes
+    # (LanceDB may return equal-distance hits in process-dependent order).
+    return sorted(seen.values(), key=lambda r: (-r.relevance_score, r.chunk_id))
 
 
 def reciprocal_rank_fusion(
@@ -40,5 +42,5 @@ def reciprocal_rank_fusion(
         replace(representative[cid], relevance_score=score, score_source=ScoreSource.RRF)
         for cid, score in scores.items()
     ]
-    fused.sort(key=lambda r: r.relevance_score, reverse=True)
+    fused.sort(key=lambda r: (-r.relevance_score, r.chunk_id))
     return fused
