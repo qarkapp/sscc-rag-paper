@@ -92,8 +92,15 @@ async def run_ablations(
     primary_metric: str = "nDCG@10",
     measures: Sequence[str] | None = None,
     concurrency: int = 8,
+    router_override: object | None = None,
 ) -> list[AblationOutcome]:
-    """Run each named ablation over the dataset and collect metrics + per-query scores."""
+    """Run each named ablation over the dataset and collect metrics + per-query scores.
+
+    ``router_override`` (a fitted :class:`~sage.core.protocols.Router`) replaces the
+    config-resolved router on every pipeline, so component ablations hold the routing
+    decision fixed -- isolating the ablated component from routing noise. Ablations that
+    explicitly change the router (the routing triad) should not pass it.
+    """
     outcomes: list[AblationOutcome] = []
     semaphore = asyncio.Semaphore(concurrency)
     for name in names:
@@ -101,6 +108,8 @@ async def run_ablations(
         pipeline = build_retrieval_pipeline(
             cfg, embedder=embedder, store=store, generator=generator, reranker=reranker
         )
+        if router_override is not None:
+            pipeline.router = router_override  # type: ignore[assignment]
         run = dict(await run_dataset(pipeline, dataset, top_k=top_k, semaphore=semaphore))
         qrels = {q: dataset.qrels[q] for q in run if q in dataset.qrels}
         outcomes.append(

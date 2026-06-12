@@ -48,6 +48,28 @@ def refetch_from_ref(collection_id: str, source_ref: str, filename: str):  # typ
     return None
 
 
+def _fetch_text(doc_id: str, meta: dict[str, str], cache_dir: Path | None):  # type: ignore[no-untyped-def]
+    """Fetch a document's (text, filename), caching the raw text on disk.
+
+    The source fetchers hit the network (arXiv throttled at 2s/request); caching the
+    materialized text keeps repeated eval runs fast, reproducible, and offline.
+    """
+    blob = None
+    if cache_dir is not None:
+        safe = doc_id.replace("/", "__").replace(":", "_._")
+        blob = cache_dir / f"{safe}.json"
+        if blob.exists():
+            cached = json.loads(blob.read_text(encoding="utf-8"))
+            return cached["text"], cached["filename"]
+    doc = refetch_from_ref(meta["collection_id"], meta["source_ref"], meta["filename"])
+    if doc is None:
+        return None, None
+    if blob is not None:
+        blob.parent.mkdir(parents=True, exist_ok=True)
+        blob.write_text(json.dumps({"text": doc.text, "filename": doc.filename}), encoding="utf-8")
+    return doc.text, doc.filename
+
+
 def build_hetdocqa_dataset(
     questions_path: str | Path,
     manifest_path: str | Path,
@@ -55,9 +77,15 @@ def build_hetdocqa_dataset(
     chunking: ChunkingCfg | None = None,
     min_overlap: float = 0.5,
     name: str = "hetdocqa",
+    cache_dir: str | Path | None = None,
 ) -> RetrievalDataset:
-    """Materialize a retrieval dataset from validated questions + the corpus manifest."""
+    """Materialize a retrieval dataset from validated questions + the corpus manifest.
+
+    ``cache_dir`` (recommended) caches fetched document text on disk so the corpus is
+    materialized from the network once and reloaded offline thereafter.
+    """
     chunker = ChonkieChunker(chunking or ChunkingCfg())
+    cache_path = Path(cache_dir) if cache_dir is not None else None
     rows = [
         json.loads(line)
         for line in Path(questions_path).read_text(encoding="utf-8").splitlines()
@@ -72,11 +100,11 @@ def build_hetdocqa_dataset(
         meta = manifest.get(doc_id)
         if meta is None:
             continue
-        doc = refetch_from_ref(meta["collection_id"], meta["source_ref"], meta["filename"])
-        if doc is None:
+        text, filename = _fetch_text(doc_id, meta, cache_path)
+        if text is None:
             continue
-        sections = [DocumentSection(doc_id, doc.text, 0, len(doc.text))]
-        for chunk in chunker.chunk(doc_id, sections, doc.filename):
+        sections = [DocumentSection(doc_id, text, 0, len(text))]
+        for chunk in chunker.chunk(doc_id, sections, filename):
             corpus[chunk.chunk_id] = chunk.content
             chunk_spans.append(ChunkSpan(chunk.chunk_id, doc_id, chunk.char_start, chunk.char_end))
 
