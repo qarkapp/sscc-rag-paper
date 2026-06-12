@@ -61,7 +61,9 @@ class CragCorrector:
             "(irrelevant) to 100 (perfectly relevant). Return only the number.\n\n"
             f"Query: {query}\n{snippets}"
         )
-        raw = await generator.complete(_JUDGE_SYSTEM, prompt, max_tokens=8)
+        # >= 16: some providers (OpenAI/Azure) reject a smaller output budget. The judge
+        # only needs to emit a number, so a slightly larger cap is harmless.
+        raw = await generator.complete(_JUDGE_SYSTEM, prompt, max_tokens=16)
         return _parse_score(raw)
 
     async def _rewrite(

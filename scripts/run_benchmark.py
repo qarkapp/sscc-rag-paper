@@ -24,13 +24,25 @@ from sage.clients.reranker import RerankClient
 from sage.config import full
 from sage.config.presets import apply
 from sage.config.schema import PipelineConfig
-from sage.eval.ablate import run_ablations
-from sage.eval.answer import answer_eval
+from sage.core.types import Strategy, StrategyDecision
+from sage.eval.ablate import AblationOutcome, run_ablations, run_dataset
+from sage.eval.answer import AnswerScore, answer_eval
 from sage.eval.benchmarks import load_musique, load_qasper
 from sage.eval.dataset import RetrievalDataset, index_passages
+from sage.eval.metrics import retrieval_metrics_per_query
 from sage.eval.stats import bootstrap_ci, paired_bootstrap_test
 from sage.pipeline import build_retrieval_pipeline
 from sage.store import LanceDBStore
+
+
+class _ForcedRouter:
+    """Router that always returns a fixed strategy, for the oracle upper bound."""
+
+    def __init__(self, strategy: Strategy) -> None:
+        self._strategy = strategy
+
+    async def route(self, query: str, query_vector: object, store: object) -> StrategyDecision:
+        return StrategyDecision(strategy=self._strategy)
 
 CONCURRENCY = 4
 TOP_K = 10
@@ -49,8 +61,7 @@ SAGE_GENERATOR = "openai/gpt-4.1-mini"
 # for a uniform table.
 ABLATIONS = [
     "full",
-    "router_keyword",   # EGR -> keyword heuristic (lower bound)
-    "router_oracle",    # routing upper bound
+    "router_keyword",   # EGR -> keyword heuristic (lower bound); oracle computed below
     "wo_dphf",          # DPHF -> single-path HyDE
     "wo_hyde",          # HyDE -> query-only dense
     "wo_sscc",          # SSCC -> single-threshold CRAG
@@ -107,6 +118,48 @@ async def main() -> None:
         rows.append((abl, o, ans))
         print(f"  [{abl}] nDCG@10={o.metrics.get('nDCG@10', 0):.4f} "
               f"EM={ans.mean_em:.4f} F1={ans.mean_f1:.4f} ({time.time() - t0:.0f}s)", flush=True)
+
+    # Routing oracle = per-query best over forced strategies. The preset OracleRouter is
+    # not a valid bound here (it lacks per-query type labels and collapses to semantic),
+    # so the upper bound is built by forcing each strategy and taking the per-query max.
+    forced = [("semantic", Strategy.SEMANTIC), ("dphf", Strategy.DPHF), ("stepback", Strategy.STEP_BACK)]
+    ndcg_pq: list[dict[str, float]] = []
+    succ_pq: list[dict[str, float]] = []
+    f1_pq: list[dict[str, float]] = []
+    em_pq: list[dict[str, float]] = []
+    for _sname, strat in forced:
+        pipe = build_retrieval_pipeline(
+            base, embedder=embedder, store=store, generator=generator, reranker=reranker
+        )
+        pipe.router = _ForcedRouter(strat)  # type: ignore[assignment]
+        run = dict(
+            await run_dataset(pipe, dataset, top_k=TOP_K, semaphore=asyncio.Semaphore(CONCURRENCY))
+        )
+        qrels = {q: dataset.qrels[q] for q in run if q in dataset.qrels}
+        ndcg_pq.append(retrieval_metrics_per_query(qrels, run, "nDCG@10"))
+        succ_pq.append(retrieval_metrics_per_query(qrels, run, "Success@10"))
+        ans = await answer_eval(pipe, dataset, generator, top_k=ANSWER_K, concurrency=CONCURRENCY)
+        f1_pq.append(ans.f1)
+        em_pq.append(ans.em)
+
+    def _max_pq(dicts: list[dict[str, float]], keys: list[str]) -> dict[str, float]:
+        return {q: max((d.get(q, 0.0) for d in dicts), default=0.0) for q in keys}
+
+    okeys = sorted(rows[0][2].f1)
+    oracle_ndcg = _max_pq(ndcg_pq, okeys)
+    oracle_outcome = AblationOutcome(
+        name="router_oracle",
+        metrics={
+            "nDCG@10": sum(oracle_ndcg.values()) / max(1, len(oracle_ndcg)),
+            "Success@10": sum(_max_pq(succ_pq, okeys).values()) / max(1, len(okeys)),
+        },
+        per_query=oracle_ndcg,
+    )
+    oracle_answer = AnswerScore(em=_max_pq(em_pq, okeys), f1=_max_pq(f1_pq, okeys))
+    rows.insert(2, ("router_oracle", oracle_outcome, oracle_answer))
+    print(f"  [router_oracle] nDCG@10={oracle_outcome.metrics['nDCG@10']:.4f} "
+          f"EM={oracle_answer.mean_em:.4f} F1={oracle_answer.mean_f1:.4f} ({time.time() - t0:.0f}s)",
+          flush=True)
 
     # Significance of answer-F1 vs the full system, per ablation (paired bootstrap).
     full_f1 = next(a for n, _, a in rows if n == "full").f1
