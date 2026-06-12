@@ -104,13 +104,19 @@ class RaptorCfg(BaseModel):
 
 class RouterCfg(BaseModel):
     enabled: bool = True
-    variant: Literal["keyword", "egr", "oracle", "learned"] = "egr"
+    variant: Literal["keyword", "egr", "oracle", "learned", "compositional"] = "egr"
     egr_k: int = 20
     egr_temperature: float = 1.0
     egr_tau_low: float = 1.8
     egr_tau_high: float = 2.6
     calibrate: bool = False
     calibration_set: str | None = None
+    # Compositional router: per-strategy reward regression over query-intent and
+    # anchoring-scale features (+ low-rank query-embedding components). Routes to the
+    # strategy with the highest predicted retrieval reward, trained on a disjoint split.
+    comp_pca_dims: int = 8
+    comp_alpha: float = 1.0
+    comp_folds: int = 5
 
 
 class FusionCfg(BaseModel):
