@@ -1,0 +1,38 @@
+hetdocqa: 762 questions over 3517 passages
+raptor index: +0 summary nodes (2s)
+indexed (2s); evaluating 195 queries (split=dev)
+  forced[semantic] nDCG@10=0.5678 F1=0.4377 (281s)
+  forced[dphf] nDCG@10=0.6980 F1=0.5030 (736s)
+  forced[stepback] nDCG@10=0.5836 F1=0.4544 (1022s)
+  [full] nDCG@10=0.6876 EM=0.2051 F1=0.4888 (1051s)
+  [wo_dphf] nDCG@10=0.6672 EM=0.2000 F1=0.4910 (1352s)
+  [wo_hyde] nDCG@10=0.5678 EM=0.1897 F1=0.4377 (1376s)
+  [wo_sscc] nDCG@10=0.6225 EM=0.1897 F1=0.4602 (1412s)
+  [wo_crag] nDCG@10=0.6876 EM=0.2051 F1=0.4893 (1439s)
+  [wo_rerank] nDCG@10=0.1044 EM=0.0923 F1=0.2764 (1511s)
+  [wo_graph] nDCG@10=0.6879 EM=0.2103 F1=0.4938 (1865s)
+  [wo_raptor] nDCG@10=0.6714 EM=0.2103 F1=0.5034 (2111s)
+  [wo_cross_doc] nDCG@10=0.6876 EM=0.2051 F1=0.4888 (2133s)
+  [semantic_only] nDCG@10=0.2787 EM=0.1282 F1=0.3354 (2158s)
+===== hetdocqa: routing triad (2158s) =====  best-fixed=always-dphf
+router             nDCG@10      EM      F1        F1 95% CI p(F1 vs bf)
+always-semantic     0.5678  0.1897  0.4377   [0.389, 0.488]       0.000
+always-dphf         0.6980  0.2103  0.5030   [0.456, 0.551]       1.000
+always-stepback     0.5836  0.1897  0.4544   [0.408, 0.503]       0.002
+keyword             0.6897  0.2103  0.5001   [0.452, 0.549]       0.373
+egr                 0.5836  0.1897  0.4544   [0.408, 0.503]       0.002
+compositional       0.6876  0.2051  0.4888   [0.441, 0.537]       0.026
+oracle              0.7431  0.2000  0.4825   [0.436, 0.530]       0.069
+===== hetdocqa: component ablation (2158s) =====
+config             nDCG@10   Su@10      EM      F1        F1 95% CI   p(F1)
+full                0.6876   0.908  0.2051  0.4888   [0.441, 0.537]     nan
+wo_dphf             0.6672   0.887  0.2000  0.4910   [0.443, 0.538]   0.836
+wo_hyde             0.5678   0.769  0.1897  0.4377   [0.389, 0.488]   0.001
+wo_sscc             0.6225   0.851  0.1897  0.4602   [0.412, 0.509]   0.007
+wo_crag             0.6876   0.908  0.2051  0.4893   [0.442, 0.538]   0.230
+wo_rerank           0.1044   0.277  0.0923  0.2764   [0.230, 0.325]   0.000
+wo_graph            0.6879   0.913  0.2103  0.4938   [0.446, 0.542]   0.430
+wo_raptor           0.6714   0.872  0.2103  0.5034   [0.457, 0.550]   0.074
+wo_cross_doc        0.6876   0.908  0.2051  0.4888   [0.441, 0.537]   1.000
+semantic_only       0.2787   0.579  0.1282  0.3354   [0.287, 0.384]   0.000
+total 2158s
