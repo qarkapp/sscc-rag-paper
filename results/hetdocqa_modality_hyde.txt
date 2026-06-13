@@ -1,0 +1,12 @@
+dev 195 queries; code/table-evidence 30 (1s)
+-- all dev (195 queries) --
+metric        generic   modality     delta        p
+nDCG@10        0.5969     0.6232   +0.0263    0.025
+R@10           0.6410     0.6927   +0.0517    0.000
+F1             0.4587     0.4800   +0.0213    0.041
+-- code/table-evidence (30 queries) --
+metric        generic   modality     delta        p
+nDCG@10        0.6667     0.7480   +0.0813    0.011
+R@10           0.6611     0.7722   +0.1111    0.003
+F1             0.4669     0.5110   +0.0441    0.036
+total 349s
