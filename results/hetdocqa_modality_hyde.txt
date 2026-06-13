@@ -10,3 +10,16 @@ nDCG@10        0.6667     0.7480   +0.0813    0.011
 R@10           0.6611     0.7722   +0.1111    0.003
 F1             0.4669     0.5110   +0.0441    0.036
 total 349s
+=== FROZEN TEST (split=test, 363q; 'dev' label is cosmetic) ===
+split=test: 363 queries; code/table-evidence 56 (1s)
+-- all dev (363 queries) --
+metric        generic   modality     delta        p
+nDCG@10        0.6239     0.6465   +0.0226    0.004
+R@10           0.6796     0.7078   +0.0281    0.004
+F1             0.5414     0.5354   -0.0060    0.514
+-- code/table-evidence (56 queries) --
+metric        generic   modality     delta        p
+nDCG@10        0.7190     0.7849   +0.0660    0.013
+R@10           0.7429     0.8134   +0.0705    0.010
+F1             0.5352     0.5962   +0.0610    0.011
+total 667s
