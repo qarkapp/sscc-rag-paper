@@ -62,10 +62,19 @@ async def test_index_corpus_builds_cross_document_tier(tmp_path):
     await pipeline.index_corpus(docs)
 
     qvec = await embedder.embed_query("alpha")
-    # Fetch broadly: corpus nodes coexist with per-document summaries at level 1.
-    corpus_hits = await store.search_by_level(qvec, top_k=100, level=1)
-    corpus_nodes = [r for r in corpus_hits if r.document_id == CORPUS_DOCUMENT_ID]
+    # The corpus tier sits one level above the deepest per-document summary, so search
+    # every level and collect the cross-document nodes wherever they landed.
+    corpus_nodes = []
+    per_doc_levels = []
+    for level in range(1, cfg.raptor.max_levels + 2):
+        for r in await store.search_by_level(qvec, top_k=100, level=level):
+            if r.document_id == CORPUS_DOCUMENT_ID:
+                corpus_nodes.append(r)
+            else:
+                per_doc_levels.append(r.level)
     assert corpus_nodes  # a cross-document tier was created
+    # Built above every per-document summary, so tree traversal reaches it first.
+    assert min(n.level for n in corpus_nodes) > max(per_doc_levels, default=0)
 
 
 async def test_indexing_without_raptor(tmp_path):

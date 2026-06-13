@@ -44,8 +44,14 @@ def _dedup(results: list[SearchResult]) -> list[SearchResult]:
     return out
 
 
+# The cross-document corpus tier sits one level above the deepest per-document
+# summary, so retrieval scans one level beyond ``max_levels`` to include it.
+def _top_level(cfg: RaptorCfg) -> int:
+    return cfg.max_levels + 1
+
+
 async def _max_level(store: VectorStore, query_vector: np.ndarray, cfg: RaptorCfg) -> int:
-    for level in range(cfg.max_levels, 0, -1):
+    for level in range(_top_level(cfg), 0, -1):
         hits = await store.search_by_level(query_vector, 1, level)
         if hits:
             return level
@@ -81,7 +87,7 @@ async def _collapsed(
 ) -> list[SearchResult]:
     candidates: list[SearchResult] = []
     fetch = max(top_k * 3, cfg.traversal_top_k)
-    for level in range(cfg.max_levels + 1):
+    for level in range(_top_level(cfg) + 1):
         candidates.extend(await store.search_by_level(query_vector, fetch, level))
     ranked = _dedup(candidates)
     return select_within_budget(ranked, cfg.retrieval_token_budget)

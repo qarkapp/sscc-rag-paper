@@ -55,6 +55,11 @@ async def build_cross_document_tier(
         return []  # nothing to bridge across
 
     cache = cached_summaries or {}
+    # The corpus tier sits *above* every per-document summary, so tree-traversal
+    # retrieval (which starts at the highest level and descends) visits it first.
+    # Placing it at a fixed low level would orphan it below the per-doc trees -- it
+    # would never be reached by traversal nor win a flat similarity ranking.
+    base_level = max(r.level for r in doc_top_summaries) + 1
     embeddings = np.vstack([r.embedding for r in doc_top_summaries])
     clusters = hierarchical_cluster(embeddings, cfg=cfg, seed=seed)
     semaphore = asyncio.Semaphore(concurrency)
@@ -67,7 +72,7 @@ async def build_cross_document_tier(
         async with semaphore:
             text = await summarize_cluster(
                 [doc_top_summaries[i].content for i in members],
-                level=2,
+                level=base_level,
                 generator=generator,
             )
         embedding = (await embedder.embed_documents([text]))[0]
@@ -77,7 +82,7 @@ async def build_cross_document_tier(
             chunk_index=idx,
             content=text,
             embedding=embedding,
-            level=1,
+            level=base_level,
             child_ids=tuple(member_ids),
         )
 
