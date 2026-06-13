@@ -75,8 +75,10 @@ _LABELS = ["semantic", "dphf", "stepback"]
 # the triad, so no router_* rows here; the router is held fixed at compositional.
 ABLATIONS = [
     "full",
-    "wo_dphf",        # DPHF -> single-path HyDE
-    "wo_hyde",        # HyDE -> query-only dense
+    "wo_dphf",            # DPHF -> single-path HyDE
+    "wo_hyde",            # HyDE -> query-only dense
+    "wo_modality_hyde",   # modality-aware HyDE -> single generic prose hypothetical
+    "hyde_multi_prose",   # control: same hypothetical count, all prose (ensemble effect)
     "wo_sscc",        # SSCC -> single-threshold CRAG
     "wo_crag",        # correction off entirely
     "wo_rerank",      # cross-encoder off

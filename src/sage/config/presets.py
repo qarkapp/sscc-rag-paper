@@ -32,6 +32,7 @@ def full(cfg: PipelineConfig) -> PipelineConfig:
     out = _copy(cfg)
     out.router.variant = "egr"
     out.fusion.variant = "rrf"
+    out.fusion.hyde_expansion = "modality"
     out.correction.variant = "sscc"
     out.graph.enabled = True
     out.raptor.enabled = True
@@ -116,6 +117,11 @@ ABLATIONS: dict[str, Preset] = {
     # keeping rerank/correction/graph on. Isolates the HyDE contribution; the router
     # itself is ablated separately by the routing triad.
     "wo_hyde": _set(**{"router.enabled": False}),
+    # Modality-aware HyDE: "wo" drops back to a single generic prose hypothetical;
+    # "multi_prose" is the same-count diverse-prose ensemble control (isolates the
+    # modality effect from the multi-hypothesis effect).
+    "wo_modality_hyde": _set(**{"fusion.hyde_expansion": "none"}),
+    "hyde_multi_prose": _set(**{"fusion.hyde_expansion": "multi_prose"}),
     "wo_sscc": _set(**{"correction.variant": "crag"}),
     "wo_crag": _set(**{"correction.enabled": False}),
     "wo_rerank": _set(**{"rerank.enabled": False}),

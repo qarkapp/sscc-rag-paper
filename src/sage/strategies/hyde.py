@@ -45,6 +45,9 @@ class HydeStrategy:
         if generator is None:  # no generator -> fall back to dense search
             return await store.search(query_vector, top_k)
 
+        if self._fusion.hyde_expansion != "none":
+            return await self._expanded(query, query_vector, store, embedder, generator, top_k)
+
         hypothesis = await generator.complete(HYDE_SYSTEM, f"Question: {query}")
         hypo_vector = await embedder.embed_query(hypothesis)
         hypo_results = await store.search(hypo_vector, top_k)
@@ -55,3 +58,34 @@ class HydeStrategy:
         if self._fusion.variant == "rrf":
             return reciprocal_rank_fusion([query_results, hypo_results], k=self._fusion.rrf_k)
         return merge_deduplicate([query_results, hypo_results])
+
+    async def _expanded(
+        self,
+        query: str,
+        query_vector: np.ndarray,
+        store: VectorStore,
+        embedder: Embedder,
+        generator: Generator,
+        top_k: int,
+    ) -> list[SearchResult]:
+        """Multi-hypothetical HyDE: union the query path with one path per hypothetical.
+
+        ``modality`` uses one hypothetical per content modality (the method); ``multi_prose``
+        uses the same number of prose hypotheticals (the ensemble control).
+        """
+        from sage.strategies.modality_hyde import modality_hypotheticals, prose_hypotheticals
+
+        if self._fusion.hyde_expansion == "modality":
+            texts = list(
+                (await modality_hypotheticals(
+                    query, generator, modalities=self._fusion.modality_kinds
+                )).values()
+            )
+        else:
+            texts = await prose_hypotheticals(
+                query, generator, n=len(self._fusion.modality_kinds)
+            )
+        pools = [await store.search(query_vector, top_k)]
+        for text in texts:
+            pools.append(await store.search(await embedder.embed_query(text), top_k))
+        return merge_deduplicate(pools)

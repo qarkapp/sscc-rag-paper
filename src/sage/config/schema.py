@@ -125,6 +125,12 @@ class FusionCfg(BaseModel):
     # fusion (DPHF).
     variant: Literal["single", "merge_dedup", "rrf"] = "rrf"
     rrf_k: int = 60
+    # Modality-aware HyDE: generate one hypothetical document per content modality and
+    # union their retrievals, so code/table evidence is surfaced (not just prose). The
+    # "multi_prose" control generates ``modality_count`` prose hypotheticals instead, to
+    # separate the modality effect from the multi-hypothesis (ensemble) effect.
+    hyde_expansion: Literal["none", "modality", "multi_prose"] = "none"
+    modality_kinds: tuple[str, ...] = ("prose", "code", "table")
 
 
 class RerankCfg(BaseModel):

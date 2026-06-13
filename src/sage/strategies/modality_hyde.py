@@ -15,7 +15,17 @@ import asyncio
 
 from sage.core.protocols import Generator
 
-__all__ = ["MODALITY_SYSTEM", "modality_hypotheticals"]
+__all__ = ["MODALITY_SYSTEM", "modality_hypotheticals", "prose_hypotheticals"]
+
+# Distinct prose framings for the multi-prose control: same hypothetical count as the
+# modality arm, all prose, so the modality effect is separated from the ensemble effect.
+_PROSE_FRAMINGS = (
+    "write a concise, factual passage that directly answers it",
+    "write a detailed explanatory passage that answers it, naming specifics",
+    "write a passage stating the key facts, figures, and entities needed to answer it",
+    "write a background passage that situates and then answers it",
+    "write a passage answering it from the perspective of the source document",
+)
 
 # One generation system prompt per structurally-distinct modality (markdown / pdf read
 # as prose). Each asks for a short hypothetical document in that modality's form.
@@ -48,3 +58,18 @@ async def modality_hypotheticals(
 
     pairs = await asyncio.gather(*(_one(m) for m in modalities))
     return {m: t for m, t in pairs if t.strip()}
+
+
+async def prose_hypotheticals(query: str, generator: Generator, *, n: int) -> list[str]:
+    """Generate ``n`` distinct *prose* hypotheticals (the multi-prose ensemble control).
+
+    Same hypothetical count as the modality arm but all prose, so any difference is
+    attributable to modality typing rather than to having multiple hypotheses.
+    """
+
+    async def _one(framing: str) -> str:
+        system = f"Given a question, {framing}. Be specific and output only the passage."
+        return await generator.complete(system, f"Question: {query}", max_tokens=256)
+
+    texts = await asyncio.gather(*(_one(f) for f in _PROSE_FRAMINGS[:n]))
+    return [t for t in texts if t.strip()]
