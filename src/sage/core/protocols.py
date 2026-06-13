@@ -123,6 +123,10 @@ class VectorStore(Protocol):
         """Return every leaf row (level 0), e.g. for building the chunk graph."""
         ...
 
+    async def count(self) -> int:
+        """Total number of stored rows across all levels."""
+        ...
+
 
 @runtime_checkable
 class Parser(Protocol):

@@ -37,7 +37,7 @@ from sage.core.types import Strategy, StrategyDecision
 from sage.eval.ablate import AblationOutcome, run_ablations, run_dataset
 from sage.eval.answer import AnswerScore, answer_eval
 from sage.eval.benchmarks import load_musique, load_qasper
-from sage.eval.dataset import RetrievalDataset, index_passages
+from sage.eval.dataset import RetrievalDataset, build_raptor_index, index_passages
 from sage.eval.metrics import retrieval_metrics_per_query
 from sage.eval.stats import bootstrap_ci, paired_bootstrap_test
 from sage.hetdocqa.eval_loader import build_hetdocqa_dataset
@@ -59,9 +59,12 @@ class _ForcedRouter:
         return StrategyDecision(strategy=self._strategy)
 
 
-CONCURRENCY = 4
+CONCURRENCY = 8
 TOP_K = 10
 ANSWER_K = 5
+# Ablations/sweeps run on the dev split; the test split is reserved for the final
+# frozen run (no test-set tuning). Other benchmarks have no split metadata -> all.
+ABLATION_SPLIT = "dev"
 SAGE_GENERATOR = "openai/gpt-4.1-mini"
 
 # Forced first-stage strategies the routers choose among (DPHF == dual-path HyDE).
@@ -99,6 +102,18 @@ def _load(name: str) -> tuple[RetrievalDataset, bool]:
     raise SystemExit(f"unknown benchmark {name!r}; choose musique|qasper|hetdocqa")
 
 
+def _subset_split(dataset: RetrievalDataset, split: str) -> RetrievalDataset:
+    """Keep only queries in ``split`` (the full corpus stays, as distractors)."""
+    examples = [ex for ex in dataset.examples if ex.metadata.get("split") == split]
+    if not examples:
+        return dataset  # no split metadata (musique/qasper): use everything
+    qids = {ex.qid for ex in examples}
+    qrels = {q: r for q, r in dataset.qrels.items() if q in qids}
+    return RetrievalDataset(
+        name=f"{dataset.name}-{split}", examples=examples, corpus=dataset.corpus, qrels=qrels
+    )
+
+
 def _kw_label(strategy: Strategy) -> str:
     if strategy is Strategy.SEMANTIC:
         return "semantic"
@@ -125,12 +140,19 @@ async def main() -> None:
     )
     dim = await embedder.probe()
     store = LanceDBStore(f".cache/{name}/db", dim=dim)
-    await index_passages(store, embedder, dataset.corpus)
-    print(f"indexed ({time.time() - t0:.0f}s)")
-
     base = full(PipelineConfig())
     base.raptor.enabled = raptor_on
     rcfg = base.router
+
+    await index_passages(store, embedder, dataset.corpus)
+    if raptor_on:
+        n = await build_raptor_index(store, embedder, generator, base.raptor, seed=base.seed)
+        print(f"raptor index: +{n} summary nodes ({time.time() - t0:.0f}s)", flush=True)
+    # Ablate on the dev split only (full corpus kept as distractors); test reserved.
+    dataset = _subset_split(dataset, ABLATION_SPLIT)
+    print(f"indexed ({time.time() - t0:.0f}s); evaluating {len(dataset.examples)} "
+          f"queries (split={ABLATION_SPLIT if dataset.name.endswith(ABLATION_SPLIT) else 'all'})")
+
     qids = [ex.qid for ex in dataset.examples]
     qtext = {ex.qid: ex.question for ex in dataset.examples}
 

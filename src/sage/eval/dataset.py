@@ -14,10 +14,17 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-from sage.core.protocols import Embedder, VectorStore
+from sage.core.protocols import Embedder, Generator, VectorStore
 from sage.core.types import StoreRow
 
-__all__ = ["QAExample", "RetrievalDataset", "index_passages", "load_beir", "load_jsonl"]
+__all__ = [
+    "QAExample",
+    "RetrievalDataset",
+    "build_raptor_index",
+    "index_passages",
+    "load_beir",
+    "load_jsonl",
+]
 
 
 @dataclass(frozen=True, slots=True)
@@ -59,6 +66,62 @@ async def index_passages(
                 for k, pid in enumerate(batch)
             ]
         )
+
+
+async def build_raptor_index(
+    store: VectorStore,
+    embedder: Embedder,
+    generator: Generator,
+    cfg: object,
+    *,
+    seed: int = 42,
+) -> int:
+    """Build per-document RAPTOR trees + cross-doc tier over already-indexed leaves.
+
+    The benchmark corpus is flat (one leaf per passage); a passage id is ``doc:idx``,
+    so leaves are grouped by their source document, a tree is built per document, and a
+    cross-document tier is built over the per-document top summaries. Idempotent: a
+    no-op if summary levels already exist in the (persistent) store. Returns the number
+    of summary nodes added.
+    """
+    from collections import defaultdict
+
+    from sage.raptor.cross_doc import build_cross_document_tier
+    from sage.raptor.tree import build_tree
+
+    leaves = await store.all_leaf_rows()
+    if not leaves or await store.count() > len(leaves):
+        return 0  # nothing to index, or a tree already exists
+
+    by_doc: dict[str, list[StoreRow]] = defaultdict(list)
+    for row in leaves:
+        by_doc[row.chunk_id.rsplit(":", 1)[0]].append(row)
+
+    top_nodes: list[StoreRow] = []
+    n_summaries = 0
+    for doc_id, doc_leaves in by_doc.items():
+        summaries = await build_tree(
+            sorted(doc_leaves, key=lambda r: r.chunk_id),
+            document_id=doc_id,
+            embedder=embedder,
+            generator=generator,
+            store=store,
+            cfg=cfg,  # type: ignore[arg-type]
+            seed=seed,
+        )
+        n_summaries += len(summaries)
+        if summaries:
+            top_level = max(s.level for s in summaries)
+            top_nodes.extend(s for s in summaries if s.level == top_level)
+        else:
+            top_nodes.extend(doc_leaves)  # too small to summarize: represent by leaves
+
+    if getattr(cfg, "cross_doc", False) and top_nodes:
+        await build_cross_document_tier(
+            top_nodes, embedder=embedder, generator=generator, store=store,
+            cfg=cfg, seed=seed,  # type: ignore[arg-type]
+        )
+    return n_summaries
 
 
 def load_jsonl(
