@@ -96,7 +96,12 @@ class GraphContext:
             for r in rows
         ]
         embeddings = np.vstack([r.embedding for r in rows])
-        graph = build_chunk_graph(chunks, embeddings, semantic_threshold=cfg.semantic_threshold)
+        graph = build_chunk_graph(
+            chunks,
+            embeddings,
+            semantic_threshold=cfg.semantic_threshold,
+            semantic_max_degree=cfg.semantic_max_degree,
+        )
 
         entailment: list[EntailmentEdge] | None = None
         if "nli" in cfg.edges and nli_classifier is not None:

@@ -151,6 +151,10 @@ class GraphCfg(BaseModel):
     enabled: bool = False
     edges: list[EdgeType] = Field(default_factory=lambda: list(_DEFAULT_EDGES))
     semantic_threshold: float = 0.7
+    # Cap semantic edges to each node's top-k neighbours (a kNN similarity graph), so
+    # edge count is O(k*n) rather than O(n^2). Bounds graph memory and GNN training cost
+    # on large corpora; <=0 keeps every above-threshold pair (the dense graph).
+    semantic_max_degree: int = 16
     gnn_layers: int = 2
     gnn_hidden: int = 128
     gnn_objective: Literal["graphsage_neighbor", "dgi"] = "graphsage_neighbor"

@@ -67,14 +67,18 @@ def _undirected(i: int, j: int) -> tuple[int, int]:
 
 
 def build_chunk_graph(
-    chunks: Sequence[Chunk], embeddings: np.ndarray, *, semantic_threshold: float = 0.7
+    chunks: Sequence[Chunk],
+    embeddings: np.ndarray,
+    *,
+    semantic_threshold: float = 0.7,
+    semantic_max_degree: int = 16,
 ) -> ChunkGraph:
     """Construct a typed chunk graph from chunks and their embeddings."""
     chunk_ids = [c.chunk_id for c in chunks]
     graph = ChunkGraph(chunk_ids=chunk_ids, embeddings=np.asarray(embeddings))
     graph.edges = {
         "sequential": _sequential_edges(chunks),
-        "semantic": _semantic_edges(embeddings, semantic_threshold),
+        "semantic": _semantic_edges(embeddings, semantic_threshold, max_degree=semantic_max_degree),
         "xref": _xref_edges(chunks),
         "ast": _ast_edges(chunks),
     }
@@ -93,16 +97,30 @@ def _sequential_edges(chunks: Sequence[Chunk]) -> set[tuple[int, int]]:
     return edges
 
 
-def _semantic_edges(embeddings: np.ndarray, threshold: float) -> set[tuple[int, int]]:
+def _semantic_edges(
+    embeddings: np.ndarray, threshold: float, *, max_degree: int = 16
+) -> set[tuple[int, int]]:
     n = embeddings.shape[0]
     if n < 2:
         return set()
     norm = embeddings / (np.linalg.norm(embeddings, axis=1, keepdims=True) + 1e-12)
     sims = norm @ norm.T
-    edges: set[tuple[int, int]] = set()
-    rows, cols = np.where(np.triu(sims, k=1) > threshold)
-    for i, j in zip(rows.tolist(), cols.tolist(), strict=True):
-        edges.add((int(i), int(j)))
+    if max_degree <= 0:
+        edges: set[tuple[int, int]] = set()
+        rows, cols = np.where(np.triu(sims, k=1) > threshold)
+        for i, j in zip(rows.tolist(), cols.tolist(), strict=True):
+            edges.add((int(i), int(j)))
+        return edges
+    # kNN graph: keep each node's top-``max_degree`` above-threshold neighbours, so the
+    # edge count is O(k*n) instead of O(n^2). The union is symmetric (undirected).
+    np.fill_diagonal(sims, -np.inf)
+    k = min(max_degree, n - 1)
+    topk = np.argpartition(-sims, kth=k - 1, axis=1)[:, :k]
+    edges = set()
+    for i in range(n):
+        for j in topk[i].tolist():
+            if sims[i, j] > threshold:
+                edges.add(_undirected(i, int(j)))
     return edges
 
 
