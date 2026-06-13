@@ -38,6 +38,9 @@ class ChunkGraph:
     chunk_ids: list[str]
     embeddings: np.ndarray
     edges: dict[str, set[tuple[int, int]]] = field(default_factory=dict)
+    # Memoized per-(edge-type-set) sparse transition matrix + index map for PPR, so
+    # repeated query-time expansions reuse one build instead of reconstructing it.
+    _ppr_cache: dict[tuple[str, ...], object] = field(default_factory=dict, repr=False)
 
     @property
     def index_of(self) -> dict[str, int]:
