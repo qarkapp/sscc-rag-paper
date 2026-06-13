@@ -59,10 +59,21 @@ async def raptor_retrieve(
     cfg: RaptorCfg,
     top_k: int,
 ) -> list[SearchResult]:
-    """Retrieve from the RAPTOR tree using the configured mode."""
+    """Retrieve from the RAPTOR tree using the configured mode.
+
+    With ``cfg.cross_doc`` disabled, corpus-level (cross-document) nodes are excluded
+    from the results, so the ``wo_cross_doc`` ablation actually removes the tier at
+    retrieval time rather than only skipping its construction.
+    """
     if cfg.retrieval_mode == "collapsed":
-        return await _collapsed(store, query_vector, cfg=cfg, top_k=top_k)
-    return await _traversal(store, query_vector, cfg=cfg, top_k=top_k)
+        results = await _collapsed(store, query_vector, cfg=cfg, top_k=top_k)
+    else:
+        results = await _traversal(store, query_vector, cfg=cfg, top_k=top_k)
+    if not cfg.cross_doc:
+        from sage.raptor.cross_doc import CORPUS_DOCUMENT_ID
+
+        results = [r for r in results if not r.chunk_id.startswith(CORPUS_DOCUMENT_ID)]
+    return results
 
 
 async def _collapsed(

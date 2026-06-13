@@ -128,6 +128,7 @@ def _mean(d: dict[str, float], qids: list[str]) -> float:
 
 async def main() -> None:
     name = sys.argv[1] if len(sys.argv) > 1 else "musique"
+    split = sys.argv[2] if len(sys.argv) > 2 else ABLATION_SPLIT
     t0 = time.time()
     dataset, raptor_on = _load(name)
     print(f"{name}: {len(dataset.examples)} questions over {len(dataset.corpus)} passages")
@@ -148,10 +149,11 @@ async def main() -> None:
     if raptor_on:
         n = await build_raptor_index(store, embedder, generator, base.raptor, seed=base.seed)
         print(f"raptor index: +{n} summary nodes ({time.time() - t0:.0f}s)", flush=True)
-    # Ablate on the dev split only (full corpus kept as distractors); test reserved.
-    dataset = _subset_split(dataset, ABLATION_SPLIT)
+    # Evaluate on one split (full corpus kept as distractors). Dev for development;
+    # the frozen test split is run exactly once for the final numbers.
+    dataset = _subset_split(dataset, split)
     print(f"indexed ({time.time() - t0:.0f}s); evaluating {len(dataset.examples)} "
-          f"queries (split={ABLATION_SPLIT if dataset.name.endswith(ABLATION_SPLIT) else 'all'})")
+          f"queries (split={split if dataset.name.endswith(split) else 'all'})")
 
     qids = [ex.qid for ex in dataset.examples]
     qtext = {ex.qid: ex.question for ex in dataset.examples}
