@@ -28,7 +28,7 @@ def fig_routing_degeneracy(data: dict, name: str) -> None:
     dists = {q: np.sort(np.asarray(data["knn_distances"][q])) for q in qids}
     labels = data["labels"]
 
-    fig, axes = plt.subplots(1, 3, figsize=(fs.WIDE, 2.35))
+    fig, axes = plt.subplots(1, 3, figsize=(fs.WIDE, 2.55))
 
     # (a) kNN distance profiles are near-flat -> softmax(-d/T) is ~uniform.
     ax = axes[0]
@@ -86,12 +86,13 @@ def fig_routing_degeneracy(data: dict, name: str) -> None:
     axc.set_title(r"(b) Entropy pinned to the $\log K$ ceiling", loc="left")
 
     # zoomed distribution near the ceiling.
-    axz.hist(H, bins=np.linspace(H.min() - 0.0008, logk + 0.0008, 30), color=fs.INK, zorder=3)
-    axz.axvline(logk, color=fs.ACCENT, lw=1.1, ls="--", zorder=4)
-    axz.text(logk - 0.0006, axz.get_ylim()[1] * 0.92, r"$\log K$", color=fs.ACCENT,
-             fontsize=6.5, va="top", ha="right")
-    axz.text(0.04, 0.95, fr"$\bar H/\log K={H.mean()/logk:.3f}$" + "\n"
-             + fr"$\sigma_H={H.std():.1e}$" + "\n" + f"{100*n_sb/len(qids):.0f}% $\\to$ step-back",
+    axz.hist(H, bins=np.linspace(H.min() - 0.0008, logk + 0.0008, 30),
+             color=fs.BAR, edgecolor="white", linewidth=0.3, zorder=3)
+    axz.axvline(logk, color=fs.ACCENT, lw=1.1, ls=(0, (3, 2)), zorder=4)
+    fs.halo(axz.text(logk - 0.00012, axz.get_ylim()[1] * 0.99, r"$\log K$", color=fs.ACCENT,
+                     fontsize=6.8, va="top", ha="right", zorder=5))
+    axz.text(0.04, 0.96, fr"$\sigma_H={fs.sci(H.std())}$" + "\n"
+             + f"{100 * n_sb / len(qids):.0f}% routed $\\to$ step-back",
              transform=axz.transAxes, fontsize=6.8, va="top", ha="left", color=fs.INK)
     axz.set_xlim(H.min() - 0.0008, logk + 0.0010)
     axz.set_xlabel("routing entropy $H$ (zoom)")
@@ -116,8 +117,10 @@ def fig_routing_degeneracy(data: dict, name: str) -> None:
     grand = H.mean()
     between = sum(len(g) * (np.mean(g) - grand) ** 2 for g in groups if g)
     within = sum(sum((x - np.mean(g)) ** 2 for x in g) for g in groups if g)
-    ax.text(0.5, 0.04, f"between/within $= {between / max(within, 1e-9):.3f}$",
-            transform=ax.transAxes, fontsize=7, ha="center", color=fs.ACCENT)
+    fs.halo(ax.text(0.5, 1.0, f"between/within dispersion $= {between / max(within, 1e-9):.3f}$",
+            transform=ax.transAxes, fontsize=6.8, ha="center", va="top", color=fs.ACCENT, zorder=6))
+    fs.halo(ax.text(0.97, 0.04, "— class mean", transform=ax.transAxes, fontsize=6,
+            ha="right", va="bottom", color=fs.ACCENT, zorder=6))
     ax.set_xticks(range(1, len(labels) + 1))
     ax.set_xticklabels([_LABEL_NAMES[s] for s in labels])
     ax.set_xlabel("oracle-best strategy")
@@ -129,13 +132,66 @@ def fig_routing_degeneracy(data: dict, name: str) -> None:
     print("wrote F_routing_degeneracy")
 
 
+def fig_recall_dominance(data: dict) -> None:
+    """Two panels: the reranker lifts Recall@k; pool-expansion enhancements pile on top."""
+    ks = np.array(data["ks"])
+    c = data["curves"]
+    dense = np.array(c["Dense (bi-encoder)"])
+    rerank = np.array(c["+ Reranker"])
+    enh = {"+ RAPTOR": ("+ Reranker + RAPTOR", fs.COOL),
+           "+ Graph": ("+ Reranker + Graph", fs.GREEN),
+           "+ all enh.": ("+ Reranker + all enh.", fs.ACCENT)}
+
+    fig, (axA, axB) = plt.subplots(1, 2, figsize=(fs.WIDE * 0.74, 2.5),
+                                   gridspec_kw={"width_ratios": [1.25, 1]})
+
+    # (a) the whole story: dense vs +reranker vs +enhancements.
+    axA.plot(ks, dense, color=fs.NULL, ls=(0, (4, 2)), lw=1.6, label="Dense (bi-encoder)", zorder=2)
+    axA.plot(ks, rerank, color=fs.INK, lw=2.2, label="+ Reranker", zorder=4)
+    for lbl, (key, col) in enh.items():
+        axA.plot(ks, np.array(c[key]), color=col, lw=1.0, alpha=0.95, label=lbl, zorder=3)
+    k0 = 9  # k=10
+    axA.annotate("", xy=(10, rerank[k0]), xytext=(10, dense[k0]),
+                 arrowprops=dict(arrowstyle="<->", color=fs.ACCENT, lw=1.0))
+    axA.text(11.5, (rerank[k0] + dense[k0]) / 2,
+             f"reranker\n$+{rerank[k0] - dense[k0]:.2f}$ R@10", color=fs.ACCENT, fontsize=7, va="center")
+    axA.set_xlabel("$k$")
+    axA.set_ylabel("Recall@$k$")
+    axA.set_xlim(1, ks.max())
+    axA.set_ylim(0, 1)
+    axA.legend(loc="lower right", fontsize=6.6)
+    axA.set_title("(a) The reranker carries retrieval", loc="left")
+
+    # (b) zoom on the reranker-on curves: the enhancements are indistinguishable.
+    band = np.vstack([rerank] + [np.array(c[k]) for k, _ in enh.values()])
+    axB.fill_between(ks, band.min(0), band.max(0), color=fs.NULL_L, alpha=0.7, lw=0, zorder=1,
+                     label="enh. spread")
+    axB.plot(ks, rerank, color=fs.INK, lw=1.8, zorder=4, label="+ Reranker")
+    for lbl, (key, col) in enh.items():
+        axB.plot(ks, np.array(c[key]), color=col, lw=1.0, alpha=0.95, zorder=3)
+    maxspread = float(np.max(band.max(0) - band.min(0)))
+    axB.text(0.5, 0.08, f"max spread across\nenhancements $\\leq {maxspread:.03f}$",
+             transform=axB.transAxes, ha="center", fontsize=7, color=fs.ACCENT)
+    axB.set_xlabel("$k$")
+    axB.set_ylabel("Recall@$k$")
+    axB.set_xlim(1, ks.max())
+    lo = float(min(rerank[4:].min(), band[:, 4:].min())) - 0.02
+    axB.set_ylim(lo, 1.0)
+    axB.set_title("(b) Enhancements add nothing on top", loc="left")
+
+    fig.tight_layout(w_pad=1.4)
+    fs.save(fig, "F_recall_dominance")
+    print("wrote F_recall_dominance")
+
+
 def main() -> None:
     fs.use_style()
     routing = FIGDATA / "routing_musique.json"
     if routing.exists():
         fig_routing_degeneracy(json.loads(routing.read_text()), "musique")
-    else:
-        print(f"missing {routing}; run scripts/diag_router.py musique")
+    recall = FIGDATA / "recall_hetdocqa.json"
+    if recall.exists():
+        fig_recall_dominance(json.loads(recall.read_text()))
 
 
 if __name__ == "__main__":
