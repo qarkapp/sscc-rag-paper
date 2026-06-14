@@ -245,6 +245,56 @@ def fig_heterogeneity(perq: dict) -> None:
     print("wrote F_heterogeneity")
 
 
+def fig_fragility(perq_dev: dict, perq_test: dict) -> None:
+    """Appendix: three implementation-fragility cases -- a reported gain that flips sign
+    across splits (RAPTOR), a 43x naive-vs-cached latency gap (PPR), and a port bug that
+    made the cross-doc tier look perfectly inert until fixed."""
+    from sage.eval.stats import paired_diff_ci
+
+    fig, (axA, axB, axC) = plt.subplots(1, 3, figsize=(fs.WIDE, 2.4))
+
+    # (a) RAPTOR effect (full - wo_raptor) on dev vs test -> opposite sign.
+    pts, los, his = [], [], []
+    for d in (perq_dev, perq_test):
+        a = [d["configs"]["full"]["f1"][q] for q in d["qids"]]
+        c = [d["configs"]["wo_raptor"]["f1"][q] for q in d["qids"]]
+        delta, lo, hi = paired_diff_ci(a, c, seed=0)
+        pts.append(delta)
+        los.append(delta - lo)
+        his.append(hi - delta)
+    axA.axhline(0, color="#8a9098", lw=0.9)
+    axA.errorbar([0, 1], pts, yerr=[los, his], fmt="o", color=fs.ACCENT, ms=5,
+                 capsize=3, lw=1.3, zorder=3)
+    axA.set_xticks([0, 1])
+    axA.set_xticklabels(["dev", "test"])
+    axA.set_xlim(-0.5, 1.5)
+    axA.set_ylabel(r"$\Delta$F1 (full $-$ ablate)")
+    axA.set_title("(a) RAPTOR flips sign", loc="left")
+
+    # (b) PPR per-query latency: naive networkx rebuild vs cached sparse iteration.
+    axB.bar([0, 1], [6.41, 0.15], 0.6, color=[fs.NULL, fs.BAR], edgecolor="white", lw=0.5)
+    axB.set_yscale("log")
+    axB.set_xticks([0, 1])
+    axB.set_xticklabels(["networkx\n(rebuild)", "sparse\n(cached)"])
+    axB.set_ylabel("PPR latency / query (s)")
+    for x, v in [(0, 6.41), (1, 0.15)]:
+        axB.text(x, v * 1.25, f"{v:.2f}s", ha="center", fontsize=6.5, color=fs.INK)
+    axB.set_ylim(0.05, 18)
+    axB.set_title("(b) PPR: 43$\\times$ slower naive", loc="left")
+
+    # (c) cross-doc ablation magnitude: a level bug made it bit-identical to full.
+    axC.bar([0, 1], [0.0000, 0.0029], 0.6, color=[fs.NULL, fs.BAR], edgecolor="white", lw=0.5)
+    axC.set_xticks([0, 1])
+    axC.set_xticklabels(["before\nlevel-fix", "after"])
+    axC.set_ylabel(r"$|\Delta$F1$|$ (cross-doc ablation)")
+    axC.set_ylim(0, 0.006)
+    axC.set_title("(c) Cross-doc: bug hid it", loc="left")
+
+    fig.tight_layout(w_pad=2.2)
+    fs.save(fig, "A_fragility")
+    print("wrote A_fragility")
+
+
 def fig_difficulty(perq: dict) -> None:
     """Appendix: where HetDocQA is hard -- answer F1 by question type, retrieval nDCG@10
     by the modality of a question's gold evidence."""
@@ -330,6 +380,9 @@ def main() -> None:
     hetq = Path("results/hetdocqa_dev_perquery.json")
     if hetq.exists():
         fig_difficulty(json.loads(hetq.read_text()))
+    hett = Path("results/hetdocqa_test_perquery.json")
+    if hetq.exists() and hett.exists():
+        fig_fragility(json.loads(hetq.read_text()), json.loads(hett.read_text()))
     routing = FIGDATA / "routing_musique.json"
     if routing.exists():
         fig_routing_degeneracy(json.loads(routing.read_text()), "musique")

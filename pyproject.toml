@@ -75,6 +75,11 @@ src = ["src", "tests"]
 select = ["E", "F", "I", "UP", "B", "SIM", "RUF", "N", "C4", "PTH"]
 ignore = ["E501"]  # line length handled by formatter
 
+[tool.ruff.lint.per-file-ignores]
+# Figure/extraction scripts: math-style names (H, K, L), matplotlib backend set before
+# pyplot import, and dict()/zip idioms are fine here.
+"paper/*" = ["N806", "N803", "E402", "C408", "B905"]
+
 [tool.ruff.lint.isort]
 known-first-party = ["sage"]
 

@@ -64,15 +64,14 @@ CONFIGS = {
 def recall_at_k(ranking: list[str], gold: set[str]) -> list[float]:
     if not gold:
         return [float("nan")] * len(KS)
-    hits, out, gi = 0, [], 0
-    seen = 0
+    hits = 0
     per_k = {}
-    for r in ranking:
-        seen += 1
+    for seen, r in enumerate(ranking, start=1):
         if r in gold:
             hits += 1
         per_k[seen] = hits / len(gold)
     last = 0.0
+    out = []
     for k in KS:
         last = per_k.get(k, last)
         out.append(last)
