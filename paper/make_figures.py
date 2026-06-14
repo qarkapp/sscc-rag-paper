@@ -261,11 +261,9 @@ def fig_mahyde_control() -> None:
                zorder=3)
     ax.set_xticks(x)
     ax.set_xticklabels(metrics)
-    ax.set_ylim(0, 0.95)
+    ax.set_ylim(0, 0.92)
     ax.set_ylabel("score (code/table test subset, $n{=}56$)")
     ax.legend(loc="upper right", fontsize=6.4)
-    fs.halo(ax.text(0.02, 0.045, "modality vs. multi-prose: n.s. (F1 $p{=}.11$)",
-            transform=ax.transAxes, fontsize=6.4, ha="left", va="bottom", color=fs.ACCENT))
     ax.set_title("Modality typing vs. ensemble (code/table questions)", loc="left")
     fig.tight_layout()
     fs.save(fig, "A_mahyde_control")
