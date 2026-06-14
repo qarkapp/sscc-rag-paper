@@ -179,11 +179,11 @@ def fig_sscc_calibration(data: dict) -> None:
     different score values, so one global threshold (CRAG) cannot serve both."""
     from scipy.stats import gaussian_kde
 
-    panels = [("bi", "(a) Bi-encoder  $1/(1{+}L_2)$", "bi-encoder relevance score"),
-              ("cross", "(b) Cross-encoder reranker", "cross-encoder relevance score")]
+    panels = [("bi", "(a) Bi-encoder  $1/(1{+}L_2)$", "bi-encoder relevance score", "upper left"),
+              ("cross", "(b) Cross-encoder reranker", "cross-encoder relevance score", "upper right")]
     fig, axes = plt.subplots(1, 2, figsize=(fs.WIDE * 0.72, 2.5))
     taus = {}
-    for ax, (key, title, xlab) in zip(axes, panels):
+    for ax, (key, title, xlab, loc) in zip(axes, panels):
         arr = np.array(data[key], dtype=np.float64)
         rel, irr = arr[arr[:, 1] == 1, 0], arr[arr[:, 1] == 0, 0]
         lo, hi = arr[:, 0].min(), arr[:, 0].max()
@@ -201,7 +201,7 @@ def fig_sscc_calibration(data: dict) -> None:
         ax.set_ylabel("density")
         ax.set_yticks([])
         ax.set_title(title, loc="left")
-    axes[0].legend(loc="upper left", fontsize=6.4, handlelength=1.2)
+        ax.legend(loc=loc, fontsize=6.4, handlelength=1.2)
     fig.tight_layout(w_pad=1.6)
     fs.save(fig, "F_sscc_calibration")
     print(f"wrote F_sscc_calibration  (tau_bi={taus['bi']:.3f}, tau_cross={taus['cross']:.3f})")
