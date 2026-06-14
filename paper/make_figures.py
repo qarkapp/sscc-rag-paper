@@ -280,10 +280,12 @@ def fig_fragility(perq_dev: dict, perq_test: dict) -> None:
     for x, v in [(0, 6.41), (1, 0.15)]:
         axB.text(x, v * 1.25, f"{v:.2f}s", ha="center", fontsize=6.5, color=fs.INK)
     axB.set_ylim(0.05, 18)
-    axB.set_title("(b) PPR: 43$\\times$ slower naive", loc="left")
+    axB.set_title("(b) Naive vs. cached PPR", loc="left")
 
     # (c) cross-doc ablation magnitude: a level bug made it bit-identical to full.
     axC.bar([0, 1], [0.0000, 0.0029], 0.6, color=[fs.NULL, fs.BAR], edgecolor="white", lw=0.5)
+    for x, v in [(0, 0.0000), (1, 0.0029)]:
+        axC.text(x, v + 0.00012, f"{v:.4f}", ha="center", fontsize=6.5, color=fs.INK)
     axC.set_xticks([0, 1])
     axC.set_xticklabels(["before\nlevel-fix", "after"])
     axC.set_ylabel(r"$|\Delta$F1$|$ (cross-doc ablation)")
