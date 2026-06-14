@@ -11,10 +11,9 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-import numpy as np
-
 import figstyle as fs
 import matplotlib.pyplot as plt
+import numpy as np
 from matplotlib.lines import Line2D
 
 FIGDATA = Path("paper/figdata")
@@ -25,7 +24,7 @@ def fig_routing_degeneracy(data: dict, name: str) -> None:
     """Three panels: distance saturation -> entropy at ceiling -> no class separation."""
     qids = list(data["entropy"])
     H = np.array([data["entropy"][q] for q in qids])
-    logk, tlo, thi = data["log_k"], data["tau_low"], data["tau_high"]
+    logk = data["log_k"]
     dists = {q: np.sort(np.asarray(data["knn_distances"][q])) for q in qids}
     labels = data["labels"]
 
@@ -57,7 +56,6 @@ def fig_routing_degeneracy(data: dict, name: str) -> None:
     # above both EGR thresholds. The consequence (all route to step-back) is stated, not
     # drawn at full range (which would put the thresholds off in empty space).
     axb = axes[1]
-    n_sb = sum(1 for q in qids if data["egr"][q] == "stepback")
     counts, _, _ = axb.hist(H, bins=np.linspace(H.min() - 0.0009, logk + 0.0009, 30),
                             color=fs.BAR, edgecolor="white", linewidth=0.4, zorder=3)
     m = max(counts)
@@ -149,7 +147,7 @@ def fig_recall_dominance(data: dict) -> None:
     axB.fill_between(ks, band.min(0), band.max(0), color=fs.NULL_L, alpha=0.7, lw=0, zorder=1,
                      label="enh. spread")
     axB.plot(ks, rerank, color=fs.INK, lw=1.8, zorder=4, label="+ Reranker")
-    for lbl, (key, col) in enh.items():
+    for _lbl, (key, col) in enh.items():
         axB.plot(ks, np.array(c[key]), color=col, lw=1.0, alpha=0.95, zorder=3)
     maxspread = float(np.max(band.max(0) - band.min(0)))
     axB.text(0.5, 0.08, f"max spread across\nenhancements $\\leq {maxspread:.03f}$",
@@ -207,8 +205,76 @@ def fig_sscc_calibration(data: dict) -> None:
     print(f"wrote F_sscc_calibration  (tau_bi={taus['bi']:.3f}, tau_cross={taus['cross']:.3f})")
 
 
+def fig_heterogeneity(perq: dict) -> None:
+    """Effect (delta-F1 (full minus ablate) with 95% CI for three components across benchmarks ordered
+    by heterogeneity. SSCC rises with heterogeneity; HyDE helps throughout; RAPTOR is null."""
+    from sage.eval.stats import paired_diff_ci
+
+    order = ["musique", "qasper", "hetdocqa"]
+    xlabels = ["MuSiQue\n(prose)", "QASPER\n(sci-prose)", "HetDocQA\n(heterog.)"]
+    comps = [("wo_sscc", "SSCC", fs.GREEN, "o"),
+             ("wo_hyde", "HyDE", fs.COOL, "s"),
+             ("wo_raptor", "RAPTOR", fs.NULL, "^")]
+    fig, ax = plt.subplots(figsize=(fs.COL * 1.5, 2.7))
+    ax.axhline(0, color="#8a9098", lw=0.9, zorder=1)
+    for j, (key, label, col, mk) in enumerate(comps):
+        xs, ys, lo, hi = [], [], [], []
+        for i, b in enumerate(order):
+            d = perq.get(b)
+            if d is None or key not in d["configs"]:
+                continue
+            qids = d["qids"]
+            a = [d["configs"]["full"]["f1"].get(q, 0.0) for q in qids]
+            c = [d["configs"][key]["f1"].get(q, 0.0) for q in qids]
+            delta, clo, chi = paired_diff_ci(a, c, seed=0)
+            xs.append(i + (j - 1) * 0.09)
+            ys.append(delta)
+            lo.append(delta - clo)
+            hi.append(chi - delta)
+        ax.errorbar(xs, ys, yerr=[lo, hi], color=col, marker=mk, ms=4.5, lw=1.3,
+                    capsize=2.2, capthick=0.8, label=label, zorder=3)
+    ax.set_xticks(range(len(order)))
+    ax.set_xticklabels(xlabels)
+    ax.set_xlim(-0.4, len(order) - 0.6)
+    ax.set_ylabel(r"$\Delta$F1  (full $-$ ablate)")
+    ax.set_xlabel(r"increasing corpus heterogeneity $\rightarrow$")
+    ax.legend(loc="upper left", fontsize=6.6, handlelength=1.4)
+    ax.set_title("Component benefit vs. corpus heterogeneity", loc="left")
+    fig.tight_layout()
+    fs.save(fig, "F_heterogeneity")
+    print("wrote F_heterogeneity")
+
+
+def fig_mahyde_control() -> None:
+    """Appendix: modality typing vs. a same-size prose ensemble on the code/table test
+    subset (n=56). Modality is numerically best but not significantly above multi-prose."""
+    # from results/hetdocqa_mahyde_control.txt (frozen test, code/table subgroup).
+    metrics = ["nDCG@10", "Recall@10", "F1"]
+    arms = [("generic ($\\times$1 prose)", [0.7425, 0.7777, 0.5602], fs.NULL),
+            ("multi-prose ($\\times$3)", [0.7672, 0.8060, 0.5519], fs.COOL),
+            ("modality ($\\times$3)", [0.7849, 0.8134, 0.5962], fs.GREEN)]
+    fig, ax = plt.subplots(figsize=(fs.COL * 1.6, 2.6))
+    x = np.arange(len(metrics))
+    w = 0.26
+    for j, (name, vals, col) in enumerate(arms):
+        ax.bar(x + (j - 1) * w, vals, w, color=col, label=name, edgecolor="white", lw=0.5,
+               zorder=3)
+    ax.set_xticks(x)
+    ax.set_xticklabels(metrics)
+    ax.set_ylim(0, 0.95)
+    ax.set_ylabel("score (code/table test subset, $n{=}56$)")
+    ax.legend(loc="upper right", fontsize=6.4)
+    fs.halo(ax.text(0.02, 0.045, "modality vs. multi-prose: n.s. (F1 $p{=}.11$)",
+            transform=ax.transAxes, fontsize=6.4, ha="left", va="bottom", color=fs.ACCENT))
+    ax.set_title("Modality typing vs. ensemble (code/table questions)", loc="left")
+    fig.tight_layout()
+    fs.save(fig, "A_mahyde_control")
+    print("wrote A_mahyde_control")
+
+
 def main() -> None:
     fs.use_style()
+    fig_mahyde_control()
     routing = FIGDATA / "routing_musique.json"
     if routing.exists():
         fig_routing_degeneracy(json.loads(routing.read_text()), "musique")
@@ -218,6 +284,11 @@ def main() -> None:
     sscc = FIGDATA / "sscc.json"
     if sscc.exists():
         fig_sscc_calibration(json.loads(sscc.read_text()))
+    perq = {b: json.loads(p.read_text())
+            for b in ("musique", "qasper", "hetdocqa")
+            for p in [Path(f"results/{b}_dev_perquery.json")] if p.exists()}
+    if {"musique", "qasper", "hetdocqa"} <= set(perq):
+        fig_heterogeneity(perq)
 
 
 if __name__ == "__main__":
