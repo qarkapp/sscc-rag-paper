@@ -245,6 +245,60 @@ def fig_heterogeneity(perq: dict) -> None:
     print("wrote F_heterogeneity")
 
 
+def fig_difficulty(perq: dict) -> None:
+    """Appendix: where HetDocQA is hard -- answer F1 by question type, retrieval nDCG@10
+    by the modality of a question's gold evidence."""
+    from sage.eval.stats import bootstrap_ci
+
+    rows = [json.loads(line) for line in
+            Path("data/hetdocqa/hetdocqa.jsonl").read_text().splitlines() if line.strip()]
+    manifest = {d["doc_id"]: d["modality"]
+                for d in json.loads(Path("data/hetdocqa/corpus_manifest.json").read_text())}
+    meta = {r["qid"]: (r["type"],
+                       {manifest.get(s["document_id"], "prose") for s in r["gold_spans"]})
+            for r in rows}
+    full = perq["configs"]["full"]
+    qids = [q for q in perq["qids"] if q in meta]
+
+    def bars(ax, groups, score_key, xlabel):
+        labels, means, los, his = [], [], [], []
+        for name, qs in groups:
+            vals = [full[score_key][q] for q in qs if q in full[score_key]]
+            if len(vals) < 3:
+                continue
+            mean, lo, hi = bootstrap_ci(vals, seed=0)
+            labels.append(f"{name}  ($n{{=}}{len(vals)}$)")
+            means.append(mean)
+            los.append(mean - lo)
+            his.append(hi - mean)
+        order = np.argsort(means)
+        y = np.arange(len(order))
+        ax.barh(y, [means[i] for i in order], color=fs.BAR, edgecolor="white", lw=0.5,
+                zorder=3, height=0.66)
+        ax.errorbar([means[i] for i in order], y, xerr=[[los[i] for i in order],
+                    [his[i] for i in order]], fmt="none", ecolor=fs.INK, elinewidth=0.8,
+                    capsize=2, zorder=4)
+        ax.set_yticks(y)
+        ax.set_yticklabels([labels[i] for i in order])
+        ax.set_xlabel(xlabel)
+        ax.set_xlim(0, max(means) + max(his) + 0.06)
+
+    types = ["factual", "code", "cross_document", "multi_hop", "thematic"]
+    type_names = {"cross_document": "cross-doc", "multi_hop": "multi-hop"}
+    by_type = [(type_names.get(t, t), [q for q in qids if meta[q][0] == t]) for t in types]
+    mods = ["prose", "code", "table", "markdown", "pdf"]
+    by_mod = [(m, [q for q in qids if m in meta[q][1]]) for m in mods]
+
+    fig, (axA, axB) = plt.subplots(1, 2, figsize=(fs.WIDE, 2.5))
+    bars(axA, by_type, "f1", "answer F1")
+    axA.set_title("(a) Answer F1 by question type", loc="left")
+    bars(axB, by_mod, "ndcg", "retrieval nDCG@10")
+    axB.set_title("(b) Retrieval by gold-evidence modality", loc="left")
+    fig.tight_layout(w_pad=2.0)
+    fs.save(fig, "A_difficulty")
+    print("wrote A_difficulty")
+
+
 def fig_mahyde_control() -> None:
     """Appendix: modality typing vs. a same-size prose ensemble on the code/table test
     subset (n=56). Modality is numerically best but not significantly above multi-prose."""
@@ -273,6 +327,9 @@ def fig_mahyde_control() -> None:
 def main() -> None:
     fs.use_style()
     fig_mahyde_control()
+    hetq = Path("results/hetdocqa_dev_perquery.json")
+    if hetq.exists():
+        fig_difficulty(json.loads(hetq.read_text()))
     routing = FIGDATA / "routing_musique.json"
     if routing.exists():
         fig_routing_degeneracy(json.loads(routing.read_text()), "musique")
