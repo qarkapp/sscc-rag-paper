@@ -1,0 +1,2066 @@
+[
+  {
+    "doc_id": "arxiv-2005.11401:arxiv-2005.11401",
+    "collection_id": "arxiv-2005.11401",
+    "filename": "2005.11401.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2005.11401",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2005.11401:wiki-Retrieval-augmented_generation",
+    "collection_id": "arxiv-2005.11401",
+    "filename": "Retrieval-augmented generation.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Retrieval-augmented generation",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2004.04906:arxiv-2004.04906",
+    "collection_id": "arxiv-2004.04906",
+    "filename": "2004.04906.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2004.04906",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2004.04906:wiki-Information_retrieval",
+    "collection_id": "arxiv-2004.04906",
+    "filename": "Information retrieval.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Information retrieval",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2212.10496:arxiv-2212.10496",
+    "collection_id": "arxiv-2212.10496",
+    "filename": "2212.10496.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2212.10496",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2212.10496:wiki-Information_retrieval",
+    "collection_id": "arxiv-2212.10496",
+    "filename": "Information retrieval.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Information retrieval",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2401.18059:arxiv-2401.18059",
+    "collection_id": "arxiv-2401.18059",
+    "filename": "2401.18059.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2401.18059",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2401.18059:wiki-Retrieval-augmented_generation",
+    "collection_id": "arxiv-2401.18059",
+    "filename": "Retrieval-augmented generation.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Retrieval-augmented generation",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2401.15884:arxiv-2401.15884",
+    "collection_id": "arxiv-2401.15884",
+    "filename": "2401.15884.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2401.15884",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2401.15884:wiki-Retrieval-augmented_generation",
+    "collection_id": "arxiv-2401.15884",
+    "filename": "Retrieval-augmented generation.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Retrieval-augmented generation",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2310.11511:arxiv-2310.11511",
+    "collection_id": "arxiv-2310.11511",
+    "filename": "2310.11511.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2310.11511",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2310.11511:wiki-Retrieval-augmented_generation",
+    "collection_id": "arxiv-2310.11511",
+    "filename": "Retrieval-augmented generation.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Retrieval-augmented generation",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2112.09118:arxiv-2112.09118",
+    "collection_id": "arxiv-2112.09118",
+    "filename": "2112.09118.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2112.09118",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2112.09118:wiki-Information_retrieval",
+    "collection_id": "arxiv-2112.09118",
+    "filename": "Information retrieval.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Information retrieval",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2004.12832:arxiv-2004.12832",
+    "collection_id": "arxiv-2004.12832",
+    "filename": "2004.12832.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2004.12832",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2004.12832:wiki-Information_retrieval",
+    "collection_id": "arxiv-2004.12832",
+    "filename": "Information retrieval.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Information retrieval",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1706.02216:arxiv-1706.02216",
+    "collection_id": "arxiv-1706.02216",
+    "filename": "1706.02216.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1706.02216",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1706.02216:wiki-Graph_neural_network",
+    "collection_id": "arxiv-1706.02216",
+    "filename": "Graph neural network.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Graph neural network",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1609.02907:arxiv-1609.02907",
+    "collection_id": "arxiv-1609.02907",
+    "filename": "1609.02907.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1609.02907",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1609.02907:wiki-Graph_neural_network",
+    "collection_id": "arxiv-1609.02907",
+    "filename": "Graph neural network.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Graph neural network",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1710.10903:arxiv-1710.10903",
+    "collection_id": "arxiv-1710.10903",
+    "filename": "1710.10903.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1710.10903",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1710.10903:wiki-Graph_neural_network",
+    "collection_id": "arxiv-1710.10903",
+    "filename": "Graph neural network.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Graph neural network",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1810.00826:arxiv-1810.00826",
+    "collection_id": "arxiv-1810.00826",
+    "filename": "1810.00826.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1810.00826",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1810.00826:wiki-Graph_neural_network",
+    "collection_id": "arxiv-1810.00826",
+    "filename": "Graph neural network.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Graph neural network",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1706.03762:arxiv-1706.03762",
+    "collection_id": "arxiv-1706.03762",
+    "filename": "1706.03762.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1706.03762",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1706.03762:wiki-Transformer_(deep_learning_architecture)",
+    "collection_id": "arxiv-1706.03762",
+    "filename": "Transformer (deep learning architecture).txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Transformer (deep learning architecture)",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1810.04805:arxiv-1810.04805",
+    "collection_id": "arxiv-1810.04805",
+    "filename": "1810.04805.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1810.04805",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1810.04805:wiki-BERT_(language_model)",
+    "collection_id": "arxiv-1810.04805",
+    "filename": "BERT (language model).txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://BERT (language model)",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2005.14165:arxiv-2005.14165",
+    "collection_id": "arxiv-2005.14165",
+    "filename": "2005.14165.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2005.14165",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2005.14165:wiki-GPT-3",
+    "collection_id": "arxiv-2005.14165",
+    "filename": "GPT-3.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://GPT-3",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1907.11692:arxiv-1907.11692",
+    "collection_id": "arxiv-1907.11692",
+    "filename": "1907.11692.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1907.11692",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1907.11692:wiki-BERT_(language_model)",
+    "collection_id": "arxiv-1907.11692",
+    "filename": "BERT (language model).txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://BERT (language model)",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1802.03426:arxiv-1802.03426",
+    "collection_id": "arxiv-1802.03426",
+    "filename": "1802.03426.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1802.03426",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1802.03426:wiki-Dimensionality_reduction",
+    "collection_id": "arxiv-1802.03426",
+    "filename": "Dimensionality reduction.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Dimensionality reduction",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1908.10084:arxiv-1908.10084",
+    "collection_id": "arxiv-1908.10084",
+    "filename": "1908.10084.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1908.10084",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1908.10084:wiki-Word_embedding",
+    "collection_id": "arxiv-1908.10084",
+    "filename": "Word embedding.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Word embedding",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2212.03533:arxiv-2212.03533",
+    "collection_id": "arxiv-2212.03533",
+    "filename": "2212.03533.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2212.03533",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2212.03533:wiki-Word_embedding",
+    "collection_id": "arxiv-2212.03533",
+    "filename": "Word embedding.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Word embedding",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1310.4546:arxiv-1310.4546",
+    "collection_id": "arxiv-1310.4546",
+    "filename": "1310.4546.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1310.4546",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1310.4546:wiki-Word_embedding",
+    "collection_id": "arxiv-1310.4546",
+    "filename": "Word embedding.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Word embedding",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1809.09600:arxiv-1809.09600",
+    "collection_id": "arxiv-1809.09600",
+    "filename": "1809.09600.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1809.09600",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1809.09600:wiki-Question_answering",
+    "collection_id": "arxiv-1809.09600",
+    "filename": "Question answering.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Question answering",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2108.00573:arxiv-2108.00573",
+    "collection_id": "arxiv-2108.00573",
+    "filename": "2108.00573.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2108.00573",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2108.00573:wiki-Question_answering",
+    "collection_id": "arxiv-2108.00573",
+    "filename": "Question answering.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Question answering",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1705.03551:arxiv-1705.03551",
+    "collection_id": "arxiv-1705.03551",
+    "filename": "1705.03551.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1705.03551",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1705.03551:wiki-Question_answering",
+    "collection_id": "arxiv-1705.03551",
+    "filename": "Question answering.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Question answering",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1412.6980:arxiv-1412.6980",
+    "collection_id": "arxiv-1412.6980",
+    "filename": "1412.6980.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1412.6980",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1412.6980:wiki-Stochastic_gradient_descent",
+    "collection_id": "arxiv-1412.6980",
+    "filename": "Stochastic gradient descent.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Stochastic gradient descent",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1512.03385:arxiv-1512.03385",
+    "collection_id": "arxiv-1512.03385",
+    "filename": "1512.03385.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1512.03385",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1512.03385:wiki-Residual_neural_network",
+    "collection_id": "arxiv-1512.03385",
+    "filename": "Residual neural network.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Residual neural network",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1406.2661:arxiv-1406.2661",
+    "collection_id": "arxiv-1406.2661",
+    "filename": "1406.2661.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1406.2661",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1406.2661:wiki-Generative_adversarial_network",
+    "collection_id": "arxiv-1406.2661",
+    "filename": "Generative adversarial network.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Generative adversarial network",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1312.6114:arxiv-1312.6114",
+    "collection_id": "arxiv-1312.6114",
+    "filename": "1312.6114.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1312.6114",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1312.6114:wiki-Variational_autoencoder",
+    "collection_id": "arxiv-1312.6114",
+    "filename": "Variational autoencoder.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Variational autoencoder",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2403.05530:arxiv-2403.05530",
+    "collection_id": "arxiv-2403.05530",
+    "filename": "2403.05530.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2403.05530",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2403.05530:wiki-Large_language_model",
+    "collection_id": "arxiv-2403.05530",
+    "filename": "Large language model.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Large language model",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2203.02155:arxiv-2203.02155",
+    "collection_id": "arxiv-2203.02155",
+    "filename": "2203.02155.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2203.02155",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2203.02155:wiki-Reinforcement_learning_from_human_feedback",
+    "collection_id": "arxiv-2203.02155",
+    "filename": "Reinforcement learning from human feedback.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Reinforcement learning from human feedback",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2302.13971:arxiv-2302.13971",
+    "collection_id": "arxiv-2302.13971",
+    "filename": "2302.13971.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2302.13971",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2302.13971:wiki-Llama_(language_model)",
+    "collection_id": "arxiv-2302.13971",
+    "filename": "Llama (language model).txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Llama (language model)",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2307.09288:arxiv-2307.09288",
+    "collection_id": "arxiv-2307.09288",
+    "filename": "2307.09288.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2307.09288",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2307.09288:wiki-Llama_(language_model)",
+    "collection_id": "arxiv-2307.09288",
+    "filename": "Llama (language model).txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Llama (language model)",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1910.10683:arxiv-1910.10683",
+    "collection_id": "arxiv-1910.10683",
+    "filename": "1910.10683.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1910.10683",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1910.10683:wiki-Transformer_(deep_learning_architecture)",
+    "collection_id": "arxiv-1910.10683",
+    "filename": "Transformer (deep learning architecture).txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Transformer (deep learning architecture)",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2104.08821:arxiv-2104.08821",
+    "collection_id": "arxiv-2104.08821",
+    "filename": "2104.08821.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2104.08821",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2104.08821:wiki-Word_embedding",
+    "collection_id": "arxiv-2104.08821",
+    "filename": "Word embedding.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Word embedding",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2002.08909:arxiv-2002.08909",
+    "collection_id": "arxiv-2002.08909",
+    "filename": "2002.08909.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2002.08909",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2002.08909:wiki-Retrieval-augmented_generation",
+    "collection_id": "arxiv-2002.08909",
+    "filename": "Retrieval-augmented generation.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Retrieval-augmented generation",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2112.04426:arxiv-2112.04426",
+    "collection_id": "arxiv-2112.04426",
+    "filename": "2112.04426.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2112.04426",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2112.04426:wiki-Retrieval-augmented_generation",
+    "collection_id": "arxiv-2112.04426",
+    "filename": "Retrieval-augmented generation.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Retrieval-augmented generation",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2208.03299:arxiv-2208.03299",
+    "collection_id": "arxiv-2208.03299",
+    "filename": "2208.03299.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2208.03299",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2208.03299:wiki-Retrieval-augmented_generation",
+    "collection_id": "arxiv-2208.03299",
+    "filename": "Retrieval-augmented generation.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Retrieval-augmented generation",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2007.01282:arxiv-2007.01282",
+    "collection_id": "arxiv-2007.01282",
+    "filename": "2007.01282.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2007.01282",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2007.01282:wiki-Question_answering",
+    "collection_id": "arxiv-2007.01282",
+    "filename": "Question answering.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Question answering",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1606.05250:arxiv-1606.05250",
+    "collection_id": "arxiv-1606.05250",
+    "filename": "1606.05250.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1606.05250",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1606.05250:wiki-Question_answering",
+    "collection_id": "arxiv-1606.05250",
+    "filename": "Question answering.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Question answering",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1611.09268:arxiv-1611.09268",
+    "collection_id": "arxiv-1611.09268",
+    "filename": "1611.09268.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1611.09268",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1611.09268:wiki-Information_retrieval",
+    "collection_id": "arxiv-1611.09268",
+    "filename": "Information retrieval.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Information retrieval",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2104.08663:arxiv-2104.08663",
+    "collection_id": "arxiv-2104.08663",
+    "filename": "2104.08663.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2104.08663",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2104.08663:wiki-Information_retrieval",
+    "collection_id": "arxiv-2104.08663",
+    "filename": "Information retrieval.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Information retrieval",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1409.3215:arxiv-1409.3215",
+    "collection_id": "arxiv-1409.3215",
+    "filename": "1409.3215.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1409.3215",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1409.3215:wiki-Recurrent_neural_network",
+    "collection_id": "arxiv-1409.3215",
+    "filename": "Recurrent neural network.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Recurrent neural network",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1508.04025:arxiv-1508.04025",
+    "collection_id": "arxiv-1508.04025",
+    "filename": "1508.04025.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1508.04025",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1508.04025:wiki-Attention_(machine_learning)",
+    "collection_id": "arxiv-1508.04025",
+    "filename": "Attention (machine learning).txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Attention (machine learning)",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1503.02531:arxiv-1503.02531",
+    "collection_id": "arxiv-1503.02531",
+    "filename": "1503.02531.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1503.02531",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1503.02531:wiki-Knowledge_distillation",
+    "collection_id": "arxiv-1503.02531",
+    "filename": "Knowledge distillation.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Knowledge distillation",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2004.05150:arxiv-2004.05150",
+    "collection_id": "arxiv-2004.05150",
+    "filename": "2004.05150.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2004.05150",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2004.05150:wiki-Transformer_(deep_learning_architecture)",
+    "collection_id": "arxiv-2004.05150",
+    "filename": "Transformer (deep learning architecture).txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Transformer (deep learning architecture)",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2103.00020:arxiv-2103.00020",
+    "collection_id": "arxiv-2103.00020",
+    "filename": "2103.00020.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2103.00020",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2103.00020:wiki-Contrastive_learning",
+    "collection_id": "arxiv-2103.00020",
+    "filename": "Contrastive learning.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Contrastive learning",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2010.11929:arxiv-2010.11929",
+    "collection_id": "arxiv-2010.11929",
+    "filename": "2010.11929.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2010.11929",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2010.11929:wiki-Vision_transformer",
+    "collection_id": "arxiv-2010.11929",
+    "filename": "Vision transformer.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Vision transformer",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1505.04597:arxiv-1505.04597",
+    "collection_id": "arxiv-1505.04597",
+    "filename": "1505.04597.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1505.04597",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1505.04597:wiki-Convolutional_neural_network",
+    "collection_id": "arxiv-1505.04597",
+    "filename": "Convolutional neural network.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Convolutional neural network",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1301.3781:arxiv-1301.3781",
+    "collection_id": "arxiv-1301.3781",
+    "filename": "1301.3781.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1301.3781",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1301.3781:wiki-Word_embedding",
+    "collection_id": "arxiv-1301.3781",
+    "filename": "Word embedding.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Word embedding",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2305.14314:arxiv-2305.14314",
+    "collection_id": "arxiv-2305.14314",
+    "filename": "2305.14314.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2305.14314",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2305.14314:wiki-Large_language_model",
+    "collection_id": "arxiv-2305.14314",
+    "filename": "Large language model.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Large language model",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2201.11903:arxiv-2201.11903",
+    "collection_id": "arxiv-2201.11903",
+    "filename": "2201.11903.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2201.11903",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2201.11903:wiki-Large_language_model",
+    "collection_id": "arxiv-2201.11903",
+    "filename": "Large language model.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Large language model",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1409.1556:arxiv-1409.1556",
+    "collection_id": "arxiv-1409.1556",
+    "filename": "1409.1556.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1409.1556",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1409.1556:wiki-Convolutional_neural_network",
+    "collection_id": "arxiv-1409.1556",
+    "filename": "Convolutional neural network.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Convolutional neural network",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1512.00567:arxiv-1512.00567",
+    "collection_id": "arxiv-1512.00567",
+    "filename": "1512.00567.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1512.00567",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1512.00567:wiki-Convolutional_neural_network",
+    "collection_id": "arxiv-1512.00567",
+    "filename": "Convolutional neural network.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Convolutional neural network",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1608.06993:arxiv-1608.06993",
+    "collection_id": "arxiv-1608.06993",
+    "filename": "1608.06993.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1608.06993",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1608.06993:wiki-Convolutional_neural_network",
+    "collection_id": "arxiv-1608.06993",
+    "filename": "Convolutional neural network.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Convolutional neural network",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1502.03167:arxiv-1502.03167",
+    "collection_id": "arxiv-1502.03167",
+    "filename": "1502.03167.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1502.03167",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1502.03167:wiki-Batch_normalization",
+    "collection_id": "arxiv-1502.03167",
+    "filename": "Batch normalization.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Batch normalization",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1607.06450:arxiv-1607.06450",
+    "collection_id": "arxiv-1607.06450",
+    "filename": "1607.06450.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1607.06450",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1607.06450:wiki-Deep_learning",
+    "collection_id": "arxiv-1607.06450",
+    "filename": "Deep learning.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Deep learning",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1506.01497:arxiv-1506.01497",
+    "collection_id": "arxiv-1506.01497",
+    "filename": "1506.01497.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1506.01497",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1506.01497:wiki-Object_detection",
+    "collection_id": "arxiv-1506.01497",
+    "filename": "Object detection.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Object detection",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1804.02767:arxiv-1804.02767",
+    "collection_id": "arxiv-1804.02767",
+    "filename": "1804.02767.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1804.02767",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1804.02767:wiki-Object_detection",
+    "collection_id": "arxiv-1804.02767",
+    "filename": "Object detection.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Object detection",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1905.11946:arxiv-1905.11946",
+    "collection_id": "arxiv-1905.11946",
+    "filename": "1905.11946.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1905.11946",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1905.11946:wiki-Convolutional_neural_network",
+    "collection_id": "arxiv-1905.11946",
+    "filename": "Convolutional neural network.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Convolutional neural network",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2106.09685:arxiv-2106.09685",
+    "collection_id": "arxiv-2106.09685",
+    "filename": "2106.09685.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2106.09685",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2106.09685:wiki-Fine-tuning_(deep_learning)",
+    "collection_id": "arxiv-2106.09685",
+    "filename": "Fine-tuning (deep learning).txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Fine-tuning (deep learning)",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2104.08691:arxiv-2104.08691",
+    "collection_id": "arxiv-2104.08691",
+    "filename": "2104.08691.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2104.08691",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2104.08691:wiki-Prompt_engineering",
+    "collection_id": "arxiv-2104.08691",
+    "filename": "Prompt engineering.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Prompt engineering",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2204.02311:arxiv-2204.02311",
+    "collection_id": "arxiv-2204.02311",
+    "filename": "2204.02311.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2204.02311",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2204.02311:wiki-Large_language_model",
+    "collection_id": "arxiv-2204.02311",
+    "filename": "Large language model.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Large language model",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2210.11416:arxiv-2210.11416",
+    "collection_id": "arxiv-2210.11416",
+    "filename": "2210.11416.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2210.11416",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2210.11416:wiki-Large_language_model",
+    "collection_id": "arxiv-2210.11416",
+    "filename": "Large language model.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Large language model",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2211.05100:arxiv-2211.05100",
+    "collection_id": "arxiv-2211.05100",
+    "filename": "2211.05100.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2211.05100",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2211.05100:wiki-Large_language_model",
+    "collection_id": "arxiv-2211.05100",
+    "filename": "Large language model.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Large language model",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2206.07682:arxiv-2206.07682",
+    "collection_id": "arxiv-2206.07682",
+    "filename": "2206.07682.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2206.07682",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2206.07682:wiki-Large_language_model",
+    "collection_id": "arxiv-2206.07682",
+    "filename": "Large language model.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Large language model",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1804.07461:arxiv-1804.07461",
+    "collection_id": "arxiv-1804.07461",
+    "filename": "1804.07461.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1804.07461",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1804.07461:wiki-Natural_language_processing",
+    "collection_id": "arxiv-1804.07461",
+    "filename": "Natural language processing.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Natural language processing",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1905.00537:arxiv-1905.00537",
+    "collection_id": "arxiv-1905.00537",
+    "filename": "1905.00537.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1905.00537",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1905.00537:wiki-Natural_language_processing",
+    "collection_id": "arxiv-1905.00537",
+    "filename": "Natural language processing.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Natural language processing",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2009.03300:arxiv-2009.03300",
+    "collection_id": "arxiv-2009.03300",
+    "filename": "2009.03300.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2009.03300",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2009.03300:wiki-Machine_learning",
+    "collection_id": "arxiv-2009.03300",
+    "filename": "Machine learning.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Machine learning",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1903.00161:arxiv-1903.00161",
+    "collection_id": "arxiv-1903.00161",
+    "filename": "1903.00161.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1903.00161",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1903.00161:wiki-Question_answering",
+    "collection_id": "arxiv-1903.00161",
+    "filename": "Question answering.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Question answering",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2104.09864:arxiv-2104.09864",
+    "collection_id": "arxiv-2104.09864",
+    "filename": "2104.09864.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2104.09864",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2104.09864:wiki-Transformer_(deep_learning_architecture)",
+    "collection_id": "arxiv-2104.09864",
+    "filename": "Transformer (deep learning architecture).txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Transformer (deep learning architecture)",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1412.3555:arxiv-1412.3555",
+    "collection_id": "arxiv-1412.3555",
+    "filename": "1412.3555.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1412.3555",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1412.3555:wiki-Recurrent_neural_network",
+    "collection_id": "arxiv-1412.3555",
+    "filename": "Recurrent neural network.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Recurrent neural network",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1410.3916:arxiv-1410.3916",
+    "collection_id": "arxiv-1410.3916",
+    "filename": "1410.3916.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1410.3916",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1410.3916:wiki-Artificial_neural_network",
+    "collection_id": "arxiv-1410.3916",
+    "filename": "Artificial neural network.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Artificial neural network",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2302.04761:arxiv-2302.04761",
+    "collection_id": "arxiv-2302.04761",
+    "filename": "2302.04761.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2302.04761",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2302.04761:wiki-Large_language_model",
+    "collection_id": "arxiv-2302.04761",
+    "filename": "Large language model.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Large language model",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2201.08239:arxiv-2201.08239",
+    "collection_id": "arxiv-2201.08239",
+    "filename": "2201.08239.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2201.08239",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2201.08239:wiki-Chatbot",
+    "collection_id": "arxiv-2201.08239",
+    "filename": "Chatbot.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Chatbot",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2303.08774:arxiv-2303.08774",
+    "collection_id": "arxiv-2303.08774",
+    "filename": "2303.08774.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2303.08774",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2303.08774:wiki-GPT-4",
+    "collection_id": "arxiv-2303.08774",
+    "filename": "GPT-4.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://GPT-4",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1312.5602:arxiv-1312.5602",
+    "collection_id": "arxiv-1312.5602",
+    "filename": "1312.5602.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1312.5602",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1312.5602:wiki-Reinforcement_learning",
+    "collection_id": "arxiv-1312.5602",
+    "filename": "Reinforcement learning.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Reinforcement learning",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1602.01783:arxiv-1602.01783",
+    "collection_id": "arxiv-1602.01783",
+    "filename": "1602.01783.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1602.01783",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1602.01783:wiki-Reinforcement_learning",
+    "collection_id": "arxiv-1602.01783",
+    "filename": "Reinforcement learning.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Reinforcement learning",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1707.06347:arxiv-1707.06347",
+    "collection_id": "arxiv-1707.06347",
+    "filename": "1707.06347.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1707.06347",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1707.06347:wiki-Reinforcement_learning",
+    "collection_id": "arxiv-1707.06347",
+    "filename": "Reinforcement learning.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Reinforcement learning",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1509.02971:arxiv-1509.02971",
+    "collection_id": "arxiv-1509.02971",
+    "filename": "1509.02971.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1509.02971",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1509.02971:wiki-Reinforcement_learning",
+    "collection_id": "arxiv-1509.02971",
+    "filename": "Reinforcement learning.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Reinforcement learning",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1412.6572:arxiv-1412.6572",
+    "collection_id": "arxiv-1412.6572",
+    "filename": "1412.6572.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1412.6572",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1412.6572:wiki-Adversarial_machine_learning",
+    "collection_id": "arxiv-1412.6572",
+    "filename": "Adversarial machine learning.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Adversarial machine learning",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1312.6199:arxiv-1312.6199",
+    "collection_id": "arxiv-1312.6199",
+    "filename": "1312.6199.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1312.6199",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1312.6199:wiki-Adversarial_machine_learning",
+    "collection_id": "arxiv-1312.6199",
+    "filename": "Adversarial machine learning.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Adversarial machine learning",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1611.03530:arxiv-1611.03530",
+    "collection_id": "arxiv-1611.03530",
+    "filename": "1611.03530.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1611.03530",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1611.03530:wiki-Machine_learning",
+    "collection_id": "arxiv-1611.03530",
+    "filename": "Machine learning.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Machine learning",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1207.0580:arxiv-1207.0580",
+    "collection_id": "arxiv-1207.0580",
+    "filename": "1207.0580.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1207.0580",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1207.0580:wiki-Deep_learning",
+    "collection_id": "arxiv-1207.0580",
+    "filename": "Deep learning.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Deep learning",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1502.01852:arxiv-1502.01852",
+    "collection_id": "arxiv-1502.01852",
+    "filename": "1502.01852.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1502.01852",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1502.01852:wiki-Deep_learning",
+    "collection_id": "arxiv-1502.01852",
+    "filename": "Deep learning.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Deep learning",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1801.06146:arxiv-1801.06146",
+    "collection_id": "arxiv-1801.06146",
+    "filename": "1801.06146.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1801.06146",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1801.06146:wiki-Natural_language_processing",
+    "collection_id": "arxiv-1801.06146",
+    "filename": "Natural language processing.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Natural language processing",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1802.05365:arxiv-1802.05365",
+    "collection_id": "arxiv-1802.05365",
+    "filename": "1802.05365.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1802.05365",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1802.05365:wiki-Natural_language_processing",
+    "collection_id": "arxiv-1802.05365",
+    "filename": "Natural language processing.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Natural language processing",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1408.5882:arxiv-1408.5882",
+    "collection_id": "arxiv-1408.5882",
+    "filename": "1408.5882.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1408.5882",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1408.5882:wiki-Natural_language_processing",
+    "collection_id": "arxiv-1408.5882",
+    "filename": "Natural language processing.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Natural language processing",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1703.03400:arxiv-1703.03400",
+    "collection_id": "arxiv-1703.03400",
+    "filename": "1703.03400.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1703.03400",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1703.03400:wiki-Meta-learning_(computer_science)",
+    "collection_id": "arxiv-1703.03400",
+    "filename": "Meta-learning (computer science).txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Meta-learning (computer science)",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2005.12872:arxiv-2005.12872",
+    "collection_id": "arxiv-2005.12872",
+    "filename": "2005.12872.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2005.12872",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2005.12872:wiki-Object_detection",
+    "collection_id": "arxiv-2005.12872",
+    "filename": "Object detection.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Object detection",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2111.06377:arxiv-2111.06377",
+    "collection_id": "arxiv-2111.06377",
+    "filename": "2111.06377.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2111.06377",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2111.06377:wiki-Self-supervised_learning",
+    "collection_id": "arxiv-2111.06377",
+    "filename": "Self-supervised learning.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Self-supervised learning",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2006.11477:arxiv-2006.11477",
+    "collection_id": "arxiv-2006.11477",
+    "filename": "2006.11477.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2006.11477",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2006.11477:wiki-Speech_recognition",
+    "collection_id": "arxiv-2006.11477",
+    "filename": "Speech recognition.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Speech recognition",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-1503.03832:arxiv-1503.03832",
+    "collection_id": "arxiv-1503.03832",
+    "filename": "1503.03832.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1503.03832",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-1503.03832:wiki-Facial_recognition_system",
+    "collection_id": "arxiv-1503.03832",
+    "filename": "Facial recognition system.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Facial recognition system",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "arxiv-2010.11934:arxiv-2010.11934",
+    "collection_id": "arxiv-2010.11934",
+    "filename": "2010.11934.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2010.11934",
+    "license": "arXiv (see source_ref)"
+  },
+  {
+    "doc_id": "arxiv-2010.11934:wiki-Natural_language_processing",
+    "collection_id": "arxiv-2010.11934",
+    "filename": "Natural language processing.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Natural language processing",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "requests:README.md",
+    "collection_id": "requests",
+    "filename": "README.md",
+    "modality": "markdown",
+    "source_ref": "github://psf/requests@main:README.md",
+    "license": "Apache-2.0"
+  },
+  {
+    "doc_id": "requests:src/requests/api.py",
+    "collection_id": "requests",
+    "filename": "api.py",
+    "modality": "code",
+    "source_ref": "github://psf/requests@main:src/requests/api.py",
+    "license": "Apache-2.0"
+  },
+  {
+    "doc_id": "requests:src/requests/sessions.py",
+    "collection_id": "requests",
+    "filename": "sessions.py",
+    "modality": "code",
+    "source_ref": "github://psf/requests@main:src/requests/sessions.py",
+    "license": "Apache-2.0"
+  },
+  {
+    "doc_id": "requests:wiki-Hypertext_Transfer_Protocol",
+    "collection_id": "requests",
+    "filename": "Hypertext Transfer Protocol.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Hypertext Transfer Protocol",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "flask:README.md",
+    "collection_id": "flask",
+    "filename": "README.md",
+    "modality": "markdown",
+    "source_ref": "github://pallets/flask@main:README.md",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "doc_id": "flask:src/flask/app.py",
+    "collection_id": "flask",
+    "filename": "app.py",
+    "modality": "code",
+    "source_ref": "github://pallets/flask@main:src/flask/app.py",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "doc_id": "flask:wiki-Web_framework",
+    "collection_id": "flask",
+    "filename": "Web framework.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Web framework",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "click:README.md",
+    "collection_id": "click",
+    "filename": "README.md",
+    "modality": "markdown",
+    "source_ref": "github://pallets/click@main:README.md",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "doc_id": "click:src/click/core.py",
+    "collection_id": "click",
+    "filename": "core.py",
+    "modality": "code",
+    "source_ref": "github://pallets/click@main:src/click/core.py",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "doc_id": "click:wiki-Command-line_interface",
+    "collection_id": "click",
+    "filename": "Command-line interface.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Command-line interface",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "fastapi:README.md",
+    "collection_id": "fastapi",
+    "filename": "README.md",
+    "modality": "markdown",
+    "source_ref": "github://fastapi/fastapi@master:README.md",
+    "license": "MIT"
+  },
+  {
+    "doc_id": "fastapi:fastapi/applications.py",
+    "collection_id": "fastapi",
+    "filename": "applications.py",
+    "modality": "code",
+    "source_ref": "github://fastapi/fastapi@master:fastapi/applications.py",
+    "license": "MIT"
+  },
+  {
+    "doc_id": "fastapi:wiki-Web_API",
+    "collection_id": "fastapi",
+    "filename": "Web API.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Web API",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "httpx:README.md",
+    "collection_id": "httpx",
+    "filename": "README.md",
+    "modality": "markdown",
+    "source_ref": "github://encode/httpx@master:README.md",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "doc_id": "httpx:httpx/_client.py",
+    "collection_id": "httpx",
+    "filename": "_client.py",
+    "modality": "code",
+    "source_ref": "github://encode/httpx@master:httpx/_client.py",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "doc_id": "httpx:wiki-HTTP",
+    "collection_id": "httpx",
+    "filename": "HTTP.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://HTTP",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "pydantic:README.md",
+    "collection_id": "pydantic",
+    "filename": "README.md",
+    "modality": "markdown",
+    "source_ref": "github://pydantic/pydantic@main:README.md",
+    "license": "MIT"
+  },
+  {
+    "doc_id": "pydantic:pydantic/main.py",
+    "collection_id": "pydantic",
+    "filename": "main.py",
+    "modality": "code",
+    "source_ref": "github://pydantic/pydantic@main:pydantic/main.py",
+    "license": "MIT"
+  },
+  {
+    "doc_id": "pydantic:wiki-Data_validation",
+    "collection_id": "pydantic",
+    "filename": "Data validation.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Data validation",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "rich:README.md",
+    "collection_id": "rich",
+    "filename": "README.md",
+    "modality": "markdown",
+    "source_ref": "github://Textualize/rich@master:README.md",
+    "license": "MIT"
+  },
+  {
+    "doc_id": "rich:rich/console.py",
+    "collection_id": "rich",
+    "filename": "console.py",
+    "modality": "code",
+    "source_ref": "github://Textualize/rich@master:rich/console.py",
+    "license": "MIT"
+  },
+  {
+    "doc_id": "rich:wiki-Terminal_emulator",
+    "collection_id": "rich",
+    "filename": "Terminal emulator.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Terminal emulator",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "typer:README.md",
+    "collection_id": "typer",
+    "filename": "README.md",
+    "modality": "markdown",
+    "source_ref": "github://fastapi/typer@master:README.md",
+    "license": "MIT"
+  },
+  {
+    "doc_id": "typer:typer/main.py",
+    "collection_id": "typer",
+    "filename": "main.py",
+    "modality": "code",
+    "source_ref": "github://fastapi/typer@master:typer/main.py",
+    "license": "MIT"
+  },
+  {
+    "doc_id": "typer:wiki-Command-line_interface",
+    "collection_id": "typer",
+    "filename": "Command-line interface.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Command-line interface",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "pandas:README.md",
+    "collection_id": "pandas",
+    "filename": "README.md",
+    "modality": "markdown",
+    "source_ref": "github://pandas-dev/pandas@main:README.md",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "doc_id": "pandas:pandas/core/frame.py",
+    "collection_id": "pandas",
+    "filename": "frame.py",
+    "modality": "code",
+    "source_ref": "github://pandas-dev/pandas@main:pandas/core/frame.py",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "doc_id": "pandas:wiki-Pandas_(software)",
+    "collection_id": "pandas",
+    "filename": "Pandas (software).txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Pandas (software)",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "numpy:README.md",
+    "collection_id": "numpy",
+    "filename": "README.md",
+    "modality": "markdown",
+    "source_ref": "github://numpy/numpy@main:README.md",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "doc_id": "numpy:numpy/__init__.py",
+    "collection_id": "numpy",
+    "filename": "__init__.py",
+    "modality": "code",
+    "source_ref": "github://numpy/numpy@main:numpy/__init__.py",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "doc_id": "numpy:wiki-NumPy",
+    "collection_id": "numpy",
+    "filename": "NumPy.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://NumPy",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "sklearn:README.rst",
+    "collection_id": "sklearn",
+    "filename": "README.rst",
+    "modality": "markdown",
+    "source_ref": "github://scikit-learn/scikit-learn@main:README.rst",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "doc_id": "sklearn:sklearn/base.py",
+    "collection_id": "sklearn",
+    "filename": "base.py",
+    "modality": "code",
+    "source_ref": "github://scikit-learn/scikit-learn@main:sklearn/base.py",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "doc_id": "sklearn:wiki-Scikit-learn",
+    "collection_id": "sklearn",
+    "filename": "Scikit-learn.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Scikit-learn",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "starlette:README.md",
+    "collection_id": "starlette",
+    "filename": "README.md",
+    "modality": "markdown",
+    "source_ref": "github://encode/starlette@master:README.md",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "doc_id": "starlette:starlette/applications.py",
+    "collection_id": "starlette",
+    "filename": "applications.py",
+    "modality": "code",
+    "source_ref": "github://encode/starlette@master:starlette/applications.py",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "doc_id": "starlette:wiki-Web_framework",
+    "collection_id": "starlette",
+    "filename": "Web framework.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Web framework",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "pytest:README.rst",
+    "collection_id": "pytest",
+    "filename": "README.rst",
+    "modality": "markdown",
+    "source_ref": "github://pytest-dev/pytest@main:README.rst",
+    "license": "MIT"
+  },
+  {
+    "doc_id": "pytest:src/_pytest/main.py",
+    "collection_id": "pytest",
+    "filename": "main.py",
+    "modality": "code",
+    "source_ref": "github://pytest-dev/pytest@main:src/_pytest/main.py",
+    "license": "MIT"
+  },
+  {
+    "doc_id": "pytest:wiki-Software_testing",
+    "collection_id": "pytest",
+    "filename": "Software testing.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Software testing",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "scipy:README.rst",
+    "collection_id": "scipy",
+    "filename": "README.rst",
+    "modality": "markdown",
+    "source_ref": "github://scipy/scipy@main:README.rst",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "doc_id": "scipy:scipy/integrate/_quadpack_py.py",
+    "collection_id": "scipy",
+    "filename": "_quadpack_py.py",
+    "modality": "code",
+    "source_ref": "github://scipy/scipy@main:scipy/integrate/_quadpack_py.py",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "doc_id": "scipy:wiki-SciPy",
+    "collection_id": "scipy",
+    "filename": "SciPy.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://SciPy",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "aiohttp:README.rst",
+    "collection_id": "aiohttp",
+    "filename": "README.rst",
+    "modality": "markdown",
+    "source_ref": "github://aio-libs/aiohttp@master:README.rst",
+    "license": "Apache-2.0"
+  },
+  {
+    "doc_id": "aiohttp:aiohttp/client.py",
+    "collection_id": "aiohttp",
+    "filename": "client.py",
+    "modality": "code",
+    "source_ref": "github://aio-libs/aiohttp@master:aiohttp/client.py",
+    "license": "Apache-2.0"
+  },
+  {
+    "doc_id": "aiohttp:wiki-HTTP",
+    "collection_id": "aiohttp",
+    "filename": "HTTP.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://HTTP",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "poetry:README.md",
+    "collection_id": "poetry",
+    "filename": "README.md",
+    "modality": "markdown",
+    "source_ref": "github://python-poetry/poetry@main:README.md",
+    "license": "MIT"
+  },
+  {
+    "doc_id": "poetry:src/poetry/installation/installer.py",
+    "collection_id": "poetry",
+    "filename": "installer.py",
+    "modality": "code",
+    "source_ref": "github://python-poetry/poetry@main:src/poetry/installation/installer.py",
+    "license": "MIT"
+  },
+  {
+    "doc_id": "poetry:wiki-Package_manager",
+    "collection_id": "poetry",
+    "filename": "Package manager.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Package manager",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "uvicorn:README.md",
+    "collection_id": "uvicorn",
+    "filename": "README.md",
+    "modality": "markdown",
+    "source_ref": "github://encode/uvicorn@master:README.md",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "doc_id": "uvicorn:uvicorn/server.py",
+    "collection_id": "uvicorn",
+    "filename": "server.py",
+    "modality": "code",
+    "source_ref": "github://encode/uvicorn@master:uvicorn/server.py",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "doc_id": "uvicorn:wiki-Web_server",
+    "collection_id": "uvicorn",
+    "filename": "Web server.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Web server",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "networkx:README.rst",
+    "collection_id": "networkx",
+    "filename": "README.rst",
+    "modality": "markdown",
+    "source_ref": "github://networkx/networkx@main:README.rst",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "doc_id": "networkx:networkx/algorithms/shortest_paths/generic.py",
+    "collection_id": "networkx",
+    "filename": "generic.py",
+    "modality": "code",
+    "source_ref": "github://networkx/networkx@main:networkx/algorithms/shortest_paths/generic.py",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "doc_id": "networkx:wiki-Graph_theory",
+    "collection_id": "networkx",
+    "filename": "Graph theory.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Graph theory",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "transformers:README.md",
+    "collection_id": "transformers",
+    "filename": "README.md",
+    "modality": "markdown",
+    "source_ref": "github://huggingface/transformers@main:README.md",
+    "license": "Apache-2.0"
+  },
+  {
+    "doc_id": "transformers:src/transformers/pipelines/base.py",
+    "collection_id": "transformers",
+    "filename": "base.py",
+    "modality": "code",
+    "source_ref": "github://huggingface/transformers@main:src/transformers/pipelines/base.py",
+    "license": "Apache-2.0"
+  },
+  {
+    "doc_id": "transformers:wiki-Natural_language_processing",
+    "collection_id": "transformers",
+    "filename": "Natural language processing.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Natural language processing",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "tqdm:README.rst",
+    "collection_id": "tqdm",
+    "filename": "README.rst",
+    "modality": "markdown",
+    "source_ref": "github://tqdm/tqdm@master:README.rst",
+    "license": "MIT"
+  },
+  {
+    "doc_id": "tqdm:tqdm/std.py",
+    "collection_id": "tqdm",
+    "filename": "std.py",
+    "modality": "code",
+    "source_ref": "github://tqdm/tqdm@master:tqdm/std.py",
+    "license": "MIT"
+  },
+  {
+    "doc_id": "tqdm:wiki-Progress_bar",
+    "collection_id": "tqdm",
+    "filename": "Progress bar.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Progress bar",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "jinja:README.md",
+    "collection_id": "jinja",
+    "filename": "README.md",
+    "modality": "markdown",
+    "source_ref": "github://pallets/jinja@main:README.md",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "doc_id": "jinja:src/jinja2/environment.py",
+    "collection_id": "jinja",
+    "filename": "environment.py",
+    "modality": "code",
+    "source_ref": "github://pallets/jinja@main:src/jinja2/environment.py",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "doc_id": "jinja:wiki-Template_processor",
+    "collection_id": "jinja",
+    "filename": "Template processor.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Template processor",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "scikit-image:README.md",
+    "collection_id": "scikit-image",
+    "filename": "README.md",
+    "modality": "markdown",
+    "source_ref": "github://scikit-image/scikit-image@main:README.md",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "doc_id": "scikit-image:wiki-Digital_image_processing",
+    "collection_id": "scikit-image",
+    "filename": "Digital image processing.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Digital image processing",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "iris:iris.csv",
+    "collection_id": "iris",
+    "filename": "iris.csv",
+    "modality": "table",
+    "source_ref": "csv://https://raw.githubusercontent.com/plotly/datasets/master/iris.csv",
+    "license": "MIT"
+  },
+  {
+    "doc_id": "iris:wiki-Iris_flower_data_set",
+    "collection_id": "iris",
+    "filename": "Iris flower data set.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Iris flower data set",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "tips:tips.csv",
+    "collection_id": "tips",
+    "filename": "tips.csv",
+    "modality": "table",
+    "source_ref": "csv://https://raw.githubusercontent.com/plotly/datasets/master/tips.csv",
+    "license": "MIT"
+  },
+  {
+    "doc_id": "tips:wiki-Gratuity",
+    "collection_id": "tips",
+    "filename": "Gratuity.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Gratuity",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "gapminder:gapminder.csv",
+    "collection_id": "gapminder",
+    "filename": "gapminder.csv",
+    "modality": "table",
+    "source_ref": "csv://https://raw.githubusercontent.com/plotly/datasets/master/gapminderDataFiveYear.csv",
+    "license": "MIT"
+  },
+  {
+    "doc_id": "gapminder:wiki-Gapminder_Foundation",
+    "collection_id": "gapminder",
+    "filename": "Gapminder Foundation.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Gapminder Foundation",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "ag-exports:ag_exports.csv",
+    "collection_id": "ag-exports",
+    "filename": "ag_exports.csv",
+    "modality": "table",
+    "source_ref": "csv://https://raw.githubusercontent.com/plotly/datasets/master/2011_us_ag_exports.csv",
+    "license": "MIT"
+  },
+  {
+    "doc_id": "ag-exports:wiki-Agriculture_in_the_United_States",
+    "collection_id": "ag-exports",
+    "filename": "Agriculture in the United States.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Agriculture in the United States",
+    "license": "CC-BY-SA-4.0"
+  }
+]

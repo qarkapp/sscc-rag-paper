@@ -1,0 +1,373 @@
+\begin{thebibliography}{10}
+
+\bibitem{lewis2020rag}
+Patrick Lewis, Ethan Perez, Aleksandra Piktus, Fabio Petroni, Vladimir
+  Karpukhin, Naman Goyal, Heinrich K{\"u}ttler, Mike Lewis, Wen-tau Yih, Tim
+  Rockt{\"a}schel, Sebastian Riedel, and Douwe Kiela.
+\newblock Retrieval-augmented generation for knowledge-intensive {NLP} tasks.
+\newblock In {\em Advances in Neural Information Processing Systems (NeurIPS)},
+  2020.
+
+\bibitem{guu2020realm}
+Kelvin Guu, Kenton Lee, Zora Tung, Panupong Pasupat, and Ming-Wei Chang.
+\newblock {REALM}: Retrieval-augmented language model pre-training.
+\newblock In {\em International Conference on Machine Learning (ICML)}, 2020.
+
+\bibitem{izacard2021fid}
+Gautier Izacard and Edouard Grave.
+\newblock Leveraging passage retrieval with generative models for open domain
+  question answering.
+\newblock In {\em Proceedings of the European Chapter of the ACL (EACL)}, 2021.
+
+\bibitem{gao2023hyde}
+Luyu Gao, Xueguang Ma, Jimmy Lin, and Jamie Callan.
+\newblock Precise zero-shot dense retrieval without relevance labels.
+\newblock In {\em Proceedings of the Association for Computational Linguistics
+  (ACL)}, 2023.
+
+\bibitem{zheng2024stepback}
+Huaixiu~Steven Zheng, Swaroop Mishra, Xinyun Chen, Heng-Tze Cheng, Ed~H. Chi,
+  Quoc~V. Le, and Denny Zhou.
+\newblock Take a step back: Evoking reasoning via abstraction in large language
+  models.
+\newblock In {\em International Conference on Learning Representations (ICLR)},
+  2024.
+
+\bibitem{wang2023query2doc}
+Liang Wang, Nan Yang, and Furu Wei.
+\newblock Query2doc: Query expansion with large language models.
+\newblock In {\em Proceedings of Empirical Methods in Natural Language
+  Processing (EMNLP)}, 2023.
+
+\bibitem{sarthi2024raptor}
+Parth Sarthi, Salman Abdullah, Aditi Tuli, Shubh Khanna, Anna Goldie, and
+  Christopher~D. Manning.
+\newblock {RAPTOR}: Recursive abstractive processing for tree-organized
+  retrieval.
+\newblock In {\em International Conference on Learning Representations (ICLR)},
+  2024.
+
+\bibitem{edge2024graphrag}
+Darren Edge, Ha~Trinh, Newman Cheng, Joshua Bradley, Alex Chao, Apurva Mody,
+  Steven Truitt, Dasha Metropolitansky, Robert~Osazuwa Ness, and Jonathan
+  Larson.
+\newblock From local to global: A graph {RAG} approach to query-focused
+  summarization.
+\newblock {\em arXiv preprint arXiv:2404.16130}, 2024.
+
+\bibitem{gutierrez2024hipporag}
+Bernal~Jim{\'e}nez Guti{\'e}rrez, Yiheng Shu, Yu~Gu, Michihiro Yasunaga, and
+  Yu~Su.
+\newblock {HippoRAG}: Neurobiologically inspired long-term memory for large
+  language models.
+\newblock In {\em Advances in Neural Information Processing Systems (NeurIPS)},
+  2024.
+
+\bibitem{yan2024crag}
+Shi-Qi Yan, Jia-Chen Gu, Yun Zhu, and Zhen-Hua Ling.
+\newblock Corrective retrieval augmented generation.
+\newblock {\em arXiv preprint arXiv:2401.15884}, 2024.
+
+\bibitem{asai2024selfrag}
+Akari Asai, Zeqiu Wu, Yizhong Wang, Avirup Sil, and Hannaneh Hajishirzi.
+\newblock Self-{RAG}: Learning to retrieve, generate, and critique through
+  self-reflection.
+\newblock In {\em International Conference on Learning Representations (ICLR)},
+  2024.
+
+\bibitem{jiang2023flare}
+Zhengbao Jiang, Frank~F. Xu, Luyu Gao, Zhiqing Sun, Qian Liu, Jane Dwivedi-Yu,
+  Yiming Yang, Jamie Callan, and Graham Neubig.
+\newblock Active retrieval augmented generation.
+\newblock In {\em Proceedings of Empirical Methods in Natural Language
+  Processing (EMNLP)}, 2023.
+
+\bibitem{jeong2024adaptiverag}
+Soyeong Jeong, Jinheon Baek, Sukmin Cho, Sung~Ju Hwang, and Jong~C. Park.
+\newblock Adaptive-{RAG}: Learning to adapt retrieval-augmented large language
+  models through question complexity.
+\newblock In {\em Proceedings of the North American Chapter of the ACL
+  (NAACL)}, 2024.
+
+\bibitem{cormack2009rrf}
+Gordon~V. Cormack, Charles L.~A. Clarke, and Stefan Buettcher.
+\newblock Reciprocal rank fusion outperforms {Condorcet} and individual rank
+  learning methods.
+\newblock In {\em Proceedings of ACM SIGIR}, 2009.
+
+\bibitem{kwiatkowski2019nq}
+Tom Kwiatkowski, Jennimaria Palomaki, Olivia Redfield, Michael Collins, Ankur
+  Parikh, Chris Alberti, Danielle Epstein, Illia Polosukhin, Jacob Devlin,
+  Kenton Lee, et~al.
+\newblock Natural questions: A benchmark for question answering research.
+\newblock {\em Transactions of the Association for Computational Linguistics
+  (TACL)}, 2019.
+
+\bibitem{yang2018hotpotqa}
+Zhilin Yang, Peng Qi, Saizheng Zhang, Yoshua Bengio, William~W. Cohen, Ruslan
+  Salakhutdinov, and Christopher~D. Manning.
+\newblock {HotpotQA}: A dataset for diverse, explainable multi-hop question
+  answering.
+\newblock In {\em Proceedings of Empirical Methods in Natural Language
+  Processing (EMNLP)}, 2018.
+
+\bibitem{trivedi2022musique}
+Harsh Trivedi, Niranjan Balasubramanian, Tushar Khot, and Ashish Sabharwal.
+\newblock {MuSiQue}: Multihop questions via single-hop question composition.
+\newblock {\em Transactions of the Association for Computational Linguistics
+  (TACL)}, 2022.
+
+\bibitem{ho2020twowiki}
+Xanh Ho, Anh-Khoa~Duong Nguyen, Saku Sugawara, and Akiko Aizawa.
+\newblock Constructing a multi-hop {QA} dataset for comprehensive evaluation of
+  reasoning steps.
+\newblock In {\em Proceedings of the International Conference on Computational
+  Linguistics (COLING)}, 2020.
+
+\bibitem{dasigi2021qasper}
+Pradeep Dasigi, Kyle Lo, Iz~Beltagy, Arman Cohan, Noah~A. Smith, and Matt
+  Gardner.
+\newblock A dataset of information-seeking questions and answers anchored in
+  research papers.
+\newblock In {\em Proceedings of the North American Chapter of the ACL
+  (NAACL)}, 2021.
+
+\bibitem{pang2022quality}
+Richard~Yuanzhe Pang, Alicia Parrish, Nitish Joshi, Nikita Nangia, Jason Phang,
+  Angelica Chen, Vishakh Padmakumar, Johnny Ma, Jana Thompson, He~He, and
+  Samuel~R. Bowman.
+\newblock {QuALITY}: Question answering with long input texts, yes!
+\newblock In {\em Proceedings of the North American Chapter of the ACL
+  (NAACL)}, 2022.
+
+\bibitem{wang2025hypergraphrag}
+Changjian Wang, Weihong Deng, Weili Guan, Quan Lu, and Ning Jiang.
+\newblock Cross-granularity hypergraph retrieval-augmented generation for
+  multi-hop question answering, 2025.
+
+\bibitem{du2026arag}
+Mingxuan Du, Benfeng Xu, Chiwei Zhu, Shaohan Wang, Pengyu Wang, Xiaorui Wang,
+  and Zhendong Mao.
+\newblock {A-RAG}: Scaling agentic retrieval-augmented generation via
+  hierarchical retrieval interfaces, 2026.
+
+\bibitem{chen2025logicrag}
+Shengyuan Chen, Chuang Zhou, Zheng Yuan, Qinggang Zhang, Zeyang Cui, Hao Chen,
+  Yilin Xiao, Jiannong Cao, and Xiao Huang.
+\newblock You don't need pre-built graphs for {RAG}: Retrieval augmented
+  generation with adaptive reasoning structures, 2025.
+
+\bibitem{shi2026reasoningtrees}
+Yuling Shi, Maolin Sun, Zijun Liu, Mo~Yang, Yixiong Fang, Tianran Sun, and
+  Xiaodong Gu.
+\newblock Reasoning in trees: Improving retrieval-augmented generation for
+  multi-hop question answering, 2026.
+
+\bibitem{zhang2025ragrouter}
+Jiarui Zhang, Xiangyu Liu, Yong Hu, Chaoyue Niu, Fan Wu, and Guihai Chen.
+\newblock {RAGRouter}: Learning to route queries to multiple
+  retrieval-augmented language models, 2025.
+
+\bibitem{guo2025routerag}
+Yucan Guo, Miao Su, Saiping Guan, Zihao Sun, Xiaolong Jin, Jiafeng Guo, and
+  Xueqi Cheng.
+\newblock {RouteRAG}: Efficient retrieval-augmented generation from text and
+  graph via reinforcement learning, 2025.
+
+\bibitem{wang2025infogainrag}
+Zihan Wang, Zihan Liang, Zhou Shao, Yufei Ma, Huangyu Dai, Ben Chen, Lingtao
+  Mao, Chenyi Lei, Yuqing Ding, and Han Li.
+\newblock {InfoGain-RAG}: Boosting retrieval-augmented generation via document
+  information gain-based reranking and filtering, 2025.
+
+\bibitem{zhao2025parallelsearch}
+Shu Zhao, Tan Yu, Anbang Xu, Japinder Singh, Aaditya Shukla, and Rama Akkiraju.
+\newblock {ParallelSearch}: Train your {LLM}s to decompose query and search
+  sub-queries in parallel with reinforcement learning, 2025.
+
+\bibitem{cao2025outofstyle}
+Tianyu Cao, Neel Bhandari, Akhila Yerukola, Akari Asai, and Maarten Sap.
+\newblock Out of style: {RAG}'s fragility to linguistic variation, 2025.
+
+\bibitem{oche2025ragreview}
+Agada~Joseph Oche, Ademola~Glory Folashade, Tirthankar Ghosal, and Arpan
+  Biswas.
+\newblock A systematic review of key retrieval-augmented generation ({RAG})
+  systems: Progress, gaps, and future directions, 2025.
+
+\bibitem{sharma2025ragsurvey}
+Chaitanya Sharma.
+\newblock Retrieval-augmented generation: A comprehensive survey of
+  architectures, enhancements, and robustness frontiers, 2025.
+
+\bibitem{luo2025globalrag}
+Qi~Luo, Xiaonan Li, Tingshuo Fan, Xinchi Chen, and Xipeng Qiu.
+\newblock Towards global retrieval augmented generation: A benchmark for
+  corpus-level reasoning, 2025.
+
+\bibitem{smucker2007sigtest}
+Mark~D. Smucker, James Allan, and Ben Carterette.
+\newblock A comparison of statistical significance tests for information
+  retrieval evaluation.
+\newblock In {\em Proceedings of ACM CIKM}, 2007.
+
+\bibitem{efron1979bootstrap}
+Bradley Efron.
+\newblock Bootstrap methods: Another look at the jackknife.
+\newblock {\em The Annals of Statistics}, 7(1):1--26, 1979.
+
+\bibitem{holm1979}
+Sture Holm.
+\newblock A simple sequentially rejective multiple test procedure.
+\newblock {\em Scandinavian Journal of Statistics}, 6(2):65--70, 1979.
+
+\bibitem{benjamini1995fdr}
+Yoav Benjamini and Yosef Hochberg.
+\newblock Controlling the false discovery rate: A practical and powerful
+  approach to multiple testing.
+\newblock {\em Journal of the Royal Statistical Society: Series B},
+  57(1):289--300, 1995.
+
+\bibitem{karpukhin2020dpr}
+Vladimir Karpukhin, Barlas O{\u{g}}uz, Sewon Min, Patrick Lewis, Ledell Wu,
+  Sergey Edunov, Danqi Chen, and Wen-tau Yih.
+\newblock Dense passage retrieval for open-domain question answering.
+\newblock In {\em Proceedings of Empirical Methods in Natural Language
+  Processing (EMNLP)}, 2020.
+
+\bibitem{izacard2022contriever}
+Gautier Izacard, Mathilde Caron, Lucas Hosseini, Sebastian Riedel, Piotr
+  Bojanowski, Armand Joulin, and Edouard Grave.
+\newblock Unsupervised dense information retrieval with contrastive learning.
+\newblock {\em Transactions on Machine Learning Research (TMLR)}, 2022.
+
+\bibitem{chen2024bgem3}
+Jianlv Chen, Shitao Xiao, Peitian Zhang, Kun Luo, Defu Lian, and Zheng Liu.
+\newblock {BGE M3-Embedding}: Multi-lingual, multi-functionality,
+  multi-granularity text embeddings through self-knowledge distillation.
+\newblock {\em arXiv preprint arXiv:2402.03216}, 2024.
+
+\bibitem{reimers2019sbert}
+Nils Reimers and Iryna Gurevych.
+\newblock Sentence-{BERT}: Sentence embeddings using siamese {BERT}-networks.
+\newblock In {\em Proceedings of Empirical Methods in Natural Language
+  Processing (EMNLP)}, 2019.
+
+\bibitem{nogueira2020monot5}
+Rodrigo Nogueira, Zhiying Jiang, Ronak Pradeep, and Jimmy Lin.
+\newblock Document ranking with a pretrained sequence-to-sequence model.
+\newblock In {\em Findings of the ACL: EMNLP}, 2020.
+
+\bibitem{santhanam2022colbertv2}
+Keshav Santhanam, Omar Khattab, Jon Saad-Falcon, Christopher Potts, and Matei
+  Zaharia.
+\newblock {ColBERTv2}: Effective and efficient retrieval via lightweight late
+  interaction.
+\newblock In {\em Proceedings of the North American Chapter of the ACL
+  (NAACL)}, 2022.
+
+\bibitem{joshi2017triviaqa}
+Mandar Joshi, Eunsol Choi, Daniel~S. Weld, and Luke Zettlemoyer.
+\newblock {TriviaQA}: A large scale distantly supervised challenge dataset for
+  reading comprehension.
+\newblock In {\em Proceedings of the Association for Computational Linguistics
+  (ACL)}, 2017.
+
+\bibitem{tang2024multihoprag}
+Yixuan Tang and Yi~Yang.
+\newblock {MultiHop-RAG}: Benchmarking retrieval-augmented generation for
+  multi-hop queries.
+\newblock {\em arXiv preprint arXiv:2401.15391}, 2024.
+
+\bibitem{thakur2021beir}
+Nandan Thakur, Nils Reimers, Andreas R{\"u}ckl{\'e}, Abhishek Srivastava, and
+  Iryna Gurevych.
+\newblock {BEIR}: A heterogeneous benchmark for zero-shot evaluation of
+  information retrieval models.
+\newblock In {\em NeurIPS Datasets and Benchmarks Track}, 2021.
+
+\bibitem{petroni2021kilt}
+Fabio Petroni, Aleksandra Piktus, Angela Fan, Patrick Lewis, Majid Yazdani,
+  Nicola De~Cao, James Thorne, Yacine Jernite, Vladimir Karpukhin, Jean
+  Maillard, et~al.
+\newblock {KILT}: a benchmark for knowledge intensive language tasks.
+\newblock In {\em Proceedings of the North American Chapter of the ACL
+  (NAACL)}, 2021.
+
+\bibitem{husain2019codesearchnet}
+Hamel Husain, Ho-Hsiang Wu, Tiferet Gazit, Miltiadis Allamanis, and Marc
+  Brockschmidt.
+\newblock {CodeSearchNet} challenge: Evaluating the state of semantic code
+  search.
+\newblock {\em arXiv preprint arXiv:1909.09436}, 2019.
+
+\bibitem{jarvelin2002ndcg}
+Kalervo J{\"a}rvelin and Jaana Kek{\"a}l{\"a}inen.
+\newblock Cumulated gain-based evaluation of {IR} techniques.
+\newblock {\em ACM Transactions on Information Systems (TOIS)}, 20(4):422--446,
+  2002.
+
+\bibitem{gebru2021datasheets}
+Timnit Gebru, Jamie Morgenstern, Briana Vecchione, Jennifer~Wortman Vaughan,
+  Hanna Wallach, Hal Daum{\'e}~III, and Kate Crawford.
+\newblock Datasheets for datasets.
+\newblock {\em Communications of the ACM}, 64(12):86--92, 2021.
+
+\bibitem{mcinnes2018umap}
+Leland McInnes, John Healy, and James Melville.
+\newblock {UMAP}: Uniform manifold approximation and projection for dimension
+  reduction.
+\newblock {\em arXiv preprint arXiv:1802.03426}, 2018.
+
+\bibitem{schwarz1978bic}
+Gideon Schwarz.
+\newblock Estimating the dimension of a model.
+\newblock {\em The Annals of Statistics}, 6(2):461--464, 1978.
+
+\bibitem{hamilton2017graphsage}
+William~L. Hamilton, Rex Ying, and Jure Leskovec.
+\newblock Inductive representation learning on large graphs.
+\newblock In {\em Advances in Neural Information Processing Systems (NeurIPS)},
+  2017.
+
+\bibitem{velickovic2019dgi}
+Petar Veli{\v{c}}kovi{\'c}, William Fedus, William~L. Hamilton, Pietro Li{\`o},
+  Yoshua Bengio, and R~Devon Hjelm.
+\newblock Deep graph infomax.
+\newblock In {\em International Conference on Learning Representations (ICLR)},
+  2019.
+
+\bibitem{haveliwala2002ppr}
+Taher~H. Haveliwala.
+\newblock Topic-sensitive {PageRank}.
+\newblock In {\em Proceedings of the International World Wide Web Conference
+  (WWW)}, 2002.
+
+\bibitem{wang2025jinarerankerv3}
+Feng Wang, Yuqing Li, and Han Xiao.
+\newblock jina-reranker-v3: Last but not late interaction for listwise document
+  reranking, 2025.
+
+\bibitem{zheng2023llmjudge}
+Lianmin Zheng, Wei-Lin Chiang, Ying Sheng, Siyuan Zhuang, Zhanghao Wu, Yonghao
+  Zhuang, Zi~Lin, Zhuohan Li, Dacheng Li, Eric~P. Xing, Hao Zhang, Joseph~E.
+  Gonzalez, and Ion Stoica.
+\newblock Judging {LLM}-as-a-judge with {MT-Bench} and {Chatbot Arena}.
+\newblock In {\em Advances in Neural Information Processing Systems (NeurIPS),
+  Datasets and Benchmarks Track}, 2023.
+
+\bibitem{min2023factscore}
+Sewon Min, Kalpesh Krishna, Xinxi Lyu, Mike Lewis, Wen-tau Yih, Pang~Wei Koh,
+  Mohit Iyyer, Luke Zettlemoyer, and Hannaneh Hajishirzi.
+\newblock {FActScore}: Fine-grained atomic evaluation of factual precision in
+  long form text generation.
+\newblock In {\em Proceedings of Empirical Methods in Natural Language
+  Processing (EMNLP)}, 2023.
+
+\bibitem{es2024ragas}
+Shahul Es, Jithin James, Luis Espinosa-Anke, and Steven Schockaert.
+\newblock {RAGAs}: Automated evaluation of retrieval augmented generation.
+\newblock In {\em Proceedings of the European Chapter of the ACL (EACL): System
+  Demonstrations}, 2024.
+
+\end{thebibliography}

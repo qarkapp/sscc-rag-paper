@@ -1,0 +1,74 @@
+[
+  {
+    "doc_id": "web-http:README.md",
+    "collection_id": "web-http",
+    "filename": "README.md",
+    "modality": "markdown",
+    "source_ref": "github://psf/requests@main:README.md",
+    "license": "Apache-2.0"
+  },
+  {
+    "doc_id": "web-http:src/requests/api.py",
+    "collection_id": "web-http",
+    "filename": "api.py",
+    "modality": "code",
+    "source_ref": "github://psf/requests@main:src/requests/api.py",
+    "license": "Apache-2.0"
+  },
+  {
+    "doc_id": "web-http:wiki-Hypertext_Transfer_Protocol",
+    "collection_id": "web-http",
+    "filename": "Hypertext Transfer Protocol.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Hypertext Transfer Protocol",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "rag-systems:arxiv-2401.18059",
+    "collection_id": "rag-systems",
+    "filename": "2401.18059.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://2401.18059",
+    "license": "arXiv-nonexclusive"
+  },
+  {
+    "doc_id": "rag-systems:wiki-Retrieval-augmented_generation",
+    "collection_id": "rag-systems",
+    "filename": "Retrieval-augmented generation.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Retrieval-augmented generation",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "iris-data:iris.csv",
+    "collection_id": "iris-data",
+    "filename": "iris.csv",
+    "modality": "table",
+    "source_ref": "csv://https://raw.githubusercontent.com/plotly/datasets/master/iris.csv",
+    "license": "validation-only"
+  },
+  {
+    "doc_id": "iris-data:wiki-Iris_flower_data_set",
+    "collection_id": "iris-data",
+    "filename": "Iris flower data set.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Iris flower data set",
+    "license": "CC-BY-SA-4.0"
+  },
+  {
+    "doc_id": "dimreduction:arxiv-1802.03426",
+    "collection_id": "dimreduction",
+    "filename": "1802.03426.pdf",
+    "modality": "pdf",
+    "source_ref": "arxiv://1802.03426",
+    "license": "arXiv-nonexclusive"
+  },
+  {
+    "doc_id": "dimreduction:wiki-Dimensionality_reduction",
+    "collection_id": "dimreduction",
+    "filename": "Dimensionality reduction.txt",
+    "modality": "prose",
+    "source_ref": "wikipedia://Dimensionality reduction",
+    "license": "CC-BY-SA-4.0"
+  }
+]

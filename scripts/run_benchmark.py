@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import os
 import sys
 import time
 from pathlib import Path
@@ -139,7 +140,13 @@ async def main() -> None:
 
     cache = CallCache(f".cache/{name}", CacheMode.READ_WRITE)
     embedder = OpenAICompatEmbedder(BackendConfig(provider="omlx", model="bge-m3-mlx-fp16"), cache)
-    reranker = RerankClient(BackendConfig(provider="omlx", model="jina-reranker-v3-mlx"), cache)
+    # Reranker model is swappable for the cross-encoder robustness check (M1): the
+    # default is the listwise jina-reranker-v3; SAGE_RERANK_MODEL can select a plain
+    # pairwise cross-encoder (e.g. BAAI-bge-reranker-v2-m3) to test whether the null
+    # results are an artifact of the listwise reranker's cross-candidate interaction.
+    rerank_model = os.environ.get("SAGE_RERANK_MODEL", "jina-reranker-v3-mlx")
+    reranker = RerankClient(BackendConfig(provider="omlx", model=rerank_model), cache)
+    print(f"reranker: {rerank_model}", flush=True)
     generator = ChatGenerator(
         BackendConfig(provider="openrouter", model=SAGE_GENERATOR, timeout=120), cache
     )
@@ -269,6 +276,7 @@ async def main() -> None:
     dump = {
         "name": name,
         "split": split,
+        "reranker": rerank_model,
         "qids": qids,
         "configs": {n: {"metrics": o.metrics, "ndcg": o.per_query, "f1": a.f1, "em": a.em}
                     for n, o, a in rows},
@@ -276,7 +284,8 @@ async def main() -> None:
         "routing": decisions,
         "best_fixed": best_fixed,
     }
-    Path(f"results/{name}_{split}_perquery.json").write_text(json.dumps(dump))
+    suffix = os.environ.get("SAGE_RESULT_SUFFIX", "")
+    Path(f"results/{name}_{split}_perquery{suffix}.json").write_text(json.dumps(dump))
     print(f"\ntotal {time.time() - t0:.0f}s")
 
 

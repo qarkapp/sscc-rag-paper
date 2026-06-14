@@ -1,0 +1,35 @@
+[
+  {
+    "collection_id": "web-http",
+    "title": "Requests + HTTP",
+    "doc_ids": [
+      "web-http:README.md",
+      "web-http:src/requests/api.py",
+      "web-http:wiki-Hypertext_Transfer_Protocol"
+    ]
+  },
+  {
+    "collection_id": "rag-systems",
+    "title": "RAG systems",
+    "doc_ids": [
+      "rag-systems:arxiv-2401.18059",
+      "rag-systems:wiki-Retrieval-augmented_generation"
+    ]
+  },
+  {
+    "collection_id": "iris-data",
+    "title": "Iris dataset",
+    "doc_ids": [
+      "iris-data:iris.csv",
+      "iris-data:wiki-Iris_flower_data_set"
+    ]
+  },
+  {
+    "collection_id": "dimreduction",
+    "title": "Dimensionality reduction",
+    "doc_ids": [
+      "dimreduction:arxiv-1802.03426",
+      "dimreduction:wiki-Dimensionality_reduction"
+    ]
+  }
+]

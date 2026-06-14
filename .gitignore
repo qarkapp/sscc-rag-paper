@@ -17,8 +17,12 @@ wheels/
 # Local secrets and runtime artifacts
 .env
 .cache/
-data/cache/
 *.lance/
 runs/
-data/
+data/*
+!data/hetdocqa/
+!data/hetdocqa-validation/
 .DS_Store
+
+# Internal working docs (not part of the public release)
+paper/REVIEW.md

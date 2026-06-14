@@ -1,0 +1,968 @@
+[
+  {
+    "collection_id": "arxiv-2005.11401",
+    "title": "Retrieval-augmented generation (2005.11401)",
+    "doc_ids": [
+      "arxiv-2005.11401:arxiv-2005.11401",
+      "arxiv-2005.11401:wiki-Retrieval-augmented_generation"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2004.04906",
+    "title": "Information retrieval (2004.04906)",
+    "doc_ids": [
+      "arxiv-2004.04906:arxiv-2004.04906",
+      "arxiv-2004.04906:wiki-Information_retrieval"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2212.10496",
+    "title": "Information retrieval (2212.10496)",
+    "doc_ids": [
+      "arxiv-2212.10496:arxiv-2212.10496",
+      "arxiv-2212.10496:wiki-Information_retrieval"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2401.18059",
+    "title": "Retrieval-augmented generation (2401.18059)",
+    "doc_ids": [
+      "arxiv-2401.18059:arxiv-2401.18059",
+      "arxiv-2401.18059:wiki-Retrieval-augmented_generation"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2401.15884",
+    "title": "Retrieval-augmented generation (2401.15884)",
+    "doc_ids": [
+      "arxiv-2401.15884:arxiv-2401.15884",
+      "arxiv-2401.15884:wiki-Retrieval-augmented_generation"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2310.11511",
+    "title": "Retrieval-augmented generation (2310.11511)",
+    "doc_ids": [
+      "arxiv-2310.11511:arxiv-2310.11511",
+      "arxiv-2310.11511:wiki-Retrieval-augmented_generation"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2112.09118",
+    "title": "Information retrieval (2112.09118)",
+    "doc_ids": [
+      "arxiv-2112.09118:arxiv-2112.09118",
+      "arxiv-2112.09118:wiki-Information_retrieval"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2004.12832",
+    "title": "Information retrieval (2004.12832)",
+    "doc_ids": [
+      "arxiv-2004.12832:arxiv-2004.12832",
+      "arxiv-2004.12832:wiki-Information_retrieval"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1706.02216",
+    "title": "Graph neural network (1706.02216)",
+    "doc_ids": [
+      "arxiv-1706.02216:arxiv-1706.02216",
+      "arxiv-1706.02216:wiki-Graph_neural_network"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1609.02907",
+    "title": "Graph neural network (1609.02907)",
+    "doc_ids": [
+      "arxiv-1609.02907:arxiv-1609.02907",
+      "arxiv-1609.02907:wiki-Graph_neural_network"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1710.10903",
+    "title": "Graph neural network (1710.10903)",
+    "doc_ids": [
+      "arxiv-1710.10903:arxiv-1710.10903",
+      "arxiv-1710.10903:wiki-Graph_neural_network"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1810.00826",
+    "title": "Graph neural network (1810.00826)",
+    "doc_ids": [
+      "arxiv-1810.00826:arxiv-1810.00826",
+      "arxiv-1810.00826:wiki-Graph_neural_network"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1706.03762",
+    "title": "Transformer (deep learning architecture) (1706.03762)",
+    "doc_ids": [
+      "arxiv-1706.03762:arxiv-1706.03762",
+      "arxiv-1706.03762:wiki-Transformer_(deep_learning_architecture)"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1810.04805",
+    "title": "BERT (language model) (1810.04805)",
+    "doc_ids": [
+      "arxiv-1810.04805:arxiv-1810.04805",
+      "arxiv-1810.04805:wiki-BERT_(language_model)"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2005.14165",
+    "title": "GPT-3 (2005.14165)",
+    "doc_ids": [
+      "arxiv-2005.14165:arxiv-2005.14165",
+      "arxiv-2005.14165:wiki-GPT-3"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1907.11692",
+    "title": "BERT (language model) (1907.11692)",
+    "doc_ids": [
+      "arxiv-1907.11692:arxiv-1907.11692",
+      "arxiv-1907.11692:wiki-BERT_(language_model)"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1802.03426",
+    "title": "Dimensionality reduction (1802.03426)",
+    "doc_ids": [
+      "arxiv-1802.03426:arxiv-1802.03426",
+      "arxiv-1802.03426:wiki-Dimensionality_reduction"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1908.10084",
+    "title": "Word embedding (1908.10084)",
+    "doc_ids": [
+      "arxiv-1908.10084:arxiv-1908.10084",
+      "arxiv-1908.10084:wiki-Word_embedding"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2212.03533",
+    "title": "Word embedding (2212.03533)",
+    "doc_ids": [
+      "arxiv-2212.03533:arxiv-2212.03533",
+      "arxiv-2212.03533:wiki-Word_embedding"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1310.4546",
+    "title": "Word embedding (1310.4546)",
+    "doc_ids": [
+      "arxiv-1310.4546:arxiv-1310.4546",
+      "arxiv-1310.4546:wiki-Word_embedding"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1809.09600",
+    "title": "Question answering (1809.09600)",
+    "doc_ids": [
+      "arxiv-1809.09600:arxiv-1809.09600",
+      "arxiv-1809.09600:wiki-Question_answering"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2108.00573",
+    "title": "Question answering (2108.00573)",
+    "doc_ids": [
+      "arxiv-2108.00573:arxiv-2108.00573",
+      "arxiv-2108.00573:wiki-Question_answering"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1705.03551",
+    "title": "Question answering (1705.03551)",
+    "doc_ids": [
+      "arxiv-1705.03551:arxiv-1705.03551",
+      "arxiv-1705.03551:wiki-Question_answering"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1412.6980",
+    "title": "Stochastic gradient descent (1412.6980)",
+    "doc_ids": [
+      "arxiv-1412.6980:arxiv-1412.6980",
+      "arxiv-1412.6980:wiki-Stochastic_gradient_descent"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1512.03385",
+    "title": "Residual neural network (1512.03385)",
+    "doc_ids": [
+      "arxiv-1512.03385:arxiv-1512.03385",
+      "arxiv-1512.03385:wiki-Residual_neural_network"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1406.2661",
+    "title": "Generative adversarial network (1406.2661)",
+    "doc_ids": [
+      "arxiv-1406.2661:arxiv-1406.2661",
+      "arxiv-1406.2661:wiki-Generative_adversarial_network"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1312.6114",
+    "title": "Variational autoencoder (1312.6114)",
+    "doc_ids": [
+      "arxiv-1312.6114:arxiv-1312.6114",
+      "arxiv-1312.6114:wiki-Variational_autoencoder"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2403.05530",
+    "title": "Large language model (2403.05530)",
+    "doc_ids": [
+      "arxiv-2403.05530:arxiv-2403.05530",
+      "arxiv-2403.05530:wiki-Large_language_model"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2203.02155",
+    "title": "Reinforcement learning from human feedback (2203.02155)",
+    "doc_ids": [
+      "arxiv-2203.02155:arxiv-2203.02155",
+      "arxiv-2203.02155:wiki-Reinforcement_learning_from_human_feedback"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2302.13971",
+    "title": "Llama (language model) (2302.13971)",
+    "doc_ids": [
+      "arxiv-2302.13971:arxiv-2302.13971",
+      "arxiv-2302.13971:wiki-Llama_(language_model)"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2307.09288",
+    "title": "Llama (language model) (2307.09288)",
+    "doc_ids": [
+      "arxiv-2307.09288:arxiv-2307.09288",
+      "arxiv-2307.09288:wiki-Llama_(language_model)"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1910.10683",
+    "title": "Transformer (deep learning architecture) (1910.10683)",
+    "doc_ids": [
+      "arxiv-1910.10683:arxiv-1910.10683",
+      "arxiv-1910.10683:wiki-Transformer_(deep_learning_architecture)"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2104.08821",
+    "title": "Word embedding (2104.08821)",
+    "doc_ids": [
+      "arxiv-2104.08821:arxiv-2104.08821",
+      "arxiv-2104.08821:wiki-Word_embedding"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2002.08909",
+    "title": "Retrieval-augmented generation (2002.08909)",
+    "doc_ids": [
+      "arxiv-2002.08909:arxiv-2002.08909",
+      "arxiv-2002.08909:wiki-Retrieval-augmented_generation"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2112.04426",
+    "title": "Retrieval-augmented generation (2112.04426)",
+    "doc_ids": [
+      "arxiv-2112.04426:arxiv-2112.04426",
+      "arxiv-2112.04426:wiki-Retrieval-augmented_generation"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2208.03299",
+    "title": "Retrieval-augmented generation (2208.03299)",
+    "doc_ids": [
+      "arxiv-2208.03299:arxiv-2208.03299",
+      "arxiv-2208.03299:wiki-Retrieval-augmented_generation"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2007.01282",
+    "title": "Question answering (2007.01282)",
+    "doc_ids": [
+      "arxiv-2007.01282:arxiv-2007.01282",
+      "arxiv-2007.01282:wiki-Question_answering"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1606.05250",
+    "title": "Question answering (1606.05250)",
+    "doc_ids": [
+      "arxiv-1606.05250:arxiv-1606.05250",
+      "arxiv-1606.05250:wiki-Question_answering"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1611.09268",
+    "title": "Information retrieval (1611.09268)",
+    "doc_ids": [
+      "arxiv-1611.09268:arxiv-1611.09268",
+      "arxiv-1611.09268:wiki-Information_retrieval"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2104.08663",
+    "title": "Information retrieval (2104.08663)",
+    "doc_ids": [
+      "arxiv-2104.08663:arxiv-2104.08663",
+      "arxiv-2104.08663:wiki-Information_retrieval"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1409.3215",
+    "title": "Recurrent neural network (1409.3215)",
+    "doc_ids": [
+      "arxiv-1409.3215:arxiv-1409.3215",
+      "arxiv-1409.3215:wiki-Recurrent_neural_network"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1508.04025",
+    "title": "Attention (machine learning) (1508.04025)",
+    "doc_ids": [
+      "arxiv-1508.04025:arxiv-1508.04025",
+      "arxiv-1508.04025:wiki-Attention_(machine_learning)"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1503.02531",
+    "title": "Knowledge distillation (1503.02531)",
+    "doc_ids": [
+      "arxiv-1503.02531:arxiv-1503.02531",
+      "arxiv-1503.02531:wiki-Knowledge_distillation"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2004.05150",
+    "title": "Transformer (deep learning architecture) (2004.05150)",
+    "doc_ids": [
+      "arxiv-2004.05150:arxiv-2004.05150",
+      "arxiv-2004.05150:wiki-Transformer_(deep_learning_architecture)"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2103.00020",
+    "title": "Contrastive learning (2103.00020)",
+    "doc_ids": [
+      "arxiv-2103.00020:arxiv-2103.00020",
+      "arxiv-2103.00020:wiki-Contrastive_learning"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2010.11929",
+    "title": "Vision transformer (2010.11929)",
+    "doc_ids": [
+      "arxiv-2010.11929:arxiv-2010.11929",
+      "arxiv-2010.11929:wiki-Vision_transformer"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1505.04597",
+    "title": "Convolutional neural network (1505.04597)",
+    "doc_ids": [
+      "arxiv-1505.04597:arxiv-1505.04597",
+      "arxiv-1505.04597:wiki-Convolutional_neural_network"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1301.3781",
+    "title": "Word embedding (1301.3781)",
+    "doc_ids": [
+      "arxiv-1301.3781:arxiv-1301.3781",
+      "arxiv-1301.3781:wiki-Word_embedding"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2305.14314",
+    "title": "Large language model (2305.14314)",
+    "doc_ids": [
+      "arxiv-2305.14314:arxiv-2305.14314",
+      "arxiv-2305.14314:wiki-Large_language_model"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2201.11903",
+    "title": "Large language model (2201.11903)",
+    "doc_ids": [
+      "arxiv-2201.11903:arxiv-2201.11903",
+      "arxiv-2201.11903:wiki-Large_language_model"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1409.1556",
+    "title": "Convolutional neural network (1409.1556)",
+    "doc_ids": [
+      "arxiv-1409.1556:arxiv-1409.1556",
+      "arxiv-1409.1556:wiki-Convolutional_neural_network"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1512.00567",
+    "title": "Convolutional neural network (1512.00567)",
+    "doc_ids": [
+      "arxiv-1512.00567:arxiv-1512.00567",
+      "arxiv-1512.00567:wiki-Convolutional_neural_network"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1608.06993",
+    "title": "Convolutional neural network (1608.06993)",
+    "doc_ids": [
+      "arxiv-1608.06993:arxiv-1608.06993",
+      "arxiv-1608.06993:wiki-Convolutional_neural_network"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1502.03167",
+    "title": "Batch normalization (1502.03167)",
+    "doc_ids": [
+      "arxiv-1502.03167:arxiv-1502.03167",
+      "arxiv-1502.03167:wiki-Batch_normalization"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1607.06450",
+    "title": "Deep learning (1607.06450)",
+    "doc_ids": [
+      "arxiv-1607.06450:arxiv-1607.06450",
+      "arxiv-1607.06450:wiki-Deep_learning"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1506.01497",
+    "title": "Object detection (1506.01497)",
+    "doc_ids": [
+      "arxiv-1506.01497:arxiv-1506.01497",
+      "arxiv-1506.01497:wiki-Object_detection"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1804.02767",
+    "title": "Object detection (1804.02767)",
+    "doc_ids": [
+      "arxiv-1804.02767:arxiv-1804.02767",
+      "arxiv-1804.02767:wiki-Object_detection"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1905.11946",
+    "title": "Convolutional neural network (1905.11946)",
+    "doc_ids": [
+      "arxiv-1905.11946:arxiv-1905.11946",
+      "arxiv-1905.11946:wiki-Convolutional_neural_network"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2106.09685",
+    "title": "Fine-tuning (deep learning) (2106.09685)",
+    "doc_ids": [
+      "arxiv-2106.09685:arxiv-2106.09685",
+      "arxiv-2106.09685:wiki-Fine-tuning_(deep_learning)"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2104.08691",
+    "title": "Prompt engineering (2104.08691)",
+    "doc_ids": [
+      "arxiv-2104.08691:arxiv-2104.08691",
+      "arxiv-2104.08691:wiki-Prompt_engineering"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2204.02311",
+    "title": "Large language model (2204.02311)",
+    "doc_ids": [
+      "arxiv-2204.02311:arxiv-2204.02311",
+      "arxiv-2204.02311:wiki-Large_language_model"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2210.11416",
+    "title": "Large language model (2210.11416)",
+    "doc_ids": [
+      "arxiv-2210.11416:arxiv-2210.11416",
+      "arxiv-2210.11416:wiki-Large_language_model"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2211.05100",
+    "title": "Large language model (2211.05100)",
+    "doc_ids": [
+      "arxiv-2211.05100:arxiv-2211.05100",
+      "arxiv-2211.05100:wiki-Large_language_model"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2206.07682",
+    "title": "Large language model (2206.07682)",
+    "doc_ids": [
+      "arxiv-2206.07682:arxiv-2206.07682",
+      "arxiv-2206.07682:wiki-Large_language_model"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1804.07461",
+    "title": "Natural language processing (1804.07461)",
+    "doc_ids": [
+      "arxiv-1804.07461:arxiv-1804.07461",
+      "arxiv-1804.07461:wiki-Natural_language_processing"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1905.00537",
+    "title": "Natural language processing (1905.00537)",
+    "doc_ids": [
+      "arxiv-1905.00537:arxiv-1905.00537",
+      "arxiv-1905.00537:wiki-Natural_language_processing"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2009.03300",
+    "title": "Machine learning (2009.03300)",
+    "doc_ids": [
+      "arxiv-2009.03300:arxiv-2009.03300",
+      "arxiv-2009.03300:wiki-Machine_learning"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1903.00161",
+    "title": "Question answering (1903.00161)",
+    "doc_ids": [
+      "arxiv-1903.00161:arxiv-1903.00161",
+      "arxiv-1903.00161:wiki-Question_answering"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2104.09864",
+    "title": "Transformer (deep learning architecture) (2104.09864)",
+    "doc_ids": [
+      "arxiv-2104.09864:arxiv-2104.09864",
+      "arxiv-2104.09864:wiki-Transformer_(deep_learning_architecture)"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1412.3555",
+    "title": "Recurrent neural network (1412.3555)",
+    "doc_ids": [
+      "arxiv-1412.3555:arxiv-1412.3555",
+      "arxiv-1412.3555:wiki-Recurrent_neural_network"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1410.3916",
+    "title": "Artificial neural network (1410.3916)",
+    "doc_ids": [
+      "arxiv-1410.3916:arxiv-1410.3916",
+      "arxiv-1410.3916:wiki-Artificial_neural_network"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2302.04761",
+    "title": "Large language model (2302.04761)",
+    "doc_ids": [
+      "arxiv-2302.04761:arxiv-2302.04761",
+      "arxiv-2302.04761:wiki-Large_language_model"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2201.08239",
+    "title": "Chatbot (2201.08239)",
+    "doc_ids": [
+      "arxiv-2201.08239:arxiv-2201.08239",
+      "arxiv-2201.08239:wiki-Chatbot"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2303.08774",
+    "title": "GPT-4 (2303.08774)",
+    "doc_ids": [
+      "arxiv-2303.08774:arxiv-2303.08774",
+      "arxiv-2303.08774:wiki-GPT-4"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1312.5602",
+    "title": "Reinforcement learning (1312.5602)",
+    "doc_ids": [
+      "arxiv-1312.5602:arxiv-1312.5602",
+      "arxiv-1312.5602:wiki-Reinforcement_learning"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1602.01783",
+    "title": "Reinforcement learning (1602.01783)",
+    "doc_ids": [
+      "arxiv-1602.01783:arxiv-1602.01783",
+      "arxiv-1602.01783:wiki-Reinforcement_learning"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1707.06347",
+    "title": "Reinforcement learning (1707.06347)",
+    "doc_ids": [
+      "arxiv-1707.06347:arxiv-1707.06347",
+      "arxiv-1707.06347:wiki-Reinforcement_learning"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1509.02971",
+    "title": "Reinforcement learning (1509.02971)",
+    "doc_ids": [
+      "arxiv-1509.02971:arxiv-1509.02971",
+      "arxiv-1509.02971:wiki-Reinforcement_learning"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1412.6572",
+    "title": "Adversarial machine learning (1412.6572)",
+    "doc_ids": [
+      "arxiv-1412.6572:arxiv-1412.6572",
+      "arxiv-1412.6572:wiki-Adversarial_machine_learning"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1312.6199",
+    "title": "Adversarial machine learning (1312.6199)",
+    "doc_ids": [
+      "arxiv-1312.6199:arxiv-1312.6199",
+      "arxiv-1312.6199:wiki-Adversarial_machine_learning"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1611.03530",
+    "title": "Machine learning (1611.03530)",
+    "doc_ids": [
+      "arxiv-1611.03530:arxiv-1611.03530",
+      "arxiv-1611.03530:wiki-Machine_learning"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1207.0580",
+    "title": "Deep learning (1207.0580)",
+    "doc_ids": [
+      "arxiv-1207.0580:arxiv-1207.0580",
+      "arxiv-1207.0580:wiki-Deep_learning"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1502.01852",
+    "title": "Deep learning (1502.01852)",
+    "doc_ids": [
+      "arxiv-1502.01852:arxiv-1502.01852",
+      "arxiv-1502.01852:wiki-Deep_learning"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1801.06146",
+    "title": "Natural language processing (1801.06146)",
+    "doc_ids": [
+      "arxiv-1801.06146:arxiv-1801.06146",
+      "arxiv-1801.06146:wiki-Natural_language_processing"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1802.05365",
+    "title": "Natural language processing (1802.05365)",
+    "doc_ids": [
+      "arxiv-1802.05365:arxiv-1802.05365",
+      "arxiv-1802.05365:wiki-Natural_language_processing"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1408.5882",
+    "title": "Natural language processing (1408.5882)",
+    "doc_ids": [
+      "arxiv-1408.5882:arxiv-1408.5882",
+      "arxiv-1408.5882:wiki-Natural_language_processing"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1703.03400",
+    "title": "Meta-learning (computer science) (1703.03400)",
+    "doc_ids": [
+      "arxiv-1703.03400:arxiv-1703.03400",
+      "arxiv-1703.03400:wiki-Meta-learning_(computer_science)"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2005.12872",
+    "title": "Object detection (2005.12872)",
+    "doc_ids": [
+      "arxiv-2005.12872:arxiv-2005.12872",
+      "arxiv-2005.12872:wiki-Object_detection"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2111.06377",
+    "title": "Self-supervised learning (2111.06377)",
+    "doc_ids": [
+      "arxiv-2111.06377:arxiv-2111.06377",
+      "arxiv-2111.06377:wiki-Self-supervised_learning"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2006.11477",
+    "title": "Speech recognition (2006.11477)",
+    "doc_ids": [
+      "arxiv-2006.11477:arxiv-2006.11477",
+      "arxiv-2006.11477:wiki-Speech_recognition"
+    ]
+  },
+  {
+    "collection_id": "arxiv-1503.03832",
+    "title": "Facial recognition system (1503.03832)",
+    "doc_ids": [
+      "arxiv-1503.03832:arxiv-1503.03832",
+      "arxiv-1503.03832:wiki-Facial_recognition_system"
+    ]
+  },
+  {
+    "collection_id": "arxiv-2010.11934",
+    "title": "Natural language processing (2010.11934)",
+    "doc_ids": [
+      "arxiv-2010.11934:arxiv-2010.11934",
+      "arxiv-2010.11934:wiki-Natural_language_processing"
+    ]
+  },
+  {
+    "collection_id": "requests",
+    "title": "requests + Hypertext Transfer Protocol",
+    "doc_ids": [
+      "requests:README.md",
+      "requests:src/requests/api.py",
+      "requests:src/requests/sessions.py",
+      "requests:wiki-Hypertext_Transfer_Protocol"
+    ]
+  },
+  {
+    "collection_id": "flask",
+    "title": "flask + Web framework",
+    "doc_ids": [
+      "flask:README.md",
+      "flask:src/flask/app.py",
+      "flask:wiki-Web_framework"
+    ]
+  },
+  {
+    "collection_id": "click",
+    "title": "click + Command-line interface",
+    "doc_ids": [
+      "click:README.md",
+      "click:src/click/core.py",
+      "click:wiki-Command-line_interface"
+    ]
+  },
+  {
+    "collection_id": "fastapi",
+    "title": "fastapi + Web API",
+    "doc_ids": [
+      "fastapi:README.md",
+      "fastapi:fastapi/applications.py",
+      "fastapi:wiki-Web_API"
+    ]
+  },
+  {
+    "collection_id": "httpx",
+    "title": "httpx + HTTP",
+    "doc_ids": [
+      "httpx:README.md",
+      "httpx:httpx/_client.py",
+      "httpx:wiki-HTTP"
+    ]
+  },
+  {
+    "collection_id": "pydantic",
+    "title": "pydantic + Data validation",
+    "doc_ids": [
+      "pydantic:README.md",
+      "pydantic:pydantic/main.py",
+      "pydantic:wiki-Data_validation"
+    ]
+  },
+  {
+    "collection_id": "rich",
+    "title": "rich + Terminal emulator",
+    "doc_ids": [
+      "rich:README.md",
+      "rich:rich/console.py",
+      "rich:wiki-Terminal_emulator"
+    ]
+  },
+  {
+    "collection_id": "typer",
+    "title": "typer + Command-line interface",
+    "doc_ids": [
+      "typer:README.md",
+      "typer:typer/main.py",
+      "typer:wiki-Command-line_interface"
+    ]
+  },
+  {
+    "collection_id": "pandas",
+    "title": "pandas + Pandas (software)",
+    "doc_ids": [
+      "pandas:README.md",
+      "pandas:pandas/core/frame.py",
+      "pandas:wiki-Pandas_(software)"
+    ]
+  },
+  {
+    "collection_id": "numpy",
+    "title": "numpy + NumPy",
+    "doc_ids": [
+      "numpy:README.md",
+      "numpy:numpy/__init__.py",
+      "numpy:wiki-NumPy"
+    ]
+  },
+  {
+    "collection_id": "sklearn",
+    "title": "scikit-learn + Scikit-learn",
+    "doc_ids": [
+      "sklearn:README.rst",
+      "sklearn:sklearn/base.py",
+      "sklearn:wiki-Scikit-learn"
+    ]
+  },
+  {
+    "collection_id": "starlette",
+    "title": "starlette + Web framework",
+    "doc_ids": [
+      "starlette:README.md",
+      "starlette:starlette/applications.py",
+      "starlette:wiki-Web_framework"
+    ]
+  },
+  {
+    "collection_id": "pytest",
+    "title": "pytest + Software testing",
+    "doc_ids": [
+      "pytest:README.rst",
+      "pytest:src/_pytest/main.py",
+      "pytest:wiki-Software_testing"
+    ]
+  },
+  {
+    "collection_id": "scipy",
+    "title": "scipy + SciPy",
+    "doc_ids": [
+      "scipy:README.rst",
+      "scipy:scipy/integrate/_quadpack_py.py",
+      "scipy:wiki-SciPy"
+    ]
+  },
+  {
+    "collection_id": "aiohttp",
+    "title": "aiohttp + HTTP",
+    "doc_ids": [
+      "aiohttp:README.rst",
+      "aiohttp:aiohttp/client.py",
+      "aiohttp:wiki-HTTP"
+    ]
+  },
+  {
+    "collection_id": "poetry",
+    "title": "poetry + Package manager",
+    "doc_ids": [
+      "poetry:README.md",
+      "poetry:src/poetry/installation/installer.py",
+      "poetry:wiki-Package_manager"
+    ]
+  },
+  {
+    "collection_id": "uvicorn",
+    "title": "uvicorn + Web server",
+    "doc_ids": [
+      "uvicorn:README.md",
+      "uvicorn:uvicorn/server.py",
+      "uvicorn:wiki-Web_server"
+    ]
+  },
+  {
+    "collection_id": "networkx",
+    "title": "networkx + Graph theory",
+    "doc_ids": [
+      "networkx:README.rst",
+      "networkx:networkx/algorithms/shortest_paths/generic.py",
+      "networkx:wiki-Graph_theory"
+    ]
+  },
+  {
+    "collection_id": "transformers",
+    "title": "transformers + Natural language processing",
+    "doc_ids": [
+      "transformers:README.md",
+      "transformers:src/transformers/pipelines/base.py",
+      "transformers:wiki-Natural_language_processing"
+    ]
+  },
+  {
+    "collection_id": "tqdm",
+    "title": "tqdm + Progress bar",
+    "doc_ids": [
+      "tqdm:README.rst",
+      "tqdm:tqdm/std.py",
+      "tqdm:wiki-Progress_bar"
+    ]
+  },
+  {
+    "collection_id": "jinja",
+    "title": "jinja + Template processor",
+    "doc_ids": [
+      "jinja:README.md",
+      "jinja:src/jinja2/environment.py",
+      "jinja:wiki-Template_processor"
+    ]
+  },
+  {
+    "collection_id": "scikit-image",
+    "title": "scikit-image + Digital image processing",
+    "doc_ids": [
+      "scikit-image:README.md",
+      "scikit-image:wiki-Digital_image_processing"
+    ]
+  },
+  {
+    "collection_id": "iris",
+    "title": "iris.csv + Iris flower data set",
+    "doc_ids": [
+      "iris:iris.csv",
+      "iris:wiki-Iris_flower_data_set"
+    ]
+  },
+  {
+    "collection_id": "tips",
+    "title": "tips.csv + Gratuity",
+    "doc_ids": [
+      "tips:tips.csv",
+      "tips:wiki-Gratuity"
+    ]
+  },
+  {
+    "collection_id": "gapminder",
+    "title": "gapminder.csv + Gapminder Foundation",
+    "doc_ids": [
+      "gapminder:gapminder.csv",
+      "gapminder:wiki-Gapminder_Foundation"
+    ]
+  },
+  {
+    "collection_id": "ag-exports",
+    "title": "ag_exports.csv + Agriculture in the United States",
+    "doc_ids": [
+      "ag-exports:ag_exports.csv",
+      "ag-exports:wiki-Agriculture_in_the_United_States"
+    ]
+  }
+]

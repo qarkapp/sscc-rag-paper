@@ -155,6 +155,14 @@ metrics); routing triad; exploratory negatives; datasheet; capability matrix.
 
 ---
 
+## Build & references (locked)
+- **Compile with tectonic** (`tectonic paper/main.tex`); v0.16.9 confirmed.
+- **References = first-class deliverable** (analysis paper). Comprehensive coverage of
+  EVERY tested enhancement family + benchmarks + retrievers/rerankers + fusion +
+  statistics/eval methodology + dataset-construction methodology + negative-results/
+  reproducibility prior work. **Verified, not fabricated** -- web-check bibliographic
+  details (authors/year/venue/arXiv id) before relying on any entry. `references.bib`.
+
 ## Honesty firewall for the write-up
 - Report every negative prominently; never bury under correction.
 - SSCC scope stated plainly (heterogeneity-specific, modest).

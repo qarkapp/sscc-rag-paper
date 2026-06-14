@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import sys
 import time
 from pathlib import Path
 
@@ -61,8 +62,9 @@ async def main() -> None:
     store = LanceDBStore(".cache/hetdocqa/db", dim=dim)
     await index_passages(store, embedder, ds.corpus)
 
+    split = sys.argv[1] if len(sys.argv) > 1 else "dev"
     ex = {e.qid: e for e in ds.examples}
-    dev = [e.qid for e in ds.examples if e.metadata.get("split") == "dev"]
+    dev = [e.qid for e in ds.examples if e.metadata.get("split") == split]
     # Questions whose gold evidence includes a code or table chunk (modality from manifest).
     def _has_ct(qid: str) -> bool:
         for cid in ds.qrels.get(qid, {}):
@@ -70,7 +72,7 @@ async def main() -> None:
                 return True
         return False
     ct = {q for q in dev if _has_ct(q)}
-    print(f"dev {len(dev)} queries; code/table-evidence {len(ct)} ({time.time() - t0:.0f}s)")
+    print(f"split={split}: {len(dev)} queries; code/table-evidence {len(ct)} ({time.time() - t0:.0f}s)")
 
     sem = asyncio.Semaphore(CONCURRENCY)
     run_base: dict[str, dict[str, float]] = {}
