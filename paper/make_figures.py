@@ -156,9 +156,10 @@ def fig_recall_dominance(data: dict) -> None:
              transform=axB.transAxes, ha="center", fontsize=7, color=fs.ACCENT)
     axB.set_xlabel("$k$")
     axB.set_ylabel("Recall@$k$")
-    axB.set_xlim(1, ks.max())
-    lo = float(min(rerank[4:].min(), band[:, 4:].min())) - 0.02
-    axB.set_ylim(lo, 1.0)
+    axB.set_xlim(ks.min(), ks.max())
+    lo = float(band[:, 3:].min()) - 0.02
+    hi = float(band[:, 3:].max()) + 0.03
+    axB.set_ylim(lo, hi)
     axB.set_title("(b) Enhancements add nothing on top", loc="left")
 
     fig.tight_layout(w_pad=1.4)
