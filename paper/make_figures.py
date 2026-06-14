@@ -65,18 +65,24 @@ def fig_routing_degeneracy(data: dict, name: str) -> None:
     axc.axvspan(1.6, tlo, color=fs.NULL_L, alpha=0.6, lw=0)
     axc.axvspan(tlo, thi, color="#dfe7ec", alpha=0.8, lw=0)
     axc.axvspan(thi, logk + 0.02, color="#f4d9dc", alpha=0.9, lw=0)
-    axc.axvline(H.mean(), color=fs.ACCENT, lw=1.4)
-    axc.text(tlo, 1.18, "semantic", fontsize=6, ha="center", color="#555", transform=axc.get_xaxis_transform())
-    axc.text((tlo + thi) / 2, 1.18, "DPHF", fontsize=6, ha="center", color="#555", transform=axc.get_xaxis_transform())
-    axc.text((thi + logk) / 2, 1.18, "step-back", fontsize=6, ha="center", color=fs.ACCENT, transform=axc.get_xaxis_transform())
-    for x, t in [(tlo, r"$\tau_\ell{=}%.1f$" % tlo), (thi, r"$\tau_h{=}%.1f$" % thi)]:
-        axc.axvline(x, color="#777", lw=0.7)
-    axc.annotate("all mass", xy=(H.mean(), 0.5), xytext=(2.15, 0.5), fontsize=6.5,
-                 color=fs.ACCENT, va="center", ha="right",
-                 arrowprops=dict(arrowstyle="->", lw=0.7, color=fs.ACCENT))
+    for x in (tlo, thi):
+        axc.axvline(x, color="#777", lw=0.7, zorder=2)
+    # region names INSIDE the strip (centered), so nothing collides with the title.
+    axc.text((1.6 + tlo) / 2, 0.5, "semantic", fontsize=5.5, ha="center", va="center",
+             color="#555", transform=axc.get_xaxis_transform())
+    axc.text((tlo + thi) / 2, 0.5, "DPHF", fontsize=5.5, ha="center", va="center",
+             color="#555", transform=axc.get_xaxis_transform())
+    axc.text((thi + logk) / 2 - 0.06, 0.5, "step-back", fontsize=5.5, ha="center", va="center",
+             color=fs.ACCENT, transform=axc.get_xaxis_transform())
+    axc.axvline(H.mean(), color=fs.ACCENT, lw=1.6, zorder=4)  # where all mass sits
+    axc.text(tlo - 0.04, -0.45, r"$\tau_\ell$", fontsize=6, ha="center", color="#555",
+             transform=axc.get_xaxis_transform())
+    axc.text(thi - 0.04, -0.45, r"$\tau_h$", fontsize=6, ha="center", color="#555",
+             transform=axc.get_xaxis_transform())
     axc.set_xlim(1.6, logk + 0.03)
+    axc.set_ylim(0, 1)
     axc.set_yticks([])
-    axc.tick_params(labelbottom=False)
+    axc.tick_params(labelbottom=False, length=0)
     axc.set_title(r"(b) Entropy pinned to the $\log K$ ceiling", loc="left")
 
     # zoomed distribution near the ceiling.
