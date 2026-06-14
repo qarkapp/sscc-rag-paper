@@ -1,6 +1,6 @@
 {
-  "zenodo_record": "<fill in the Zenodo record id after depositing>",
-  "_comment": "Optional large convenience artifacts only. The benchmark itself ships in git and in the Zenodo deposit. After uploading a bundle, run scripts/fetch_data.py --make-manifest <dir> to populate sha256/size below.",
+  "zenodo_record": "20693144",
+  "_comment": "Concept DOI 10.5281/zenodo.20693143 (all versions). 'zenodo_record' is the version record id used for direct file URLs. The 'files' entry below is a placeholder: no large convenience bundle is deposited yet (the benchmark ships in git and in the deposit). After uploading a bundle, run scripts/fetch_data.py --make-manifest <dir> to populate it.",
   "files": [
     {
       "name": "hetdocqa_embeddings.tar.zst",

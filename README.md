@@ -124,12 +124,18 @@ uv run mypy              # type-check
 
 ## Citation
 
+Benchmark, code, and paper are archived on Zenodo (DOI
+[10.5281/zenodo.20693143](https://doi.org/10.5281/zenodo.20693143), all versions).
+
 ```bibtex
 @misc{beyondthereranker,
-  title  = {Beyond the Reranker: Do RAG Retrieval Enhancements Help Once a
-            Strong Reranker Is Present?},
-  author = {Singh, Sadanand and Reddy, Allam and Chopra, Manan},
-  year   = {2026},
-  note   = {Cascade Research}
+  title     = {Beyond the Reranker: Do RAG Retrieval Enhancements Help Once a
+               Strong Reranker Is Present?},
+  author    = {Singh, Sadanand and Reddy, Allam and Chopra, Manan},
+  year      = {2026},
+  publisher = {Zenodo},
+  note      = {Cascade Research},
+  doi       = {10.5281/zenodo.20693143},
+  url       = {https://doi.org/10.5281/zenodo.20693143}
 }
 ```
