@@ -1,126 +1,135 @@
-"""Generate paper figures from the committed result tables.
+"""Build publication figures from extracted per-query data in paper/figdata/.
 
-DRAFT figures use the per-row F1 +/- 95% CI in results/*_ablation.txt. Final versions
-will use per-query paired-delta CIs once the warm-cache re-run writes the per-query JSON
-(scripts/run_benchmark.py now persists results/<name>_<split>_perquery.json).
+Figures show distributions / mechanisms / relationships -- not re-plots of the ablation
+means (those live in tables). Vector PDF + PNG preview via paper/figstyle.
 
     uv run --group paper python paper/make_figures.py
 """
 
 from __future__ import annotations
 
-import re
+import json
 from pathlib import Path
 
-import matplotlib
+import numpy as np
 
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt  # noqa: E402
+import figstyle as fs
+import matplotlib.pyplot as plt
 
-FIGS = Path("paper/figs")
-FIGS.mkdir(parents=True, exist_ok=True)
-ROW = re.compile(
-    r"^(\S+)\s+([\d.]+)\s+[\d.]+\s+[\d.]+\s+([\d.]+)\s+\[([\d.]+),\s*([\d.]+)\]\s+(\S+)"
-)
-
-# Friendlier labels for the components we ablate.
-PRETTY = {
-    "full": "Full system", "wo_rerank": "− Reranker", "wo_hyde": "− HyDE",
-    "wo_sscc": "− SSCC (→CRAG)", "wo_crag": "− Correction", "wo_dphf": "− DPHF/RRF",
-    "wo_graph": "− Graph (GAHR)", "wo_raptor": "− RAPTOR", "wo_cross_doc": "− Cross-doc tier",
-    "wo_modality_hyde": "− Modality-HyDE", "hyde_multi_prose": "Multi-prose HyDE",
-    "semantic_only": "Semantic only",
-}
+FIGDATA = Path("paper/figdata")
+_LABEL_NAMES = {"semantic": "Semantic", "dphf": "DPHF", "stepback": "Step-back"}
 
 
-def parse_component(path: Path) -> dict[str, tuple[float, float, float, float, float]]:
-    """Return {config: (nDCG, F1, ci_lo, ci_hi, p)} from the component-ablation block."""
-    rows: dict[str, tuple[float, float, float, float, float]] = {}
-    in_block = False
-    for line in path.read_text().splitlines():
-        if "component ablation" in line:
-            in_block = True
-            continue
-        if in_block and line.startswith("total"):
-            break
-        m = ROW.match(line.strip()) if in_block else None
-        if m:
-            cfg, ndcg, f1, lo, hi, p = m.groups()
-            rows[cfg] = (float(ndcg), float(f1), float(lo), float(hi),
-                         float("nan") if p == "nan" else float(p))
-    return rows
+def fig_routing_degeneracy(data: dict, name: str) -> None:
+    """Three panels: distance saturation -> entropy at ceiling -> no class separation."""
+    qids = list(data["entropy"])
+    H = np.array([data["entropy"][q] for q in qids])
+    logk, tlo, thi = data["log_k"], data["tau_low"], data["tau_high"]
+    dists = {q: np.sort(np.asarray(data["knn_distances"][q])) for q in qids}
+    labels = data["labels"]
 
+    fig, axes = plt.subplots(1, 3, figsize=(fs.WIDE, 2.35))
 
-def fig_forest(rows: dict, out: Path) -> None:
-    """F3 draft: F1 +/- 95% CI per config; full as a reference band; sig vs full marked."""
-    full_f1 = rows["full"][1]
-    order = sorted(rows, key=lambda c: rows[c][1])  # ascending F1
-    ys = range(len(order))
-    fig, ax = plt.subplots(figsize=(7, 5))
-    ax.axvspan(rows["full"][2], rows["full"][3], color="0.85", zorder=0, label="Full 95% CI")
-    ax.axvline(full_f1, color="0.4", ls="--", lw=1, zorder=1)
-    for y, cfg in zip(ys, order):
-        ndcg, f1, lo, hi, p = rows[cfg]
-        sig = (not (p != p)) and p < 0.05 and cfg != "full"  # p==p false for nan
-        color = "#c0392b" if sig else ("#2c3e50" if cfg == "full" else "#7f8c8d")
-        ax.plot([lo, hi], [y, y], color=color, lw=2, zorder=2)
-        ax.plot(f1, y, "o", color=color, ms=6, zorder=3)
-    ax.set_yticks(list(ys))
-    ax.set_yticklabels([PRETTY.get(c, c) for c in order], fontsize=9)
-    ax.set_xlabel("Answer token-F1 (HetDocQA test, 363 q)")
-    ax.set_title("Effect of removing each component (DRAFT: per-row CI)", fontsize=10)
-    ax.text(0.98, 0.02, "red = sig. vs Full (raw p<.05)", transform=ax.transAxes,
-            ha="right", va="bottom", fontsize=8, color="#c0392b")
-    fig.tight_layout()
-    fig.savefig(out, dpi=160)
-    plt.close(fig)
+    # (a) kNN distance profiles are near-flat -> softmax(-d/T) is ~uniform.
+    ax = axes[0]
+    k = len(next(iter(dists.values())))
+    xs = np.arange(1, k + 1)
+    prof = np.vstack([dists[q] for q in qids])
+    med = np.median(prof, axis=0)
+    q25, q75 = np.percentile(prof, [25, 75], axis=0)
+    rng = np.random.default_rng(0)
+    for q in rng.choice(qids, size=min(60, len(qids)), replace=False):
+        ax.plot(xs, dists[q], color=fs.NULL, lw=0.4, alpha=0.18, zorder=1)
+    ax.fill_between(xs, q25, q75, color=fs.COOL, alpha=0.25, lw=0, zorder=2)
+    ax.plot(xs, med, color=fs.INK, lw=1.6, zorder=3)
+    span = float(np.median(prof[:, -1] - prof[:, 0]))
+    ax.annotate(f"median span $\\Delta d\\approx{span:.2f}$\n($T=1\\Rightarrow$ softmax $\\approx$ uniform)",
+                xy=(k * 0.7, med[int(k * 0.7)]), xytext=(3.2, 0.26),
+                fontsize=6.8, color=fs.ACCENT,
+                arrowprops=dict(arrowstyle="->", lw=0.7, color=fs.ACCENT))
+    ax.set_ylim(0.18, 0.72)
+    ax.set_xlabel("nearest-neighbour rank $i$")
+    ax.set_ylabel("$L_2$ distance $d_i$")
+    ax.set_title("(a) Neighbour distances are near-flat", loc="left")
 
+    # (b) entropy zoomed to the data (a spike at the ceiling); the EGR thresholds sit far
+    # to the left (shown in a full-range context strip on top), so every query lands in
+    # the step-back region. Two stacked axes: context strip + zoomed distribution.
+    gs = axes[1].get_subplotspec().subgridspec(2, 1, height_ratios=[1, 4], hspace=0.05)
+    axes[1].remove()
+    axc = fig.add_subplot(gs[0])   # full-range context strip
+    axz = fig.add_subplot(gs[1])   # zoomed distribution
+    n_sb = sum(1 for q in qids if data["egr"][q] == "stepback")
 
-def fig_gradient(out: Path) -> None:
-    """F5 draft: SSCC effect (full_F1 - wo_sscc_F1) across homogeneous -> heterogeneous."""
-    benches = ["MuSiQue\n(prose)", "QASPER\n(sci prose)", "HetDocQA\n(heterogeneous)"]
-    sscc = [0.3925 - 0.3727, 0.2178 - 0.2210, 0.5481 - 0.5234]  # +helps
-    sig = [False, False, True]
-    fig, ax = plt.subplots(figsize=(6, 4))
-    bars = ax.bar(benches, sscc, color=["#bdc3c7" if not s else "#27ae60" for s in sig])
-    ax.axhline(0, color="0.3", lw=1)
-    for b, s in zip(bars, sig):
-        ax.text(b.get_x() + b.get_width() / 2, b.get_height(),
-                ("*" if s else "n.s."), ha="center",
-                va="bottom" if b.get_height() >= 0 else "top", fontsize=11)
-    ax.set_ylabel("SSCC effect on F1 (full − ablate)")
-    ax.set_title("SSCC helps only with heterogeneity (DRAFT)", fontsize=10)
-    fig.tight_layout()
-    fig.savefig(out, dpi=160)
-    plt.close(fig)
+    # context strip: full EGR axis with the three decision regions + where mass sits.
+    axc.axvspan(1.6, tlo, color=fs.NULL_L, alpha=0.6, lw=0)
+    axc.axvspan(tlo, thi, color="#dfe7ec", alpha=0.8, lw=0)
+    axc.axvspan(thi, logk + 0.02, color="#f4d9dc", alpha=0.9, lw=0)
+    axc.axvline(H.mean(), color=fs.ACCENT, lw=1.4)
+    axc.text(tlo, 1.18, "semantic", fontsize=6, ha="center", color="#555", transform=axc.get_xaxis_transform())
+    axc.text((tlo + thi) / 2, 1.18, "DPHF", fontsize=6, ha="center", color="#555", transform=axc.get_xaxis_transform())
+    axc.text((thi + logk) / 2, 1.18, "step-back", fontsize=6, ha="center", color=fs.ACCENT, transform=axc.get_xaxis_transform())
+    for x, t in [(tlo, r"$\tau_\ell{=}%.1f$" % tlo), (thi, r"$\tau_h{=}%.1f$" % thi)]:
+        axc.axvline(x, color="#777", lw=0.7)
+    axc.annotate("all mass", xy=(H.mean(), 0.5), xytext=(2.15, 0.5), fontsize=6.5,
+                 color=fs.ACCENT, va="center", ha="right",
+                 arrowprops=dict(arrowstyle="->", lw=0.7, color=fs.ACCENT))
+    axc.set_xlim(1.6, logk + 0.03)
+    axc.set_yticks([])
+    axc.tick_params(labelbottom=False)
+    axc.set_title(r"(b) Entropy pinned to the $\log K$ ceiling", loc="left")
 
+    # zoomed distribution near the ceiling.
+    axz.hist(H, bins=np.linspace(H.min() - 0.0008, logk + 0.0008, 30), color=fs.INK, zorder=3)
+    axz.axvline(logk, color=fs.ACCENT, lw=1.1, ls="--", zorder=4)
+    axz.text(logk - 0.0006, axz.get_ylim()[1] * 0.92, r"$\log K$", color=fs.ACCENT,
+             fontsize=6.5, va="top", ha="right")
+    axz.text(0.04, 0.95, fr"$\bar H/\log K={H.mean()/logk:.3f}$" + "\n"
+             + fr"$\sigma_H={H.std():.1e}$" + "\n" + f"{100*n_sb/len(qids):.0f}% $\\to$ step-back",
+             transform=axz.transAxes, fontsize=6.8, va="top", ha="left", color=fs.INK)
+    axz.set_xlim(H.min() - 0.0008, logk + 0.0010)
+    axz.set_xlabel("routing entropy $H$ (zoom)")
+    axz.set_ylabel("queries")
+    axz.ticklabel_format(axis="x", useOffset=False)
+    axz.set_xticks(np.round(np.linspace(H.min(), logk, 3), 3))
 
-def fig_dominance(rows: dict, out: Path) -> None:
-    """F4 draft: nDCG@10 full vs −reranker vs −every-other (mean), showing the collapse."""
-    full_nd = rows["full"][0]
-    no_rr = rows["wo_rerank"][0]
-    others = [v[0] for c, v in rows.items() if c not in ("full", "wo_rerank", "semantic_only")]
-    mean_other = sum(others) / len(others)
-    fig, ax = plt.subplots(figsize=(5.5, 4))
-    bars = ax.bar(["Full", "− Reranker", "− any other\n(mean)"],
-                  [full_nd, no_rr, mean_other],
-                  color=["#2c3e50", "#c0392b", "#7f8c8d"])
-    for b in bars:
-        ax.text(b.get_x() + b.get_width() / 2, b.get_height() + 0.01,
-                f"{b.get_height():.3f}", ha="center", fontsize=9)
-    ax.set_ylabel("nDCG@10 (HetDocQA test)")
-    ax.set_title("The reranker carries the system (DRAFT)", fontsize=10)
-    fig.tight_layout()
-    fig.savefig(out, dpi=160)
-    plt.close(fig)
+    # (c) entropy does not separate the oracle-best classes.
+    ax = axes[2]
+    groups = [[data["entropy"][q] for q in qids if data["oracle"][q] == s] for s in labels]
+    parts = ax.violinplot(groups, showextrema=False, widths=0.85)
+    for b in parts["bodies"]:
+        b.set_facecolor(fs.COOL)
+        b.set_alpha(0.35)
+        b.set_edgecolor(fs.INK)
+        b.set_linewidth(0.6)
+    for i, g in enumerate(groups, start=1):
+        ax.scatter(np.full(len(g), i) + rng.uniform(-0.07, 0.07, len(g)), g,
+                   s=3, color=fs.INK, alpha=0.5, zorder=3, lw=0)
+        ax.plot([i - 0.28, i + 0.28], [np.mean(g)] * 2, color=fs.ACCENT, lw=1.3, zorder=4)
+    # between/within dispersion ratio (an F-like separation statistic).
+    grand = H.mean()
+    between = sum(len(g) * (np.mean(g) - grand) ** 2 for g in groups if g)
+    within = sum(sum((x - np.mean(g)) ** 2 for x in g) for g in groups if g)
+    ax.text(0.5, 0.04, f"between/within $= {between / max(within, 1e-9):.3f}$",
+            transform=ax.transAxes, fontsize=7, ha="center", color=fs.ACCENT)
+    ax.set_xticks(range(1, len(labels) + 1))
+    ax.set_xticklabels([_LABEL_NAMES[s] for s in labels])
+    ax.set_xlabel("oracle-best strategy")
+    ax.set_ylabel("routing entropy $H$")
+    ax.set_title("(c) Identical across oracle classes", loc="left")
+
+    fig.tight_layout(w_pad=1.6)
+    fs.save(fig, "F_routing_degeneracy")
+    print("wrote F_routing_degeneracy")
 
 
 def main() -> None:
-    rows = parse_component(Path("results/hetdocqa_test_ablation.txt"))
-    fig_forest(rows, FIGS / "F3_forest_DRAFT.png")
-    fig_gradient(FIGS / "F5_gradient_DRAFT.png")
-    fig_dominance(rows, FIGS / "F4_dominance_DRAFT.png")
-    print(f"wrote {sorted(p.name for p in FIGS.glob('*.png'))}")
+    fs.use_style()
+    routing = FIGDATA / "routing_musique.json"
+    if routing.exists():
+        fig_routing_degeneracy(json.loads(routing.read_text()), "musique")
+    else:
+        print(f"missing {routing}; run scripts/diag_router.py musique")
 
 
 if __name__ == "__main__":

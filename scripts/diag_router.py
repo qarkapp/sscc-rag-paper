@@ -225,6 +225,24 @@ async def main() -> None:
     print(f"  paired-bootstrap p(routed vs best-fixed) = {p:.3f}")
     captured = (comp_ndcg.mean() - bf.mean()) / max(omean - bf.mean(), 1e-9)
     print(f"  oracle-gap captured = {captured:+.1%}  (0% = best-fixed, 100% = oracle)")
+
+    # ---- dump per-query routing data for figures -----------------------------------
+    import json
+    from pathlib import Path
+    Path("paper/figdata").mkdir(parents=True, exist_ok=True)
+    fig = {
+        "name": name, "k": k, "temperature": temp, "log_k": float(np.log(k)),
+        "tau_low": rcfg.egr_tau_low, "tau_high": rcfg.egr_tau_high,
+        "labels": _LABELS,
+        "entropy": {q: entropy[q] for q in qids},
+        "knn_distances": {q: dist_by_q[q].tolist() for q in qids},
+        "oracle": {q: oracle[q] for q in qids},
+        "egr": {q: egr[q] for q in qids},
+        "per_strategy_ndcg": {s: {q: per_strat[s].get(q, 0.0) for q in qids} for s in _LABELS},
+        "comp_label": comp_label,
+        "best_fixed": best_fixed,
+    }
+    Path(f"paper/figdata/routing_{name}.json").write_text(json.dumps(fig))
     print(f"\ntotal {time.time() - t0:.0f}s")
 
 
