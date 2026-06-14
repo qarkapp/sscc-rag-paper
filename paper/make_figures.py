@@ -52,48 +52,46 @@ def fig_routing_degeneracy(data: dict, name: str) -> None:
     ax.set_ylabel("$L_2$ distance $d_i$")
     ax.set_title("(a) Neighbour distances are near-flat", loc="left")
 
-    # (b) entropy zoomed to the data (a spike at the ceiling); the EGR thresholds sit far
-    # to the left (shown in a full-range context strip on top), so every query lands in
-    # the step-back region. Two stacked axes: context strip + zoomed distribution.
-    gs = axes[1].get_subplotspec().subgridspec(2, 1, height_ratios=[1, 4], hspace=0.05)
-    axes[1].remove()
-    axc = fig.add_subplot(gs[0])   # full-range context strip
-    axz = fig.add_subplot(gs[1])   # zoomed distribution
+    # (b) full entropy range [0, log K]: EGR's three decision regions are wide and labelled,
+    # and every query's entropy is jammed at the far-right ceiling (a zoom inset shows the
+    # spike's shape). So EGR always picks step-back.
+    axb = axes[1]
     n_sb = sum(1 for q in qids if data["egr"][q] == "stepback")
-
-    # context strip: full EGR axis with the three decision regions + where mass sits.
-    axc.axvspan(1.6, tlo, color=fs.NULL_L, alpha=0.6, lw=0)
-    axc.axvspan(tlo, thi, color="#dfe7ec", alpha=0.8, lw=0)
-    axc.axvspan(thi, logk + 0.02, color="#f4d9dc", alpha=0.9, lw=0)
-    # EGR carves three regions at the thresholds; only the (wide enough) step-back region
-    # is named -- the narrow ones can't hold a readable label and the caption covers them.
+    top = logk + 0.06
+    axb.axvspan(-0.05, tlo, color=fs.NULL_L, alpha=0.55, lw=0)
+    axb.axvspan(tlo, thi, color="#dde6ec", lw=0)
+    axb.axvspan(thi, top, color="#f4d9dc", lw=0)
+    counts, _, _ = axb.hist(H, bins=np.linspace(-0.05, top, 90), color=fs.BAR,
+                            edgecolor=fs.BAR, zorder=4)
+    ymax = max(counts) * 1.2
+    axb.set_ylim(0, ymax)
+    for xc, lab, col in [(tlo / 2, "semantic", "#566069"),
+                         (2.12, "DPHF", "#566069"),
+                         (2.84, "step-back", fs.ACCENT)]:
+        axb.text(xc, ymax * 0.965, lab, fontsize=6.5, ha="center", va="top", color=col)
     for x, lab in [(tlo, r"$\tau_\ell$"), (thi, r"$\tau_h$")]:
-        axc.axvline(x, color="#888", lw=0.7, zorder=2)
-        axc.text(x, -0.62, lab, fontsize=6.5, ha="center", va="top", color="#555",
-                 transform=axc.get_xaxis_transform())
-    fs.halo(axc.text((thi + logk) / 2, 0.5, "step-back", fontsize=6, ha="center", va="center",
-            color=fs.ACCENT, transform=axc.get_xaxis_transform()))
-    axc.axvline(H.mean(), color=fs.ACCENT, lw=1.8, zorder=5)  # where all mass sits
-    axc.set_xlim(1.6, logk + 0.03)
-    axc.set_ylim(0, 1)
-    axc.set_yticks([])
-    axc.tick_params(labelbottom=False, length=0)
-    axc.set_title(r"(b) Entropy pinned to the $\log K$ ceiling", loc="left")
+        axb.axvline(x, color="#7c8186", lw=0.8, zorder=5)
+        axb.text(x, ymax * 0.62, lab, fontsize=7, ha="center", va="center", color="#566069",
+                 bbox=dict(boxstyle="round,pad=0.1", fc="white", ec="none"))
+    axb.annotate(f"every query\n$H \\approx \\log K$\n($\\sigma_H = {fs.sci(H.std())}$)",
+                 xy=(H.mean(), ymax * 0.4), xytext=((tlo + thi) / 2, ymax * 0.45),
+                 fontsize=6.3, color=fs.ACCENT, ha="center", va="center",
+                 arrowprops=dict(arrowstyle="->", lw=0.8, color=fs.ACCENT))
+    axb.set_xlim(0, top)
+    axb.set_xlabel("routing entropy $H$")
+    axb.set_ylabel("queries")
+    axb.set_title(r"(b) Entropy jammed at the $\log K$ ceiling", loc="left")
 
-    # zoomed distribution near the ceiling.
-    axz.hist(H, bins=np.linspace(H.min() - 0.0008, logk + 0.0008, 30),
-             color=fs.BAR, edgecolor="white", linewidth=0.3, zorder=3)
-    axz.axvline(logk, color=fs.ACCENT, lw=1.1, ls=(0, (3, 2)), zorder=4)
-    axz.text(0.04, 0.96, fr"$\sigma_H = {fs.sci(H.std())}$" + "\n"
-             + f"{100 * n_sb / len(qids):.0f}% routed $\\to$ step-back" + "\n"
-             + r"$\mathdefault{-\,-}$ $\log K$ ceiling",
-             transform=axz.transAxes, fontsize=6.5, va="top", ha="left", color=fs.INK,
-             linespacing=1.5)
-    axz.set_xlim(H.min() - 0.0008, logk + 0.0010)
-    axz.set_xlabel("routing entropy $H$ (zoom)")
-    axz.set_ylabel("queries")
-    axz.ticklabel_format(axis="x", useOffset=False)
-    axz.set_xticks(np.round(np.linspace(H.min(), logk, 3), 3))
+    # zoom inset over the empty low-entropy region: the spike's actual shape.
+    axin = axb.inset_axes([0.085, 0.30, 0.42, 0.44])
+    axin.hist(H, bins=np.linspace(H.min() - 0.0008, logk + 0.0008, 24), color=fs.BAR,
+              edgecolor="white", linewidth=0.25)
+    axin.axvline(logk, color=fs.ACCENT, lw=1.0, ls=(0, (3, 2)))
+    axin.set_xlim(H.min() - 0.0008, logk + 0.001)
+    axin.set_xticks([round(H.min(), 3), round(logk, 3)])
+    axin.tick_params(labelsize=5.5, length=2, pad=1)
+    axin.set_yticks([])
+    axin.set_title("zoom near ceiling", fontsize=5.8, color=fs.INK, pad=2)
 
     # (c) entropy does not separate the oracle-best classes: identical violins, and the
     # per-class means all land on a single grand-mean line.
@@ -114,13 +112,14 @@ def fig_routing_degeneracy(data: dict, name: str) -> None:
         ax.plot(i, np.mean(g), "D", color=fs.ACCENT, ms=4, mec="white", mew=0.5, zorder=6)
     between = sum(len(g) * (np.mean(g) - grand) ** 2 for g in groups if g)
     within = sum(sum((x - np.mean(g)) ** 2 for x in g) for g in groups if g)
-    ax.text(0.96, 0.28, "class means (red) coincide on $\\bar H$\n"
-            f"between/within $= {between / max(within, 1e-9):.3f}$",
-            transform=ax.transAxes, fontsize=6.3, ha="right", va="center", color=fs.ACCENT,
-            bbox=dict(boxstyle="round,pad=0.3", facecolor="white", edgecolor=fs.NULL_L, lw=0.6),
-            zorder=7)
+    # label the grand-mean line at its right end; the stat sits in the empty lower-right.
+    fs.halo(ax.text(len(groups) + 0.42, grand, r"$\bar H$", fontsize=7.5, color=fs.ACCENT,
+            va="center", ha="left", zorder=7))
+    fs.halo(ax.text(0.97, 0.09, f"between/within $= {between / max(within, 1e-9):.3f}$",
+            transform=ax.transAxes, fontsize=6.5, ha="right", va="bottom", color=fs.ACCENT, zorder=7))
     ax.set_xticks(range(1, len(labels) + 1))
     ax.set_xticklabels([_LABEL_NAMES[s] for s in labels])
+    ax.set_xlim(0.45, len(labels) + 0.7)
     ax.set_xlabel("oracle-best strategy")
     ax.set_ylabel("routing entropy $H$")
     ax.set_title("(c) Identical across oracle classes", loc="left")
