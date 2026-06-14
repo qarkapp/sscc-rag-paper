@@ -1,21 +1,17 @@
-"""Fetch large release artifacts from a pCloud public link and verify checksums.
+"""Fetch large release artifacts from a Zenodo record and verify checksums.
 
-Large artifacts (e.g. the embedding cache) are hosted on a pCloud *public* folder
-link rather than in git. This script resolves that link through the pCloud API,
-downloads each expected file, and verifies its SHA-256 against ``data_manifest.json``
-so a replaced or corrupted file is caught.
+The benchmark itself ships in git. Any large convenience artifact (e.g. the
+embedding cache) is deposited in the project's Zenodo record and fetched here,
+verified by SHA-256 against ``data_manifest.json`` so a corrupted or replaced file
+is caught. No account or key is needed: Zenodo files have stable public URLs.
 
-It does NOT need a pCloud account or key -- a public link is enough.
+    uv run python scripts/fetch_data.py                       # download + verify all
+    uv run python scripts/fetch_data.py --make-manifest <dir>  # (maintainer) hash files
 
-    uv run python scripts/fetch_data.py                 # download + verify all
-    uv run python scripts/fetch_data.py --dest .cache    # custom destination
-    uv run python scripts/fetch_data.py --make-manifest <dir>   # (maintainer) hash local files
-
-The manifest (``data_manifest.json`` at the repo root) looks like:
+Manifest (``data_manifest.json`` at the repo root):
 
     {
-      "pcloud_code": "XXXXXXX",          # the code= from the public link
-      "region": "us",                     # "us" (api.pcloud.com) or "eu" (eapi.pcloud.com)
+      "zenodo_record": "1234567",
       "files": [
         {"name": "hetdocqa_embeddings.tar.zst", "sha256": "...", "dest": ".cache"}
       ]
@@ -28,19 +24,11 @@ import argparse
 import hashlib
 import json
 import sys
-import urllib.parse
 import urllib.request
 from pathlib import Path
 
 MANIFEST = Path(__file__).resolve().parent.parent / "data_manifest.json"
-_HOSTS = {"us": "https://api.pcloud.com", "eu": "https://eapi.pcloud.com"}
 _CHUNK = 1 << 20
-
-
-def _api(host: str, method: str, **params: str) -> dict:
-    url = f"{host}/{method}?" + urllib.parse.urlencode(params)
-    with urllib.request.urlopen(url, timeout=60) as resp:  # noqa: S310 (trusted host)
-        return json.loads(resp.read().decode())
 
 
 def _sha256(path: Path) -> str:
@@ -70,18 +58,9 @@ def fetch() -> int:
     if not MANIFEST.exists():
         sys.exit(f"no manifest at {MANIFEST}; run with --make-manifest <dir> first")
     man = json.loads(MANIFEST.read_text())
-    code = man.get("pcloud_code")
-    if not code or code.startswith("<"):
-        sys.exit("manifest has no real pcloud_code yet -- create the public link and fill it in")
-    host = _HOSTS.get(man.get("region", "us"), _HOSTS["us"])
-
-    # Resolve the public link to a {name -> fileid} map.
-    info = _api(host, "showpublink", code=code)
-    if info.get("result", 0) != 0:
-        sys.exit(f"showpublink failed: {info.get('error', info)}")
-    meta = info["metadata"]
-    contents = meta.get("contents", [meta])  # single-file links have no 'contents'
-    by_name = {c["name"]: c["fileid"] for c in contents if not c.get("isfolder")}
+    record = str(man.get("zenodo_record", ""))
+    if not record or record.startswith("<"):
+        sys.exit("manifest has no real zenodo_record yet -- deposit on Zenodo and fill it in")
 
     failures = 0
     for entry in man["files"]:
@@ -90,17 +69,7 @@ def fetch() -> int:
         if dest.exists() and _sha256(dest) == want:
             print(f"  {name}: already present, checksum ok")
             continue
-        fid = by_name.get(name)
-        if fid is None:
-            print(f"  {name}: NOT FOUND in public link")
-            failures += 1
-            continue
-        link = _api(host, "getpublinkdownload", code=code, fileid=str(fid))
-        if link.get("result", 0) != 0:
-            print(f"  {name}: getpublinkdownload failed: {link.get('error', link)}")
-            failures += 1
-            continue
-        url = "https://" + link["hosts"][0] + link["path"]
+        url = f"https://zenodo.org/records/{record}/files/{name}?download=1"
         _download(url, dest)
         got = _sha256(dest)
         if got != want:
@@ -121,17 +90,16 @@ def make_manifest(directory: str) -> int:
          "size_mb": round(p.stat().st_size / 1e6, 1)}
         for p in sorted(d.iterdir()) if p.is_file()
     ]
-    skeleton = {"pcloud_code": "<fill in the code= from the pCloud public link>",
-                "region": "us", "files": files}
+    skeleton = {"zenodo_record": "<fill in the Zenodo record id>", "files": files}
     print(json.dumps(skeleton, indent=2))
     return 0
 
 
 def main() -> None:
-    ap = argparse.ArgumentParser(description="Fetch + verify pCloud-hosted release artifacts.")
+    ap = argparse.ArgumentParser(description="Fetch + verify Zenodo-hosted release artifacts.")
     ap.add_argument("--make-manifest", metavar="DIR",
                     help="(maintainer) print a manifest with sha256 of every file in DIR")
-    ap.parse_args(namespace=(ns := argparse.Namespace()))
+    ns = ap.parse_args()
     sys.exit(make_manifest(ns.make_manifest) if ns.make_manifest else fetch())
 
 

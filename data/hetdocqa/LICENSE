@@ -1,0 +1,32 @@
+HetDocQA benchmark annotations
+SPDX-License-Identifier: CC-BY-4.0
+
+Copyright (c) 2026 Cascade Research
+
+The HetDocQA *annotations* in this directory, namely the questions, answers,
+evidence span labels, type labels, collection groupings, split assignments, and
+the datasheet (questions.jsonl, collections.json, the validated-question and
+review files, and DATASHEET.md), are licensed under the Creative Commons
+Attribution 4.0 International License (CC BY 4.0).
+
+You are free to share and adapt this material for any purpose, including
+commercially, provided you give appropriate credit, link to the license, and
+indicate if changes were made.
+
+Full legal text: https://creativecommons.org/licenses/by/4.0/legalcode
+Summary:         https://creativecommons.org/licenses/by/4.0/
+
+Attribution (suggested):
+  "HetDocQA" by Cascade Research, licensed under CC BY 4.0.
+
+--------------------------------------------------------------------------------
+SOURCE DOCUMENTS ARE NOT COVERED BY THIS LICENSE
+
+This benchmark does not redistribute the source corpus. corpus_manifest.json
+contains pointers (source_ref) to externally hosted documents (arXiv e-prints,
+Wikipedia articles, and permissively licensed code and data). Each source
+document retains its own license, recorded in the "license" field of
+corpus_manifest.json (among them MIT, Apache-2.0, BSD-3-Clause, CC-BY-SA-4.0, and
+the arXiv non-exclusive license). When you reconstruct the corpus with the build
+scripts, those documents are governed by their respective licenses, not by
+CC BY 4.0.

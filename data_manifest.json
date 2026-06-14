@@ -1,14 +1,13 @@
 {
-  "pcloud_code": "<fill in the code= from the pCloud public link>",
-  "region": "us",
-  "_comment": "region: 'us' -> api.pcloud.com, 'eu' -> eapi.pcloud.com. After creating the public link, run scripts/fetch_data.py --make-manifest <bundle_dir> to populate sha256/size, then paste the file list below.",
+  "zenodo_record": "<fill in the Zenodo record id after depositing>",
+  "_comment": "Optional large convenience artifacts only. The benchmark itself ships in git and in the Zenodo deposit. After uploading a bundle, run scripts/fetch_data.py --make-manifest <dir> to populate sha256/size below.",
   "files": [
     {
       "name": "hetdocqa_embeddings.tar.zst",
       "sha256": "<sha256-of-the-archive>",
       "dest": ".cache",
       "size_mb": 0.0,
-      "contents": "bge-m3 embedding .npy blobs only (vectors; no source text). Convenience: skip re-embedding. Useless without the corpus, which rebuilds from sources via scripts/build_hetdocqa.py."
+      "contents": "bge-m3 embedding .npy blobs only (vectors; no source text). Convenience: skip re-embedding. The corpus itself rebuilds from sources via scripts/build_hetdocqa.py."
     }
   ]
 }

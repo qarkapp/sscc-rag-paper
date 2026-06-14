@@ -33,9 +33,9 @@ uv run python scripts/run_benchmark.py hetdocqa test   # or run_retrieval_only.p
 
 ## Optional: fetch the large convenience bundle
 
-Large numeric artifacts are hosted on a pCloud **public link** and verified by
-SHA-256. To create the link: in pCloud, right-click the bundle → *Share → Public link*,
-copy the `code=` value, and put it in [`data_manifest.json`](data_manifest.json).
+Large numeric artifacts (optional, e.g. the embedding cache) are deposited on
+**Zenodo** alongside the benchmark and verified by SHA-256. Put the record id in
+[`data_manifest.json`](data_manifest.json).
 
 ```bash
 # maintainer: hash the bundle and print a manifest skeleton
@@ -45,19 +45,20 @@ uv run python scripts/fetch_data.py --make-manifest path/to/bundle
 uv run python scripts/fetch_data.py
 ```
 
-`scripts/fetch_data.py` resolves the public link through the pCloud API
-(`showpublink` → `getpublinkdownload`), so no pCloud account is required.
+`scripts/fetch_data.py` downloads from the record's stable public URLs
+(`zenodo.org/records/<id>/files/<name>`), so no account is required.
 
 ## Licensing
 
 - **Code:** Apache-2.0 (`LICENSE`).
-- **Benchmark annotations** (questions, answers, span labels): _TODO — choose, e.g._
-  CC-BY-4.0. Add a `data/hetdocqa/LICENSE`.
+- **Benchmark annotations** (questions, answers, span labels): CC BY 4.0
+  (`data/hetdocqa/LICENSE`).
 - **Source corpus:** each document keeps its original license; see `license` /
   `source_ref` in `corpus_manifest.json`. We distribute pointers, not content.
 
 ## Persistent archive
 
-For a citable, versioned snapshot of the benchmark, also deposit `data/hetdocqa/`
-(+ `results/`) on **Zenodo** (free, CERN-run, DOI, up to 50 GB). pCloud is for
-convenience bundles only; it has no DOI or guaranteed permanence.
+The benchmark is deposited on **Zenodo** (free, CERN-run, DOI, versioned, up to
+50 GB) for a citable, persistent snapshot: `data/hetdocqa/`, `results/`, the paper,
+and the harness. The Zenodo DOI is the canonical citation; GitHub holds the working
+copy.
