@@ -1,0 +1,13 @@
+split=test subset=ct: 56 queries (1s)
+arm            nDCG@10     R@10       F1
+generic         0.7425   0.7777   0.5602
+multi_prose     0.7672   0.8060   0.5519
+modality        0.7849   0.8134   0.5962
+paired bootstrap (the decisive test = modality vs multi_prose):
+  modality    vs generic     nDCG@10  delta=+0.0425 p=0.136
+  modality    vs generic     F1       delta=+0.0360 p=0.215
+  modality    vs multi_prose nDCG@10  delta=+0.0177 p=0.537
+  modality    vs multi_prose F1       delta=+0.0443 p=0.111
+  multi_prose vs generic     nDCG@10  delta=+0.0247 p=0.027
+  multi_prose vs generic     F1       delta=-0.0083 p=0.610
+total 94s
