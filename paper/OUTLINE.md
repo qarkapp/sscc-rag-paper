@@ -111,6 +111,35 @@ reimplementation).
 
 ---
 
+## Figures & tables (locked)
+
+**Negatives placement:** core enhancement negatives (RAPTOR, cross-doc, graph, routing,
+DPHF, CRAG) stay in the MAIN body -- they are the contribution. A dedicated appendix
+holds the *exploratory* negatives (modality-calibration, facet-coverage, modality-HyDE
+3-arm control) + exhaustive per-benchmark tables. Don't bury the core negatives.
+
+**Figures**
+- **F1 (HEADLINE):** principle diagram -- shared pipeline with each enhancement placed
+  at its stage (query / pool-expansion / re-ranking / decision), color-coded by whether
+  it survives correction. Leads with the *idea* so negatives read as explanatory.
+- **F2:** forest plot of enhancement effect sizes (Δ-F1, Δ-nDCG ± 95% CI) on HetDocQA
+  test, vertical zero line. Reranker off-scale; almost every other CI crosses zero;
+  SSCC the lone exclusion. `results/hetdocqa_test_ablation.txt`
+- **F3:** heterogeneity gradient -- SSCC (and modality-HyDE) effect size across
+  MuSiQue -> QASPER -> HetDocQA (homogeneous -> heterogeneous).
+
+**Main-body tables**
+- **T1:** HetDocQA composition (modality x type x split, span-label stats).
+- **T2:** headline ablation -- HetDocQA test, full + each -component, nDCG@10/R@10/F1
+  with corrected-significance markers.
+- **T3 (PROMINENT, centerpiece):** cross-benchmark survival grid -- enhancement x
+  {MuSiQue, QASPER, HetDocQA}, survives-Holm checkmarks. Almost all crosses; own it.
+
+**Appendix tables:** full per-benchmark ablations (raw + corrected p, secondary
+metrics); routing triad; exploratory negatives; datasheet; capability matrix.
+
+---
+
 ## Honesty firewall for the write-up
 - Report every negative prominently; never bury under correction.
 - SSCC scope stated plainly (heterogeneity-specific, modest).
