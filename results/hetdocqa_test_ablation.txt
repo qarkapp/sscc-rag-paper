@@ -1,0 +1,42 @@
+hetdocqa: 762 questions over 3517 passages
+raptor index: +0 summary nodes (2s)
+indexed (2s); evaluating 363 queries (split=test)
+  forced[semantic] nDCG@10=0.5419 F1=0.4812 (474s)
+  forced[dphf] nDCG@10=0.6499 F1=0.5495 (1608s)
+  forced[stepback] nDCG@10=0.5622 F1=0.5026 (2162s)
+  [full] nDCG@10=0.6442 EM=0.2204 F1=0.5481 (2233s)
+  [wo_dphf] nDCG@10=0.6442 EM=0.2204 F1=0.5481 (2299s)
+  [wo_hyde] nDCG@10=0.5419 EM=0.1791 F1=0.4812 (2354s)
+  [wo_modality_hyde] nDCG@10=0.6741 EM=0.2094 F1=0.5410 (3070s)
+  [hyde_multi_prose] nDCG@10=0.6842 EM=0.2314 F1=0.5521 (3959s)
+  [wo_sscc] nDCG@10=0.6017 EM=0.1956 F1=0.5234 (4066s)
+  [wo_crag] nDCG@10=0.6442 EM=0.2149 F1=0.5460 (4134s)
+  [wo_rerank] nDCG@10=0.0339 EM=0.0716 F1=0.2492 (4252s)
+  [wo_graph] nDCG@10=0.6407 EM=0.2149 F1=0.5420 (5161s)
+  [wo_raptor] nDCG@10=0.6504 EM=0.1983 F1=0.5225 (5947s)
+  [wo_cross_doc] nDCG@10=0.6441 EM=0.2176 F1=0.5449 (6042s)
+  [semantic_only] nDCG@10=0.2884 EM=0.1570 F1=0.4211 (6087s)
+===== hetdocqa: routing triad (6087s) =====  best-fixed=always-dphf
+router             nDCG@10      EM      F1        F1 95% CI p(F1 vs bf)
+always-semantic     0.5419  0.1791  0.4812   [0.446, 0.516]       0.000
+always-dphf         0.6499  0.2121  0.5495   [0.517, 0.583]       1.000
+always-stepback     0.5622  0.1763  0.5026   [0.468, 0.538]       0.000
+keyword             0.6389  0.2149  0.5459   [0.513, 0.580]       0.320
+egr                 0.5622  0.1763  0.5026   [0.468, 0.538]       0.000
+compositional       0.6442  0.2204  0.5481   [0.515, 0.583]       0.766
+oracle              0.6918  0.2039  0.5256   [0.491, 0.561]       0.018
+===== hetdocqa: component ablation (6087s) =====
+config             nDCG@10   Su@10      EM      F1        F1 95% CI   p(F1)
+full                0.6442   0.868  0.2204  0.5481   [0.515, 0.583]     nan
+wo_dphf             0.6442   0.868  0.2204  0.5481   [0.515, 0.583]   1.000
+wo_hyde             0.5419   0.771  0.1791  0.4812   [0.446, 0.516]   0.000
+wo_modality_hyde    0.6741   0.906  0.2094  0.5410   [0.507, 0.575]   0.444
+hyde_multi_prose    0.6842   0.912  0.2314  0.5521   [0.518, 0.587]   0.693
+wo_sscc             0.6017   0.829  0.1956  0.5234   [0.489, 0.559]   0.005
+wo_crag             0.6442   0.868  0.2149  0.5460   [0.512, 0.581]   0.478
+wo_rerank           0.0339   0.080  0.0716  0.2492   [0.218, 0.282]   0.000
+wo_graph            0.6407   0.862  0.2149  0.5420   [0.508, 0.577]   0.214
+wo_raptor           0.6504   0.873  0.1983  0.5225   [0.488, 0.557]   0.004
+wo_cross_doc        0.6441   0.868  0.2176  0.5449   [0.512, 0.580]   0.213
+semantic_only       0.2884   0.576  0.1570  0.4211   [0.385, 0.458]   0.000
+total 6087s
