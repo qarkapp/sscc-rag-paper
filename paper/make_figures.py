@@ -65,20 +65,15 @@ def fig_routing_degeneracy(data: dict, name: str) -> None:
     axc.axvspan(1.6, tlo, color=fs.NULL_L, alpha=0.6, lw=0)
     axc.axvspan(tlo, thi, color="#dfe7ec", alpha=0.8, lw=0)
     axc.axvspan(thi, logk + 0.02, color="#f4d9dc", alpha=0.9, lw=0)
-    for x in (tlo, thi):
-        axc.axvline(x, color="#777", lw=0.7, zorder=2)
-    # region names INSIDE the strip (centered), so nothing collides with the title.
-    axc.text((1.6 + tlo) / 2, 0.5, "semantic", fontsize=5.5, ha="center", va="center",
-             color="#555", transform=axc.get_xaxis_transform())
-    axc.text((tlo + thi) / 2, 0.5, "DPHF", fontsize=5.5, ha="center", va="center",
-             color="#555", transform=axc.get_xaxis_transform())
-    axc.text((thi + logk) / 2 - 0.06, 0.5, "step-back", fontsize=5.5, ha="center", va="center",
-             color=fs.ACCENT, transform=axc.get_xaxis_transform())
-    axc.axvline(H.mean(), color=fs.ACCENT, lw=1.6, zorder=4)  # where all mass sits
-    axc.text(tlo - 0.04, -0.45, r"$\tau_\ell$", fontsize=6, ha="center", color="#555",
-             transform=axc.get_xaxis_transform())
-    axc.text(thi - 0.04, -0.45, r"$\tau_h$", fontsize=6, ha="center", color="#555",
-             transform=axc.get_xaxis_transform())
+    # EGR carves three regions at the thresholds; only the (wide enough) step-back region
+    # is named -- the narrow ones can't hold a readable label and the caption covers them.
+    for x, lab in [(tlo, r"$\tau_\ell$"), (thi, r"$\tau_h$")]:
+        axc.axvline(x, color="#888", lw=0.7, zorder=2)
+        axc.text(x, -0.62, lab, fontsize=6.5, ha="center", va="top", color="#555",
+                 transform=axc.get_xaxis_transform())
+    fs.halo(axc.text((thi + logk) / 2, 0.5, "step-back", fontsize=6, ha="center", va="center",
+            color=fs.ACCENT, transform=axc.get_xaxis_transform()))
+    axc.axvline(H.mean(), color=fs.ACCENT, lw=1.8, zorder=5)  # where all mass sits
     axc.set_xlim(1.6, logk + 0.03)
     axc.set_ylim(0, 1)
     axc.set_yticks([])
@@ -89,38 +84,41 @@ def fig_routing_degeneracy(data: dict, name: str) -> None:
     axz.hist(H, bins=np.linspace(H.min() - 0.0008, logk + 0.0008, 30),
              color=fs.BAR, edgecolor="white", linewidth=0.3, zorder=3)
     axz.axvline(logk, color=fs.ACCENT, lw=1.1, ls=(0, (3, 2)), zorder=4)
-    fs.halo(axz.text(logk - 0.00012, axz.get_ylim()[1] * 0.99, r"$\log K$", color=fs.ACCENT,
-                     fontsize=6.8, va="top", ha="right", zorder=5))
-    axz.text(0.04, 0.96, fr"$\sigma_H={fs.sci(H.std())}$" + "\n"
-             + f"{100 * n_sb / len(qids):.0f}% routed $\\to$ step-back",
-             transform=axz.transAxes, fontsize=6.8, va="top", ha="left", color=fs.INK)
+    axz.text(0.04, 0.96, fr"$\sigma_H = {fs.sci(H.std())}$" + "\n"
+             + f"{100 * n_sb / len(qids):.0f}% routed $\\to$ step-back" + "\n"
+             + r"$\mathdefault{-\,-}$ $\log K$ ceiling",
+             transform=axz.transAxes, fontsize=6.5, va="top", ha="left", color=fs.INK,
+             linespacing=1.5)
     axz.set_xlim(H.min() - 0.0008, logk + 0.0010)
     axz.set_xlabel("routing entropy $H$ (zoom)")
     axz.set_ylabel("queries")
     axz.ticklabel_format(axis="x", useOffset=False)
     axz.set_xticks(np.round(np.linspace(H.min(), logk, 3), 3))
 
-    # (c) entropy does not separate the oracle-best classes.
+    # (c) entropy does not separate the oracle-best classes: identical violins, and the
+    # per-class means all land on a single grand-mean line.
     ax = axes[2]
     groups = [[data["entropy"][q] for q in qids if data["oracle"][q] == s] for s in labels]
-    parts = ax.violinplot(groups, showextrema=False, widths=0.85)
+    parts = ax.violinplot(groups, showextrema=False, widths=0.8)
     for b in parts["bodies"]:
         b.set_facecolor(fs.COOL)
-        b.set_alpha(0.35)
-        b.set_edgecolor(fs.INK)
+        b.set_alpha(0.25)
+        b.set_edgecolor(fs.COOL)
         b.set_linewidth(0.6)
     for i, g in enumerate(groups, start=1):
-        ax.scatter(np.full(len(g), i) + rng.uniform(-0.07, 0.07, len(g)), g,
-                   s=3, color=fs.INK, alpha=0.5, zorder=3, lw=0)
-        ax.plot([i - 0.28, i + 0.28], [np.mean(g)] * 2, color=fs.ACCENT, lw=1.3, zorder=4)
-    # between/within dispersion ratio (an F-like separation statistic).
+        ax.scatter(np.full(len(g), i) + rng.uniform(-0.08, 0.08, len(g)), g,
+                   s=2.2, color=fs.INK, alpha=0.28, zorder=3, lw=0)
     grand = H.mean()
+    ax.axhline(grand, color=fs.ACCENT, lw=1.0, ls=(0, (4, 2)), zorder=4)
+    for i, g in enumerate(groups, start=1):
+        ax.plot(i, np.mean(g), "D", color=fs.ACCENT, ms=4, mec="white", mew=0.5, zorder=6)
     between = sum(len(g) * (np.mean(g) - grand) ** 2 for g in groups if g)
     within = sum(sum((x - np.mean(g)) ** 2 for x in g) for g in groups if g)
-    fs.halo(ax.text(0.5, 1.0, f"between/within dispersion $= {between / max(within, 1e-9):.3f}$",
-            transform=ax.transAxes, fontsize=6.8, ha="center", va="top", color=fs.ACCENT, zorder=6))
-    fs.halo(ax.text(0.97, 0.04, "— class mean", transform=ax.transAxes, fontsize=6,
-            ha="right", va="bottom", color=fs.ACCENT, zorder=6))
+    ax.text(0.96, 0.28, "class means (red) coincide on $\\bar H$\n"
+            f"between/within $= {between / max(within, 1e-9):.3f}$",
+            transform=ax.transAxes, fontsize=6.3, ha="right", va="center", color=fs.ACCENT,
+            bbox=dict(boxstyle="round,pad=0.3", facecolor="white", edgecolor=fs.NULL_L, lw=0.6),
+            zorder=7)
     ax.set_xticks(range(1, len(labels) + 1))
     ax.set_xticklabels([_LABEL_NAMES[s] for s in labels])
     ax.set_xlabel("oracle-best strategy")
