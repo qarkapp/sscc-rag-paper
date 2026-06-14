@@ -18,6 +18,9 @@ Questions were drafted by a strong closed model (distinct from any model evaluat
 ## Labels
 Gold evidence is annotated as character spans in the source documents and mapped to any system's chunks at evaluation time (>=50% span overlap), so retrieval metrics are independent of chunking.
 
+## Provenance and integrity
+The corpus is distributed as source pointers (source_ref), not redistributed content. Each manifest entry pins the materialized document text with a SHA-256 (content_sha256); the build verifies the reconstructed text against this hash under the locked environment, so a drifted source or parser is caught and span offsets stay valid.
+
 ## Splits
 Calibration / dev / test splits are disjoint by collection, so thresholds tuned on dev cannot exploit corpus structure shared with test.
 

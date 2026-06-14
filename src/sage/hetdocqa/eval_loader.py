@@ -9,8 +9,10 @@ for the experiment runner, with the same chunker-agnostic relevance as the other
 
 from __future__ import annotations
 
+import hashlib
 import json
 import time
+import warnings
 from pathlib import Path
 
 from sage.chunking import ChonkieChunker
@@ -52,22 +54,38 @@ def _fetch_text(doc_id: str, meta: dict[str, str], cache_dir: Path | None):  # t
     """Fetch a document's (text, filename), caching the raw text on disk.
 
     The source fetchers hit the network (arXiv throttled at 2s/request); caching the
-    materialized text keeps repeated eval runs fast, reproducible, and offline.
+    materialized text keeps repeated eval runs fast, reproducible, and offline. When the
+    manifest entry carries a ``content_sha256``, the materialized text is verified
+    against it so a drifted source or parser is caught at build time.
     """
     blob = None
+    text = filename = None
     if cache_dir is not None:
         safe = doc_id.replace("/", "__").replace(":", "_._")
         blob = cache_dir / f"{safe}.json"
         if blob.exists():
             cached = json.loads(blob.read_text(encoding="utf-8"))
-            return cached["text"], cached["filename"]
-    doc = refetch_from_ref(meta["collection_id"], meta["source_ref"], meta["filename"])
-    if doc is None:
-        return None, None
-    if blob is not None:
-        blob.parent.mkdir(parents=True, exist_ok=True)
-        blob.write_text(json.dumps({"text": doc.text, "filename": doc.filename}), encoding="utf-8")
-    return doc.text, doc.filename
+            text, filename = cached["text"], cached["filename"]
+    if text is None:
+        doc = refetch_from_ref(meta["collection_id"], meta["source_ref"], meta["filename"])
+        if doc is None:
+            return None, None
+        text, filename = doc.text, doc.filename
+        if blob is not None:
+            blob.parent.mkdir(parents=True, exist_ok=True)
+            blob.write_text(
+                json.dumps({"text": text, "filename": filename}), encoding="utf-8"
+            )
+    want = meta.get("content_sha256")
+    if want is not None:
+        got = hashlib.sha256(text.encode("utf-8")).hexdigest()
+        if got != want:
+            warnings.warn(
+                f"content hash mismatch for {doc_id}: the reconstructed text differs from "
+                f"the pinned manifest hash (source or parser drift); spans may not align.",
+                stacklevel=2,
+            )
+    return text, filename
 
 
 def build_hetdocqa_dataset(
