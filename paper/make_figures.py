@@ -167,6 +167,46 @@ def fig_recall_dominance(data: dict) -> None:
     print("wrote F_recall_dominance")
 
 
+def _youden_threshold(rel: np.ndarray, irr: np.ndarray) -> float:
+    """Score threshold maximizing TPR - FPR (best separation of gold vs non-gold)."""
+    cand = np.unique(np.concatenate([rel, irr]))
+    j = [(rel >= t).mean() - (irr >= t).mean() for t in cand]
+    return float(cand[int(np.argmax(j))])
+
+
+def fig_sscc_calibration(data: dict) -> None:
+    """Why per-source thresholds (SSCC): bi- and cross-encoder scores separate gold at
+    different score values, so one global threshold (CRAG) cannot serve both."""
+    from scipy.stats import gaussian_kde
+
+    panels = [("bi", "(a) Bi-encoder  $1/(1{+}L_2)$", "bi-encoder relevance score"),
+              ("cross", "(b) Cross-encoder reranker", "cross-encoder relevance score")]
+    fig, axes = plt.subplots(1, 2, figsize=(fs.WIDE * 0.72, 2.5))
+    taus = {}
+    for ax, (key, title, xlab) in zip(axes, panels):
+        arr = np.array(data[key], dtype=np.float64)
+        rel, irr = arr[arr[:, 1] == 1, 0], arr[arr[:, 1] == 0, 0]
+        lo, hi = arr[:, 0].min(), arr[:, 0].max()
+        xs = np.linspace(lo, hi, 200)
+        for vals, col, lab in [(irr, fs.NULL, "non-relevant"), (rel, fs.GREEN, "relevant")]:
+            d = gaussian_kde(vals)(xs)
+            ax.fill_between(xs, d, color=col, alpha=0.35, lw=0, zorder=2)
+            ax.plot(xs, d, color=col, lw=1.3, zorder=3, label=lab)
+        tau = _youden_threshold(rel, irr)
+        taus[key] = tau
+        ax.axvline(tau, color=fs.ACCENT, lw=1.4, ls=(0, (4, 2)), zorder=4,
+                   label="calibrated $\\tau$")
+        ax.set_xlim(lo, hi)
+        ax.set_xlabel(xlab)
+        ax.set_ylabel("density")
+        ax.set_yticks([])
+        ax.set_title(title, loc="left")
+    axes[0].legend(loc="upper left", fontsize=6.4, handlelength=1.2)
+    fig.tight_layout(w_pad=1.6)
+    fs.save(fig, "F_sscc_calibration")
+    print(f"wrote F_sscc_calibration  (tau_bi={taus['bi']:.3f}, tau_cross={taus['cross']:.3f})")
+
+
 def main() -> None:
     fs.use_style()
     routing = FIGDATA / "routing_musique.json"
@@ -175,6 +215,9 @@ def main() -> None:
     recall = FIGDATA / "recall_hetdocqa.json"
     if recall.exists():
         fig_recall_dominance(json.loads(recall.read_text()))
+    sscc = FIGDATA / "sscc.json"
+    if sscc.exists():
+        fig_sscc_calibration(json.loads(sscc.read_text()))
 
 
 if __name__ == "__main__":
