@@ -20,8 +20,10 @@ visible. Two tables are produced:
 from __future__ import annotations
 
 import asyncio
+import json
 import sys
 import time
+from pathlib import Path
 
 import numpy as np
 
@@ -261,6 +263,20 @@ async def main() -> None:
         print(f"{n:16} {o.metrics.get('nDCG@10', 0):>9.4f} "
               f"{o.metrics.get('Success@10', 0):>7.3f} {a.mean_em:>7.4f} {a.mean_f1:>7.4f} "
               f"  [{lo:.3f}, {hi:.3f}] {p:>7.3f}")
+
+    # ---- persist per-query metrics for figure/table generation ---------------------
+    Path("results").mkdir(exist_ok=True)
+    dump = {
+        "name": name,
+        "split": split,
+        "qids": qids,
+        "configs": {n: {"metrics": o.metrics, "ndcg": o.per_query, "f1": a.f1, "em": a.em}
+                    for n, o, a in rows},
+        "forced": {"ndcg": per_ndcg, "f1": per_f1, "em": per_em},
+        "routing": decisions,
+        "best_fixed": best_fixed,
+    }
+    Path(f"results/{name}_{split}_perquery.json").write_text(json.dumps(dump))
     print(f"\ntotal {time.time() - t0:.0f}s")
 
 

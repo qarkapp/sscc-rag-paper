@@ -1,0 +1,470 @@
+% references.bib -- Beyond the Reranker
+% Core RAG-enhancement entries (RAPTOR, GraphRAG, CRAG, Self-RAG, Adaptive-RAG, HyDE)
+% web-verified (authors / year / venue / arXiv id). Established works (benchmarks,
+% retrievers, statistics, dataset methodology) from canonical details; give every entry
+% a final pass against the ACL Anthology / arXiv before camera-ready.
+
+% ====================================================================
+% RAG foundations
+% ====================================================================
+@inproceedings{lewis2020rag,
+  title     = {Retrieval-Augmented Generation for Knowledge-Intensive {NLP} Tasks},
+  author    = {Lewis, Patrick and Perez, Ethan and Piktus, Aleksandra and Petroni, Fabio
+               and Karpukhin, Vladimir and Goyal, Naman and K{\"u}ttler, Heinrich and
+               Lewis, Mike and Yih, Wen-tau and Rockt{\"a}schel, Tim and Riedel, Sebastian
+               and Kiela, Douwe},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2020},
+  eprint    = {2005.11401},
+  archivePrefix = {arXiv},
+}
+
+@inproceedings{guu2020realm,
+  title     = {{REALM}: Retrieval-Augmented Language Model Pre-Training},
+  author    = {Guu, Kelvin and Lee, Kenton and Tung, Zora and Pasupat, Panupong and Chang, Ming-Wei},
+  booktitle = {International Conference on Machine Learning (ICML)},
+  year      = {2020},
+  eprint    = {2002.08909},
+  archivePrefix = {arXiv},
+}
+
+@inproceedings{izacard2021fid,
+  title     = {Leveraging Passage Retrieval with Generative Models for Open Domain Question Answering},
+  author    = {Izacard, Gautier and Grave, Edouard},
+  booktitle = {Proceedings of the European Chapter of the ACL (EACL)},
+  year      = {2021},
+  eprint    = {2007.01282},
+  archivePrefix = {arXiv},
+}
+
+% ====================================================================
+% Query-side enhancements
+% ====================================================================
+@inproceedings{gao2023hyde,
+  title     = {Precise Zero-Shot Dense Retrieval without Relevance Labels},
+  author    = {Gao, Luyu and Ma, Xueguang and Lin, Jimmy and Callan, Jamie},
+  booktitle = {Proceedings of the Association for Computational Linguistics (ACL)},
+  year      = {2023},
+  eprint    = {2212.10496},
+  archivePrefix = {arXiv},
+}
+
+@inproceedings{zheng2024stepback,
+  title     = {Take a Step Back: Evoking Reasoning via Abstraction in Large Language Models},
+  author    = {Zheng, Huaixiu Steven and Mishra, Swaroop and Chen, Xinyun and Cheng,
+               Heng-Tze and Chi, Ed H. and Le, Quoc V. and Zhou, Denny},
+  booktitle = {International Conference on Learning Representations (ICLR)},
+  year      = {2024},
+  eprint    = {2310.06117},
+  archivePrefix = {arXiv},
+}
+
+@inproceedings{wang2023query2doc,
+  title     = {Query2doc: Query Expansion with Large Language Models},
+  author    = {Wang, Liang and Yang, Nan and Wei, Furu},
+  booktitle = {Proceedings of Empirical Methods in Natural Language Processing (EMNLP)},
+  year      = {2023},
+  eprint    = {2303.07678},
+  archivePrefix = {arXiv},
+}
+
+% ====================================================================
+% Hierarchical / graph retrieval
+% ====================================================================
+@inproceedings{sarthi2024raptor,
+  title     = {{RAPTOR}: Recursive Abstractive Processing for Tree-Organized Retrieval},
+  author    = {Sarthi, Parth and Abdullah, Salman and Tuli, Aditi and Khanna, Shubh and
+               Goldie, Anna and Manning, Christopher D.},
+  booktitle = {International Conference on Learning Representations (ICLR)},
+  year      = {2024},
+  eprint    = {2401.18059},
+  archivePrefix = {arXiv},
+}
+
+@article{edge2024graphrag,
+  title   = {From Local to Global: A Graph {RAG} Approach to Query-Focused Summarization},
+  author  = {Edge, Darren and Trinh, Ha and Cheng, Newman and Bradley, Joshua and Chao,
+             Alex and Mody, Apurva and Truitt, Steven and Metropolitansky, Dasha and
+             Ness, Robert Osazuwa and Larson, Jonathan},
+  journal = {arXiv preprint arXiv:2404.16130},
+  year    = {2024},
+}
+
+@inproceedings{gutierrez2024hipporag,
+  title     = {{HippoRAG}: Neurobiologically Inspired Long-Term Memory for Large Language Models},
+  author    = {Guti{\'e}rrez, Bernal Jim{\'e}nez and Shu, Yiheng and Gu, Yu and Yasunaga,
+               Michihiro and Su, Yu},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2024},
+  eprint    = {2405.14831},
+  archivePrefix = {arXiv},
+}
+
+% ====================================================================
+% Corrective / active retrieval
+% ====================================================================
+@article{yan2024crag,
+  title   = {Corrective Retrieval Augmented Generation},
+  author  = {Yan, Shi-Qi and Gu, Jia-Chen and Zhu, Yun and Ling, Zhen-Hua},
+  journal = {arXiv preprint arXiv:2401.15884},
+  year    = {2024},
+}
+
+@inproceedings{asai2024selfrag,
+  title     = {Self-{RAG}: Learning to Retrieve, Generate, and Critique through Self-Reflection},
+  author    = {Asai, Akari and Wu, Zeqiu and Wang, Yizhong and Sil, Avirup and Hajishirzi, Hannaneh},
+  booktitle = {International Conference on Learning Representations (ICLR)},
+  year      = {2024},
+  eprint    = {2310.11511},
+  archivePrefix = {arXiv},
+}
+
+@inproceedings{jiang2023flare,
+  title     = {Active Retrieval Augmented Generation},
+  author    = {Jiang, Zhengbao and Xu, Frank F. and Gao, Luyu and Sun, Zhiqing and Liu,
+               Qian and Dwivedi-Yu, Jane and Yang, Yiming and Callan, Jamie and Neubig, Graham},
+  booktitle = {Proceedings of Empirical Methods in Natural Language Processing (EMNLP)},
+  year      = {2023},
+  eprint    = {2305.06983},
+  archivePrefix = {arXiv},
+}
+
+% ====================================================================
+% Routing / adaptive retrieval
+% ====================================================================
+@inproceedings{jeong2024adaptiverag,
+  title     = {Adaptive-{RAG}: Learning to Adapt Retrieval-Augmented Large Language Models
+               through Question Complexity},
+  author    = {Jeong, Soyeong and Baek, Jinheon and Cho, Sukmin and Hwang, Sung Ju and Park, Jong C.},
+  booktitle = {Proceedings of the North American Chapter of the ACL (NAACL)},
+  year      = {2024},
+  eprint    = {2403.14403},
+  archivePrefix = {arXiv},
+}
+
+% ====================================================================
+% Fusion
+% ====================================================================
+@inproceedings{cormack2009rrf,
+  title     = {Reciprocal Rank Fusion Outperforms {Condorcet} and Individual Rank Learning Methods},
+  author    = {Cormack, Gordon V. and Clarke, Charles L. A. and Buettcher, Stefan},
+  booktitle = {Proceedings of ACM SIGIR},
+  year      = {2009},
+}
+
+% ====================================================================
+% Retrievers, embedders, rerankers
+% ====================================================================
+@inproceedings{karpukhin2020dpr,
+  title     = {Dense Passage Retrieval for Open-Domain Question Answering},
+  author    = {Karpukhin, Vladimir and O{\u{g}}uz, Barlas and Min, Sewon and Lewis, Patrick
+               and Wu, Ledell and Edunov, Sergey and Chen, Danqi and Yih, Wen-tau},
+  booktitle = {Proceedings of Empirical Methods in Natural Language Processing (EMNLP)},
+  year      = {2020},
+  eprint    = {2004.04906},
+  archivePrefix = {arXiv},
+}
+
+@inproceedings{santhanam2022colbertv2,
+  title     = {{ColBERTv2}: Effective and Efficient Retrieval via Lightweight Late Interaction},
+  author    = {Santhanam, Keshav and Khattab, Omar and Saad-Falcon, Jon and Potts,
+               Christopher and Zaharia, Matei},
+  booktitle = {Proceedings of the North American Chapter of the ACL (NAACL)},
+  year      = {2022},
+  eprint    = {2112.01488},
+  archivePrefix = {arXiv},
+}
+
+@article{izacard2022contriever,
+  title   = {Unsupervised Dense Information Retrieval with Contrastive Learning},
+  author  = {Izacard, Gautier and Caron, Mathilde and Hosseini, Lucas and Riedel, Sebastian
+             and Bojanowski, Piotr and Joulin, Armand and Grave, Edouard},
+  journal = {Transactions on Machine Learning Research (TMLR)},
+  year    = {2022},
+  eprint  = {2112.09118},
+  archivePrefix = {arXiv},
+}
+
+@inproceedings{reimers2019sbert,
+  title     = {Sentence-{BERT}: Sentence Embeddings using Siamese {BERT}-Networks},
+  author    = {Reimers, Nils and Gurevych, Iryna},
+  booktitle = {Proceedings of Empirical Methods in Natural Language Processing (EMNLP)},
+  year      = {2019},
+  eprint    = {1908.10084},
+  archivePrefix = {arXiv},
+}
+
+@inproceedings{nogueira2020monot5,
+  title     = {Document Ranking with a Pretrained Sequence-to-Sequence Model},
+  author    = {Nogueira, Rodrigo and Jiang, Zhiying and Pradeep, Ronak and Lin, Jimmy},
+  booktitle = {Findings of the ACL: EMNLP},
+  year      = {2020},
+  eprint    = {2003.06713},
+  archivePrefix = {arXiv},
+}
+
+@article{chen2024bgem3,
+  title   = {{BGE M3-Embedding}: Multi-Lingual, Multi-Functionality, Multi-Granularity Text
+             Embeddings through Self-Knowledge Distillation},
+  author  = {Chen, Jianlv and Xiao, Shitao and Zhang, Peitian and Luo, Kun and Lian, Defu
+             and Liu, Zheng},
+  journal = {arXiv preprint arXiv:2402.03216},
+  year    = {2024},
+}
+
+% ====================================================================
+% Benchmarks
+% ====================================================================
+@article{kwiatkowski2019nq,
+  title   = {Natural Questions: A Benchmark for Question Answering Research},
+  author  = {Kwiatkowski, Tom and Palomaki, Jennimaria and Redfield, Olivia and Collins,
+             Michael and Parikh, Ankur and Alberti, Chris and Epstein, Danielle and
+             Polosukhin, Illia and Devlin, Jacob and Lee, Kenton and others},
+  journal = {Transactions of the Association for Computational Linguistics (TACL)},
+  year    = {2019},
+}
+
+@inproceedings{yang2018hotpotqa,
+  title     = {{HotpotQA}: A Dataset for Diverse, Explainable Multi-hop Question Answering},
+  author    = {Yang, Zhilin and Qi, Peng and Zhang, Saizheng and Bengio, Yoshua and Cohen,
+               William W. and Salakhutdinov, Ruslan and Manning, Christopher D.},
+  booktitle = {Proceedings of Empirical Methods in Natural Language Processing (EMNLP)},
+  year      = {2018},
+  eprint    = {1809.09600},
+  archivePrefix = {arXiv},
+}
+
+@article{trivedi2022musique,
+  title   = {{MuSiQue}: Multihop Questions via Single-hop Question Composition},
+  author  = {Trivedi, Harsh and Balasubramanian, Niranjan and Khot, Tushar and Sabharwal, Ashish},
+  journal = {Transactions of the Association for Computational Linguistics (TACL)},
+  year    = {2022},
+  eprint  = {2108.00573},
+  archivePrefix = {arXiv},
+}
+
+@inproceedings{ho2020twowiki,
+  title     = {Constructing A Multi-hop {QA} Dataset for Comprehensive Evaluation of
+               Reasoning Steps},
+  author    = {Ho, Xanh and Nguyen, Anh-Khoa Duong and Sugawara, Saku and Aizawa, Akiko},
+  booktitle = {Proceedings of the International Conference on Computational Linguistics (COLING)},
+  year      = {2020},
+}
+
+@inproceedings{dasigi2021qasper,
+  title     = {A Dataset of Information-Seeking Questions and Answers Anchored in Research Papers},
+  author    = {Dasigi, Pradeep and Lo, Kyle and Beltagy, Iz and Cohan, Arman and Smith,
+               Noah A. and Gardner, Matt},
+  booktitle = {Proceedings of the North American Chapter of the ACL (NAACL)},
+  year      = {2021},
+  eprint    = {2105.03011},
+  archivePrefix = {arXiv},
+}
+
+@inproceedings{pang2022quality,
+  title     = {{QuALITY}: Question Answering with Long Input Texts, Yes!},
+  author    = {Pang, Richard Yuanzhe and Parrish, Alicia and Joshi, Nitish and Nangia,
+               Nikita and Phang, Jason and Chen, Angelica and Padmakumar, Vishakh and Ma,
+               Johnny and Thompson, Jana and He, He and Bowman, Samuel R.},
+  booktitle = {Proceedings of the North American Chapter of the ACL (NAACL)},
+  year      = {2022},
+  eprint    = {2112.08608},
+  archivePrefix = {arXiv},
+}
+
+@article{tang2024multihoprag,
+  title   = {{MultiHop-RAG}: Benchmarking Retrieval-Augmented Generation for Multi-Hop Queries},
+  author  = {Tang, Yixuan and Yang, Yi},
+  journal = {arXiv preprint arXiv:2401.15391},
+  year    = {2024},
+}
+
+@inproceedings{thakur2021beir,
+  title     = {{BEIR}: A Heterogeneous Benchmark for Zero-shot Evaluation of Information
+               Retrieval Models},
+  author    = {Thakur, Nandan and Reimers, Nils and R{\"u}ckl{\'e}, Andreas and Srivastava,
+               Abhishek and Gurevych, Iryna},
+  booktitle = {NeurIPS Datasets and Benchmarks Track},
+  year      = {2021},
+  eprint    = {2104.08663},
+  archivePrefix = {arXiv},
+}
+
+@inproceedings{petroni2021kilt,
+  title     = {{KILT}: a Benchmark for Knowledge Intensive Language Tasks},
+  author    = {Petroni, Fabio and Piktus, Aleksandra and Fan, Angela and Lewis, Patrick and
+               Yazdani, Majid and De Cao, Nicola and Thorne, James and Jernite, Yacine and
+               Karpukhin, Vladimir and Maillard, Jean and others},
+  booktitle = {Proceedings of the North American Chapter of the ACL (NAACL)},
+  year      = {2021},
+  eprint    = {2009.02252},
+  archivePrefix = {arXiv},
+}
+
+@inproceedings{joshi2017triviaqa,
+  title     = {{TriviaQA}: A Large Scale Distantly Supervised Challenge Dataset for Reading
+               Comprehension},
+  author    = {Joshi, Mandar and Choi, Eunsol and Weld, Daniel S. and Zettlemoyer, Luke},
+  booktitle = {Proceedings of the Association for Computational Linguistics (ACL)},
+  year      = {2017},
+  eprint    = {1705.03551},
+  archivePrefix = {arXiv},
+}
+
+% ====================================================================
+% Clustering / GNN internals (faithfully reimplemented components)
+% ====================================================================
+@article{mcinnes2018umap,
+  title   = {{UMAP}: Uniform Manifold Approximation and Projection for Dimension Reduction},
+  author  = {McInnes, Leland and Healy, John and Melville, James},
+  journal = {arXiv preprint arXiv:1802.03426},
+  year    = {2018},
+}
+
+@article{schwarz1978bic,
+  title   = {Estimating the Dimension of a Model},
+  author  = {Schwarz, Gideon},
+  journal = {The Annals of Statistics},
+  volume  = {6},
+  number  = {2},
+  pages   = {461--464},
+  year    = {1978},
+}
+
+@inproceedings{hamilton2017graphsage,
+  title     = {Inductive Representation Learning on Large Graphs},
+  author    = {Hamilton, William L. and Ying, Rex and Leskovec, Jure},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2017},
+  eprint    = {1706.02216},
+  archivePrefix = {arXiv},
+}
+
+@inproceedings{velickovic2019dgi,
+  title     = {Deep Graph Infomax},
+  author    = {Veli{\v{c}}kovi{\'c}, Petar and Fedus, William and Hamilton, William L. and
+               Li{\`o}, Pietro and Bengio, Yoshua and Hjelm, R Devon},
+  booktitle = {International Conference on Learning Representations (ICLR)},
+  year      = {2019},
+  eprint    = {1809.10341},
+  archivePrefix = {arXiv},
+}
+
+@inproceedings{haveliwala2002ppr,
+  title     = {Topic-Sensitive {PageRank}},
+  author    = {Haveliwala, Taher H.},
+  booktitle = {Proceedings of the International World Wide Web Conference (WWW)},
+  year      = {2002},
+}
+
+% ====================================================================
+% Statistics & IR evaluation methodology
+% ====================================================================
+@article{jarvelin2002ndcg,
+  title   = {Cumulated Gain-Based Evaluation of {IR} Techniques},
+  author  = {J{\"a}rvelin, Kalervo and Kek{\"a}l{\"a}inen, Jaana},
+  journal = {ACM Transactions on Information Systems (TOIS)},
+  volume  = {20},
+  number  = {4},
+  pages   = {422--446},
+  year    = {2002},
+}
+
+@inproceedings{smucker2007sigtest,
+  title     = {A Comparison of Statistical Significance Tests for Information Retrieval Evaluation},
+  author    = {Smucker, Mark D. and Allan, James and Carterette, Ben},
+  booktitle = {Proceedings of ACM CIKM},
+  year      = {2007},
+}
+
+@article{efron1979bootstrap,
+  title   = {Bootstrap Methods: Another Look at the Jackknife},
+  author  = {Efron, Bradley},
+  journal = {The Annals of Statistics},
+  volume  = {7},
+  number  = {1},
+  pages   = {1--26},
+  year    = {1979},
+}
+
+@article{holm1979,
+  title   = {A Simple Sequentially Rejective Multiple Test Procedure},
+  author  = {Holm, Sture},
+  journal = {Scandinavian Journal of Statistics},
+  volume  = {6},
+  number  = {2},
+  pages   = {65--70},
+  year    = {1979},
+}
+
+@article{benjamini1995fdr,
+  title   = {Controlling the False Discovery Rate: A Practical and Powerful Approach to
+             Multiple Testing},
+  author  = {Benjamini, Yoav and Hochberg, Yosef},
+  journal = {Journal of the Royal Statistical Society: Series B},
+  volume  = {57},
+  number  = {1},
+  pages   = {289--300},
+  year    = {1995},
+}
+
+% ====================================================================
+% Faithfulness / LLM-as-judge / answer evaluation
+% ====================================================================
+@inproceedings{zheng2023llmjudge,
+  title     = {Judging {LLM}-as-a-Judge with {MT-Bench} and {Chatbot Arena}},
+  author    = {Zheng, Lianmin and Chiang, Wei-Lin and Sheng, Ying and Zhuang, Siyuan and
+               Wu, Zhanghao and Zhuang, Yonghao and Lin, Zi and Li, Zhuohan and Li, Dacheng
+               and Xing, Eric P. and Zhang, Hao and Gonzalez, Joseph E. and Stoica, Ion},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS), Datasets and
+               Benchmarks Track},
+  year      = {2023},
+  eprint    = {2306.05685},
+  archivePrefix = {arXiv},
+}
+
+@inproceedings{min2023factscore,
+  title     = {{FActScore}: Fine-grained Atomic Evaluation of Factual Precision in Long Form
+               Text Generation},
+  author    = {Min, Sewon and Krishna, Kalpesh and Lyu, Xinxi and Lewis, Mike and Yih,
+               Wen-tau and Koh, Pang Wei and Iyyer, Mohit and Zettlemoyer, Luke and
+               Hajishirzi, Hannaneh},
+  booktitle = {Proceedings of Empirical Methods in Natural Language Processing (EMNLP)},
+  year      = {2023},
+  eprint    = {2305.14251},
+  archivePrefix = {arXiv},
+}
+
+@inproceedings{es2024ragas,
+  title     = {{RAGAs}: Automated Evaluation of Retrieval Augmented Generation},
+  author    = {Es, Shahul and James, Jithin and Espinosa-Anke, Luis and Schockaert, Steven},
+  booktitle = {Proceedings of the European Chapter of the ACL (EACL): System Demonstrations},
+  year      = {2024},
+  eprint    = {2309.15217},
+  archivePrefix = {arXiv},
+}
+
+% ====================================================================
+% Dataset construction methodology
+% ====================================================================
+@article{gebru2021datasheets,
+  title   = {Datasheets for Datasets},
+  author  = {Gebru, Timnit and Morgenstern, Jamie and Vecchione, Briana and Vaughan,
+             Jennifer Wortman and Wallach, Hanna and Daum{\'e} III, Hal and Crawford, Kate},
+  journal = {Communications of the ACM},
+  volume  = {64},
+  number  = {12},
+  pages   = {86--92},
+  year    = {2021},
+}
+
+% ====================================================================
+% Heterogeneous / code / table retrieval
+% ====================================================================
+@article{husain2019codesearchnet,
+  title   = {{CodeSearchNet} Challenge: Evaluating the State of Semantic Code Search},
+  author  = {Husain, Hamel and Wu, Ho-Hsiang and Gazit, Tiferet and Allamanis, Miltiadis and
+             Brockschmidt, Marc},
+  journal = {arXiv preprint arXiv:1909.09436},
+  year    = {2019},
+}
