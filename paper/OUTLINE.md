@@ -118,15 +118,30 @@ DPHF, CRAG) stay in the MAIN body -- they are the contribution. A dedicated appe
 holds the *exploratory* negatives (modality-calibration, facet-coverage, modality-HyDE
 3-arm control) + exhaustive per-benchmark tables. Don't bury the core negatives.
 
-**Figures**
+**Figures (7 main body; each carries one distinct claim)**
 - **F1 (HEADLINE):** principle diagram -- shared pipeline with each enhancement placed
   at its stage (query / pool-expansion / re-ranking / decision), color-coded by whether
   it survives correction. Leads with the *idea* so negatives read as explanatory.
-- **F2:** forest plot of enhancement effect sizes (Δ-F1, Δ-nDCG ± 95% CI) on HetDocQA
-  test, vertical zero line. Reranker off-scale; almost every other CI crosses zero;
-  SSCC the lone exclusion. `results/hetdocqa_test_ablation.txt`
-- **F3:** heterogeneity gradient -- SSCC (and modality-HyDE) effect size across
+- **F2:** HetDocQA construction + span->chunk labeling -- two-panel: build pipeline
+  (sources -> collections -> generate -> filter -> validate -> splits) and the
+  chunker-agnostic >=50%-overlap span->chunk mapping (the fairness mechanism).
+- **F3:** forest plot of effect sizes (Δ-F1, Δ-nDCG ± 95% CI) on HetDocQA test, vertical
+  zero line. Reranker off-scale; almost every other CI crosses zero; SSCC the lone
+  exclusion. `results/hetdocqa_test_ablation.txt` (needs per-query deltas -> extract).
+- **F4:** reranker dominance -- with/without-reranker collapse (nDCG ~0 without),
+  contrasted with the tiny deltas of every other component.
+- **F5:** heterogeneity gradient -- SSCC (and modality-HyDE) effect size across
   MuSiQue -> QASPER -> HetDocQA (homogeneous -> heterogeneous).
+- **F6:** EGR entropy degeneracy -- histogram of per-query routing entropy (near-constant
+  at the log K ceiling) = the signal routing relies on barely varies. Needs per-query
+  entropies -> extend `scripts/diag_router.py` to dump them.
+- **F7:** SSCC calibration mechanism -- per-source (bi- vs cross-encoder) relevance-score
+  distributions + the fitted per-source thresholds, showing why one global threshold
+  fails. Needs extraction from an SSCC calibration run.
+
+Appendix figures: per-type/per-modality performance breakdown; implementation-fragility
+(RAPTOR dev<->test sign-flip; PPR 6.4s->0.15s; cross-doc 0/30->retrieved post-fix);
+modality-HyDE 3-arm control + prose-misses-code/table mechanism.
 
 **Main-body tables**
 - **T1:** HetDocQA composition (modality x type x split, span-label stats).
